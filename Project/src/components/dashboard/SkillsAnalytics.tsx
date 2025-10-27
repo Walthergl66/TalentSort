@@ -1,0 +1,235 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import { supabase } from '@/lib/supabase'
+
+export default function SkillsAnalytics() {
+  const [skillsData, setSkillsData] = useState<any[]>([])
+  const [marketDemand, setMarketDemand] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchSkillsData = async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser()
+        if (!user) return
+
+        // Obtener habilidades del perfil del usuario
+        const { data: userProfile } = await supabase
+          .from('user_profiles')
+          .select('skills, experience_level')
+          .eq('user_id', user.id)
+          .single()
+
+        // Obtener demanda del mercado (habilidades más buscadas en trabajos activos)
+        const { data: jobPositions } = await supabase
+          .from('job_positions')
+          .select('required_skills, preferred_skills, salary_range')
+          .eq('status', 'active')
+
+        if (!jobPositions) return
+
+        // Procesar demanda del mercado
+        const demandStats: Record<string, { demand: number; avgSalary: number; totalSalary: number, jobs: number }> = {}
+        
+        jobPositions.forEach(job => {
+          const allSkills = [...(job.required_skills || []), ...(job.preferred_skills || [])]
+          const salary = job.salary_range ? parseInt(job.salary_range.split('-')[0].replace(/\D/g, '')) : 0
+          
+          allSkills.forEach((skill: string) => {
+            const normalizedSkill = skill.toLowerCase().trim()
+            if (!demandStats[normalizedSkill]) {
+              demandStats[normalizedSkill] = { demand: 0, avgSalary: 0, totalSalary: 0, jobs: 0 }
+            }
+            demandStats[normalizedSkill].demand++
+            if (salary > 0) {
+              demandStats[normalizedSkill].totalSalary += salary
+              demandStats[normalizedSkill].jobs++
+            }
+          })
+        })
+
+        // Calcular promedios y crear array ordenado
+        const demandArray = Object.entries(demandStats)
+          .map(([skill, stats]) => ({
+            name: skill.charAt(0).toUpperCase() + skill.slice(1),
+            demand: stats.demand,
+            avgSalary: stats.jobs > 0 ? Math.round(stats.totalSalary / stats.jobs) : 0,
+            percentage: Math.round((stats.demand / jobPositions.length) * 100),
+            userHasSkill: userProfile?.skills?.includes(skill) || false
+          }))
+          .sort((a, b) => b.demand - a.demand)
+
+        setMarketDemand(demandArray.slice(0, 10))
+        setSkillsData(userProfile?.skills || [])
+      } catch (error) {
+        console.error('Error fetching skills data:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchSkillsData()
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div className="animate-pulse">
+          <div className="h-6 bg-gray-200 rounded w-1/4 mb-6"></div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-3">
+              {[...Array(5)].map((_, i) => (
+                <div key={i} className="h-16 bg-gray-200 rounded"></div>
+              ))}
+            </div>
+            <div className="space-y-3">
+              {[...Array(5)].map((_, i) => (
+                <div key={i} className="h-8 bg-gray-200 rounded"></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <div className="flex items-center justify-between mb-6">
+        <h3 className="text-lg font-semibold text-gray-900">
+          Análisis del Mercado Laboral
+        </h3>
+        <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">
+          Actualizar mis habilidades
+        </button>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Market Demand Chart */}
+        <div>
+          <h4 className="text-sm font-medium text-gray-900 mb-4">
+            Habilidades Más Demandadas en el Mercado
+          </h4>
+          <div className="space-y-3">
+            {marketDemand.slice(0, 8).map((skill, index) => (
+              <div key={index} className="flex items-center">
+                <div className="flex-1">
+                  <div className="flex items-center justify-between mb-1">
+                    <div className="flex items-center space-x-2">
+                      <span className="text-sm font-medium text-gray-900">
+                        {skill.name}
+                      </span>
+                      {skill.userHasSkill && (
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                          ✓ Tienes esta skill
+                        </span>
+                      )}
+                    </div>
+                    <span className="text-sm text-gray-500">
+                      {skill.demand} empleos
+                    </span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div
+                      className={`h-2 rounded-full transition-all duration-300 ${
+                        skill.userHasSkill ? 'bg-green-600' : 'bg-blue-600'
+                      }`}
+                      style={{ width: `${Math.min(skill.percentage, 100)}%` }}
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Salary Potential */}
+        <div>
+          <h4 className="text-sm font-medium text-gray-900 mb-4">
+            Potencial Salarial por Habilidad
+          </h4>
+          <div className="space-y-4">
+            {marketDemand
+              .slice(0, 6)
+              .sort((a, b) => b.avgSalary - a.avgSalary)
+              .map((skill, index) => (
+              <div key={index} className="flex items-center justify-between p-3 rounded-lg border border-gray-200">
+                <div className="flex items-center space-x-3">
+                  <div className={`w-3 h-3 rounded-full ${
+                    skill.userHasSkill ? 'bg-green-400' : 'bg-gray-400'
+                  }`}></div>
+                  <span className="text-sm font-medium text-gray-900">
+                    {skill.name}
+                  </span>
+                </div>
+                <div className="text-right">
+                  <span className="text-sm font-semibold text-gray-900">
+                    ${skill.avgSalary.toLocaleString()}
+                  </span>
+                  <p className="text-xs text-gray-500">
+                    Salario promedio
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Summary Statistics */}
+      <div className="mt-8 pt-6 border-t border-gray-200">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="text-center">
+            <p className="text-2xl font-semibold text-gray-900">
+              {skillsData.length}
+            </p>
+            <p className="text-sm text-gray-600">
+              Tus habilidades
+            </p>
+          </div>
+          <div className="text-center">
+            <p className="text-2xl font-semibold text-gray-900">
+              {marketDemand.filter(skill => skill.userHasSkill).length}
+            </p>
+            <p className="text-sm text-gray-600">
+              Skills demandadas que tienes
+            </p>
+          </div>
+          <div className="text-center">
+            <p className="text-2xl font-semibold text-gray-900">
+              {marketDemand.length > 0 ? Math.round(marketDemand.filter(skill => skill.userHasSkill).reduce((acc, skill) => acc + skill.avgSalary, 0) / Math.max(1, marketDemand.filter(skill => skill.userHasSkill).length)) : 0}
+            </p>
+            <p className="text-sm text-gray-600">
+              Potencial salarial promedio
+            </p>
+          </div>
+          <div className="text-center">
+            <p className="text-2xl font-semibold text-gray-900">
+              {marketDemand.length - marketDemand.filter(skill => skill.userHasSkill).length}
+            </p>
+            <p className="text-sm text-gray-600">
+              Skills por aprender
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Insights */}
+      {marketDemand.length > 0 && (
+        <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+          <h5 className="text-sm font-medium text-blue-900 mb-2">
+            💡 Recomendaciones Personales
+          </h5>
+          <ul className="text-sm text-blue-800 space-y-1">
+            <li>• <strong>{marketDemand[0]?.name}</strong> es la habilidad más demandada ({marketDemand[0]?.demand} empleos disponibles)</li>
+            {marketDemand.find(skill => skill.userHasSkill && skill.avgSalary > 50000) && (
+              <li>• Tienes habilidades de alto valor como <strong>{marketDemand.find(skill => skill.userHasSkill && skill.avgSalary > 50000)?.name}</strong></li>
+            )}
+            <li>• Considera aprender <strong>{marketDemand.find(skill => !skill.userHasSkill)?.name}</strong> para mejorar tu perfil</li>
+          </ul>
+        </div>
+      )}
+    </div>
+  )
+}

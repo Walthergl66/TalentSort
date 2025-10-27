@@ -1,0 +1,499 @@
+/* Estilos del Dashboard que cumplen con ISO 9241-210 */
+
+/* Variables CSS para consistencia */
+:root {
+  --dashboard-primary: #3b82f6;
+  --dashboard-primary-light: #dbeafe;
+  --dashboard-secondary: #6b7280;
+  --dashboard-success: #10b981;
+  --dashboard-warning: #f59e0b;
+  --dashboard-danger: #ef4444;
+  --dashboard-border: #e5e7eb;
+  --dashboard-bg: #f9fafb;
+  --dashboard-surface: #ffffff;
+  --dashboard-text: #111827;
+  --dashboard-text-muted: #6b7280;
+  --dashboard-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  --dashboard-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --dashboard-radius: 8px;
+  --dashboard-radius-lg: 12px;
+  --dashboard-transition: all 0.2s ease-in-out;
+}
+
+/* Principios de diseño centrado en el usuario - ISO 9241-210 */
+
+/* 1. VISIBILIDAD DEL ESTADO DEL SISTEMA */
+.dashboard-loading {
+  position: relative;
+}
+
+.dashboard-loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Indicadores de estado claros */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.status-pending { background-color: #fef3c7; color: #92400e; }
+.status-processing { background-color: #dbeafe; color: #1e40af; }
+.status-completed { background-color: #d1fae5; color: #065f46; }
+.status-error { background-color: #fee2e2; color: #991b1b; }
+
+/* 2. CORRESPONDENCIA ENTRE EL SISTEMA Y EL MUNDO REAL */
+.dashboard-card {
+  background: var(--dashboard-surface);
+  border: 1px solid var(--dashboard-border);
+  border-radius: var(--dashboard-radius);
+  box-shadow: var(--dashboard-shadow);
+  transition: var(--dashboard-transition);
+}
+
+.dashboard-card:hover {
+  box-shadow: var(--dashboard-shadow-lg);
+  border-color: var(--dashboard-primary);
+}
+
+/* Iconografía intuitiva */
+.icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--dashboard-radius);
+  background-color: var(--dashboard-primary-light);
+  color: var(--dashboard-primary);
+}
+
+/* 3. CONTROL Y LIBERTAD DEL USUARIO */
+.action-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: var(--dashboard-radius);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--dashboard-transition);
+  text-decoration: none;
+}
+
+.action-button:focus {
+  outline: 2px solid var(--dashboard-primary);
+  outline-offset: 2px;
+}
+
+.action-button-primary {
+  background-color: var(--dashboard-primary);
+  color: white;
+}
+
+.action-button-primary:hover {
+  background-color: #2563eb;
+}
+
+.action-button-secondary {
+  background-color: transparent;
+  color: var(--dashboard-secondary);
+  border: 1px solid var(--dashboard-border);
+}
+
+.action-button-secondary:hover {
+  background-color: var(--dashboard-bg);
+  border-color: var(--dashboard-primary);
+}
+
+/* 4. CONSISTENCIA Y ESTÁNDARES */
+.dashboard-typography h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--dashboard-text);
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-typography h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--dashboard-text);
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-typography h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--dashboard-text);
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-typography p {
+  color: var(--dashboard-text-muted);
+  line-height: 1.5;
+}
+
+/* 5. PREVENCIÓN DE ERRORES */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  display: block;
+  font-weight: 500;
+  color: var(--dashboard-text);
+  margin-bottom: 0.25rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--dashboard-border);
+  border-radius: var(--dashboard-radius);
+  font-size: 0.875rem;
+  transition: var(--dashboard-transition);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--dashboard-primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-input.error {
+  border-color: var(--dashboard-danger);
+}
+
+.form-error {
+  color: var(--dashboard-danger);
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+/* 6. RECONOCIMIENTO ANTES QUE RECORDACIÓN */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  color: var(--dashboard-text-muted);
+  margin-bottom: 1rem;
+}
+
+.breadcrumb-item {
+  color: inherit;
+  text-decoration: none;
+}
+
+.breadcrumb-item:hover {
+  color: var(--dashboard-primary);
+}
+
+.breadcrumb-separator {
+  margin: 0 0.5rem;
+  color: var(--dashboard-border);
+}
+
+/* 7. FLEXIBILIDAD Y EFICIENCIA DE USO */
+.keyboard-shortcuts {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  background: var(--dashboard-surface);
+  border: 1px solid var(--dashboard-border);
+  border-radius: var(--dashboard-radius);
+  padding: 0.5rem;
+  box-shadow: var(--dashboard-shadow-lg);
+  font-size: 0.75rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.keyboard-shortcuts.visible {
+  opacity: 1;
+}
+
+/* 8. DISEÑO ESTÉTICO Y MINIMALISTA */
+.dashboard-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.dashboard-grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+.dashboard-grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.dashboard-grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+@media (max-width: 768px) {
+  .dashboard-grid-cols-2,
+  .dashboard-grid-cols-3 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+
+/* 9. AYUDA A LOS USUARIOS A RECONOCER, DIAGNOSTICAR Y RECUPERARSE DE ERRORES */
+.error-message {
+  background-color: #fee2e2;
+  border: 1px solid #fecaca;
+  border-left: 4px solid var(--dashboard-danger);
+  border-radius: var(--dashboard-radius);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.error-title {
+  font-weight: 600;
+  color: var(--dashboard-danger);
+  margin-bottom: 0.5rem;
+}
+
+.error-description {
+  color: #7f1d1d;
+  font-size: 0.875rem;
+}
+
+.success-message {
+  background-color: #d1fae5;
+  border: 1px solid #a7f3d0;
+  border-left: 4px solid var(--dashboard-success);
+  border-radius: var(--dashboard-radius);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.success-title {
+  font-weight: 600;
+  color: var(--dashboard-success);
+  margin-bottom: 0.5rem;
+}
+
+/* 10. AYUDA Y DOCUMENTACIÓN */
+.help-tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: help;
+}
+
+.help-tooltip:hover .tooltip-content {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tooltip-content {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--dashboard-text);
+  color: white;
+  padding: 0.5rem;
+  border-radius: var(--dashboard-radius);
+  font-size: 0.75rem;
+  width: max-content;
+  max-width: 200px;
+  transition: opacity 0.2s;
+  z-index: 1000;
+}
+
+.tooltip-content::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--dashboard-text);
+}
+
+/* Mejoras de accesibilidad específicas para el dashboard */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus visible mejorado */
+.focus-visible:focus {
+  outline: 2px solid var(--dashboard-primary);
+  outline-offset: 2px;
+}
+
+/* Animaciones respetan prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Contraste alto */
+@media (prefers-contrast: high) {
+  :root {
+    --dashboard-border: #000000;
+    --dashboard-text-muted: #000000;
+  }
+  
+  .dashboard-card {
+    border-width: 2px;
+  }
+}
+
+/* Modo oscuro */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --dashboard-bg: #111827;
+    --dashboard-surface: #1f2937;
+    --dashboard-text: #f9fafb;
+    --dashboard-text-muted: #d1d5db;
+    --dashboard-border: #374151;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 640px) {
+  .dashboard-card {
+    padding: 1rem;
+  }
+  
+  .action-button {
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* Componentes específicos del dashboard */
+.metric-card {
+  background: var(--dashboard-surface);
+  border: 1px solid var(--dashboard-border);
+  border-radius: var(--dashboard-radius-lg);
+  padding: 1.5rem;
+  transition: var(--dashboard-transition);
+}
+
+.metric-card:hover {
+  box-shadow: var(--dashboard-shadow-lg);
+}
+
+.metric-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--dashboard-text);
+  line-height: 1;
+}
+
+.metric-label {
+  color: var(--dashboard-text-muted);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.metric-change {
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-top: 0.5rem;
+}
+
+.metric-change.positive { color: var(--dashboard-success); }
+.metric-change.negative { color: var(--dashboard-danger); }
+.metric-change.neutral { color: var(--dashboard-text-muted); }
+
+/* Gráficos y visualizaciones */
+.chart-container {
+  position: relative;
+  height: 300px;
+  margin: 1rem 0;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 0.5rem;
+  background-color: var(--dashboard-bg);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: var(--dashboard-primary);
+  transition: width 0.3s ease;
+}
+
+/* Estados de carga específicos */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Interactividad mejorada */
+.interactive-element {
+  cursor: pointer;
+  transition: var(--dashboard-transition);
+}
+
+.interactive-element:hover {
+  transform: translateY(-1px);
+}
+
+.interactive-element:active {
+  transform: translateY(0);
+}
+
+/* Alertas y notificaciones */
+.alert {
+  border-radius: var(--dashboard-radius);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-left: 4px solid;
+}
+
+.alert-info {
+  background-color: #eff6ff;
+  border-left-color: var(--dashboard-primary);
+  color: #1e40af;
+}
+
+.alert-warning {
+  background-color: #fffbeb;
+  border-left-color: var(--dashboard-warning);
+  color: #92400e;
+}
+
+.alert-success {
+  background-color: #ecfdf5;
+  border-left-color: var(--dashboard-success);
+  color: #065f46;
+}
+
+.alert-error {
+  background-color: #fef2f2;
+  border-left-color: var(--dashboard-danger);
+  color: #991b1b;
+}

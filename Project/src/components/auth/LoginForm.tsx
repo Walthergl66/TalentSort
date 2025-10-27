@@ -2,10 +2,13 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 
 export default function LoginForm() {
+  const router = useRouter()
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -14,6 +17,7 @@ export default function LoginForm() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
+    setError('')
 
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -25,9 +29,17 @@ export default function LoginForm() {
 
       console.log('Login exitoso:', data)
       
-    } catch (error) {
+      // Redirigir al dashboard después del login exitoso
+      if (data.session) {
+        console.log('✅ Login successful, redirecting...')
+        console.log('👤 User data:', data.session.user)
+        // Temporal: usar test-dashboard para debugging
+        router.push('/dashboard')
+      }
+      
+    } catch (error: any) {
       console.error('Error en login:', error)
-      alert('Error al iniciar sesión. Verifica tus credenciales.')
+      setError(error.message || 'Error al iniciar sesión. Verifica tus credenciales.')
     } finally {
       setLoading(false)
     }
@@ -42,6 +54,12 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={handleLogin} className="space-y-4">
+      {error && (
+        <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+          <p className="text-sm text-red-600">{error}</p>
+        </div>
+      )}
+      
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
           Email

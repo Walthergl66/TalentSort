@@ -39,6 +39,10 @@ export default function Home() {
         <section className="py-12 bg-gray-50">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
+              {/* Test de conexión - Temporal */}
+              <div className="mb-8">
+              </div>
+              
               <div className="grid lg:grid-cols-2 gap-12 items-start">
                 {/* Login/Register Card */}
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
