@@ -1,0 +1,149 @@
+:root{
+  --a11y-font-scale: 1;
+  --a11y-accent: #006eff;
+}
+
+/* High contrast theme (meets 1.4.3) */
+/* High contrast: apply to page elements to ensure readability across the site */
+
+/* Modo alto contraste: versión atenuada para mejorar legibilidad sin ser demasiado agresivo */
+.a11y-high-contrast,
+.a11y-high-contrast body,
+.a11y-high-contrast .app,
+.a11y-high-contrast main,
+.a11y-high-contrast header,
+.a11y-high-contrast footer,
+.a11y-high-contrast section,
+.a11y-high-contrast div {
+  /* fondo oscuro pero no negro puro */
+  background: #0f1724 !important; /* dark slate */
+  /* texto claro pero no puro blanco */
+  color: #eef2ff !important; /* light indigo-ish */
+}
+
+/* Links, buttons, form controls */
+
+.a11y-high-contrast a,
+.a11y-high-contrast button,
+.a11y-high-contrast input,
+.a11y-high-contrast textarea,
+.a11y-high-contrast select,
+.a11y-high-contrast label {
+  color: var(--a11y-accent) !important;
+  background: transparent !important;
+}
+
+/* Botones: menos agresivos, fondo semitransparente en lugar de blanco puro */
+.a11y-high-contrast button,
+.a11y-high-contrast .btn {
+  background: rgba(255,255,255,0.08) !important;
+  color: #eef2ff !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+}
+
+.a11y-high-contrast input,
+.a11y-high-contrast textarea,
+.a11y-high-contrast select {
+  background: rgba(255,255,255,0.03) !important;
+  color: #eef2ff !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+}
+
+/* Contrast levels: provide presets the user can choose */
+.a11y-contrast-soft .a11y-high-contrast,
+.a11y-contrast-soft body {
+  background: #0b1320 !important;
+  color: #f1f5f9 !important;
+}
+
+.a11y-contrast-medium .a11y-high-contrast,
+.a11y-contrast-medium body {
+  background: #0f1724 !important;
+  color: #eef2ff !important;
+}
+
+.a11y-contrast-high .a11y-high-contrast,
+.a11y-contrast-high body {
+  background: #020617 !important; /* más oscuro */
+  color: #ffffff !important; /* más brillante */
+}
+
+/* Tweak accents per contrast level to keep ratio high */
+.a11y-contrast-soft a, .a11y-contrast-soft .a11y-toggle-button { --a11y-accent: #60a5fa }
+.a11y-contrast-medium a, .a11y-contrast-medium .a11y-toggle-button { --a11y-accent: #3b82f6 }
+.a11y-contrast-high a, .a11y-contrast-high .a11y-toggle-button { --a11y-accent: #ffd54f }
+
+.a11y-high-contrast img {
+  filter: none !important;
+}
+
+/* Font scaling */
+html { font-size: calc(16px * var(--a11y-font-scale)); }
+
+/* Letter spacing */
+.a11y-letter-spacing * {
+  letter-spacing: 0.12em !important;
+  line-height: 1.7 !important;
+}
+
+/* Reduced motion */
+.a11y-reduced-motion *, .a11y-reduced-motion *::before, .a11y-reduced-motion *::after {
+  transition: none !important;
+  animation: none !important;
+}
+
+/* Keyboard navigation focus */
+.a11y-keyboard-nav :focus,
+.a11y-keyboard-nav :focus-visible,
+.a11y-high-contrast :focus,
+.a11y-high-contrast :focus-visible {
+  outline: 2px solid var(--a11y-accent) !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 6px rgba(59,130,246,0.07) !important;
+}
+
+/* Helpful: ensure keyboard focus is visible even when browser default is suppressed */
+*:focus:not(.no-focus) {
+  outline: none;
+}
+
+/* Provide visible focus when keyboard navigation is enabled (applies site-wide when the provider sets the class on html) */
+.a11y-keyboard-nav *:focus-visible {
+  outline: 4px solid var(--a11y-accent) !important;
+  outline-offset: 2px !important;
+}
+
+/* Large buttons */
+.a11y-large-buttons button, .a11y-large-buttons .btn {
+  padding: 12px 18px !important;
+  font-size: 1.05rem !important;
+}
+
+/* Menu styling */
+.a11y-menu-root { position: fixed; right: 16px; bottom: 18px; z-index: 9999; }
+/* Toggle button: red with white icon/text */
+.a11y-toggle-button {
+  background: #ef4444; /* red-500 */
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+.a11y-toggle-button:hover { filter: brightness(0.95); }
+.a11y-toggle-button svg { width: 32px; height: 32px; fill: currentColor; }
+.a11y-toggle-button span { line-height: 1; }
+.a11y-toggle-button { gap: 12px; padding: 12px 16px; font-size: 0.95rem; }
+.a11y-menu { width: 300px; max-width: calc(100vw - 32px); background: #fff; color: #111; box-shadow: 0 6px 24px rgba(0,0,0,0.15); border-radius: 8px; padding: 12px; margin-top: 8px; }
+.a11y-menu-header { display:flex; justify-content:space-between; align-items:center; }
+.a11y-menu h4 { margin-top: 8px; margin-bottom: 6px; }
+.a11y-menu label { display:block; margin-bottom: 8px; font-size: 0.95rem; }
+.a11y-tts-controls button { margin-right: 8px }
+.a11y-menu-footer { display:flex; justify-content:space-between; align-items:center; margin-top:12px }
+
+/* small tweak for dark mode when high contrast is on */
+.a11y-high-contrast .a11y-menu { background: #111; color:#fff }
