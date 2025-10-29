@@ -97,15 +97,6 @@ export const AccessibilityMenu: React.FC = () => {
               Aumentar espaciado entre letras y líneas
             </label>
 
-            <label>
-              Color de acento:
-              <input
-                aria-label="Color personalizado"
-                type="color"
-                value={state.customColor || "#3b82f6"}
-                onChange={(e) => setState({ customColor: e.target.value })}
-              />
-            </label>
           </section>
 
           <section>
@@ -137,6 +128,15 @@ export const AccessibilityMenu: React.FC = () => {
                       <input type="checkbox" checked={state.hoverToSpeak} onChange={() => { setState({ hoverToSpeak: !state.hoverToSpeak, ttsEnabled: state.hoverToSpeak ? state.ttsEnabled : true }) }} />
                       Leer al pasar el cursor (hover-to-speak)
                     </label>
+
+            <label>
+              <input
+                type="checkbox"
+                checked={state.liveTranscriptionEnabled}
+                onChange={() => setState({ liveTranscriptionEnabled: !state.liveTranscriptionEnabled })}
+              />
+              Transcripción en vivo (Web Speech API)
+            </label>
 
             <div className="a11y-tts-controls">
               <button onClick={() => { setState({ ttsEnabled: true }); speakPage() }}>Leer página</button>

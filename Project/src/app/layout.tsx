@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import AccessibilityProvider from '@/components/Accesibilidad/AccessibilityProvider'
 import AccessibilityMenu from '@/components/Accesibilidad/AccessibilityMenu'
+import LiveTranscription from '@/components/Accesibilidad/LiveTranscription'
 import './globals.css'
 import '@/components/Accesibilidad/accessibility.css'
 
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
   creator: 'Talent AI',
   publisher: 'Talent AI',
   robots: 'index, follow',
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=5',
+  // viewport moved to dedicated export `viewport` (see Next.js metadata API)
   openGraph: {
     title: 'Talent AI - Sistema de Reclutamiento Inteligente',
     description: 'Optimiza tu proceso de reclutamiento con inteligencia artificial',
@@ -61,6 +62,7 @@ export default function RootLayout({
             {children}
           </main>
           <AccessibilityMenu />
+          <LiveTranscription />
         </AccessibilityProvider>
 
         {/* Script para detectar navegación por teclado */}
@@ -82,4 +84,11 @@ export default function RootLayout({
       </body>
     </html>
   )
+}
+
+// Dedicated viewport export (Next.js metadata API expects this separate export)
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
 }

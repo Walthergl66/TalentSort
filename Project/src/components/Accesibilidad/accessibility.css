@@ -147,3 +147,30 @@ html { font-size: calc(16px * var(--a11y-font-scale)); }
 
 /* small tweak for dark mode when high contrast is on */
 .a11y-high-contrast .a11y-menu { background: #111; color:#fff }
+
+/* Live transcription overlay */
+.live-transcription-overlay {
+  position: fixed;
+  right: 16px;
+  bottom: 90px;
+  width: auto;
+  max-width: 480px;
+  max-height: 360px;
+  overflow: hidden;
+  background: rgba(0,0,0,0.8);
+  color: #fff;
+  padding: 10px 12px;
+  border-radius: 8px;
+  z-index: 99999;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+  display: flex;
+  flex-direction: column;
+}
+.live-transcription-header { display:flex; justify-content:space-between; align-items:center; gap:8px; font-weight:700; margin-bottom:8px; font-size:1rem }
+.live-transcription-body { font-size:1rem; line-height:1.4; overflow:auto; max-height:260px; padding-right:6px }
+.live-transcription-close { background:transparent; border:none; color:inherit; font-size:1.05rem; cursor:pointer }
+.live-transcription-status { color:#ff6b6b; margin-left:6px; font-weight:700 }
+
+.live-transcription-controls { display:flex; gap:8px; margin-top:8px }
+.live-transcription-controls button { background: rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); color: #fff; padding:6px 10px; border-radius:6px; cursor:pointer }
+.live-transcription-hint { font-size:0.85rem; opacity:0.9; margin-top:6px }

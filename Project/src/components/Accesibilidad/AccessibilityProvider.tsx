@@ -11,6 +11,7 @@ type AccessibilityState = {
   largeButtons: boolean
   ttsEnabled: boolean
   hoverToSpeak: boolean
+  liveTranscriptionEnabled: boolean
   captionsEnabled: boolean
   customColor?: string | null
 }
@@ -32,6 +33,7 @@ const defaultState: AccessibilityState = {
   largeButtons: false,
   ttsEnabled: false,
   hoverToSpeak: false,
+  liveTranscriptionEnabled: false,
   captionsEnabled: false,
   customColor: null,
 }
@@ -48,7 +50,10 @@ export const AccessibilityProvider: React.FC<{ children: React.ReactNode }> = ({
   const [state, setInternalState] = useState<AccessibilityState>(() => {
     try {
       const raw = typeof window !== "undefined" ? localStorage.getItem("a11y:settings") : null
-      return raw ? JSON.parse(raw) : defaultState
+      if (!raw) return defaultState
+      const parsed = JSON.parse(raw)
+      // Merge saved settings with defaults to ensure all keys exist (prevents uncontrolled -> controlled warnings)
+      return { ...defaultState, ...parsed }
     } catch (e) {
       return defaultState
     }
