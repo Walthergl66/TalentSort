@@ -1,13 +1,20 @@
 // components/auth/RegisterForm.tsx
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
+import PostRegistrationSurvey, { SurveyResponses } from './PostRegistrationSurvey'
+import TermsModal from '../legal/TermsModal'
+import PrivacyModal from '../legal/PrivacyModal'
+import Tooltip, { HelpIcon } from '@/components/common/Tooltip'
 
 export default function RegisterForm() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
+  const [showSurvey, setShowSurvey] = useState(false)
+  const [showTermsModal, setShowTermsModal] = useState(false)
+  const [showPrivacyModal, setShowPrivacyModal] = useState(false)
   const [formData, setFormData] = useState({
     full_name: '',
     company_name: '',
@@ -17,6 +24,16 @@ export default function RegisterForm() {
     acceptTerms: false
   })
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
+
+  // Listener para abrir modal de privacidad desde el modal de términos
+  useEffect(() => {
+    const handleOpenPrivacy = () => {
+      setShowTermsModal(false)
+      setShowPrivacyModal(true)
+    }
+    window.addEventListener('openPrivacyModal', handleOpenPrivacy)
+    return () => window.removeEventListener('openPrivacyModal', handleOpenPrivacy)
+  }, [])
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -70,10 +87,10 @@ export default function RegisterForm() {
           acceptTerms: false
         })
 
-        // Opcional: redirigir a página de confirmación
-        // setTimeout(() => {
-        //   router.push('/auth/confirm-email')
-        // }, 3000)
+        // Mostrar encuesta de satisfacción después de 1 segundo
+        setTimeout(() => {
+          setShowSurvey(true)
+        }, 1000)
       }
       
     } catch (error: any) {
@@ -95,8 +112,44 @@ export default function RegisterForm() {
     })
   }
 
+  const handleSurveySubmit = async (responses: SurveyResponses) => {
+    try {
+      // Calcular promedio de satisfacción
+      const average = (responses.clarity + responses.ease + responses.time + 
+                      responses.satisfaction + responses.wouldRecommend) / 5
+
+      // Guardar en localStorage para analytics (en producción, enviar a backend)
+      const surveyData = {
+        ...responses,
+        average,
+        timestamp: new Date().toISOString(),
+        email: formData.email
+      }
+      
+      const existingSurveys = JSON.parse(localStorage.getItem('registration_surveys') || '[]')
+      existingSurveys.push(surveyData)
+      localStorage.setItem('registration_surveys', JSON.stringify(existingSurveys))
+
+      console.log('📊 Encuesta post-registro guardada:', surveyData)
+      
+      // En producción, aquí se enviaría a una API:
+      // await fetch('/api/surveys/registration', {
+      //   method: 'POST',
+      //   body: JSON.stringify(surveyData)
+      // })
+      
+    } catch (error) {
+      console.error('Error guardando encuesta:', error)
+    }
+  }
+
+  const handleSurveyClose = () => {
+    setShowSurvey(false)
+  }
+
   return (
-    <form onSubmit={handleRegister} className="space-y-4">
+    <>
+      <form onSubmit={handleRegister} className="space-y-4">
       {message && (
         <div className={`p-3 rounded-lg text-sm ${
           message.type === 'success' 
@@ -158,8 +211,11 @@ export default function RegisterForm() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-1.5">
             Contraseña *
+            <Tooltip content="Usa al menos 6 caracteres. Recomendamos combinar letras mayúsculas, minúsculas, números y símbolos para mayor seguridad.">
+              <HelpIcon />
+            </Tooltip>
           </label>
           <input
             type="password"
@@ -175,8 +231,11 @@ export default function RegisterForm() {
         </div>
 
         <div>
-          <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-1.5">
             Confirmar Contraseña *
+            <Tooltip content="Repite la contraseña exactamente como la escribiste arriba para confirmar que la recuerdas.">
+              <HelpIcon />
+            </Tooltip>
           </label>
           <input
             type="password"
@@ -202,15 +261,28 @@ export default function RegisterForm() {
           className="mt-1 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
           required
         />
-        <label htmlFor="acceptTerms" className="text-sm text-gray-600">
-          Acepto los{' '}
-          <a href="/terms" className="text-blue-600 hover:text-blue-500 underline">
-            términos y condiciones
-          </a>{' '}
-          y la{' '}
-          <a href="/privacy" className="text-blue-600 hover:text-blue-500 underline">
-            política de privacidad
-          </a>
+        <label htmlFor="acceptTerms" className="text-sm text-gray-600 flex items-start gap-1.5">
+          <span>
+            Acepto los{' '}
+            <button
+              type="button"
+              onClick={() => setShowTermsModal(true)}
+              className="text-blue-600 hover:text-blue-500 underline font-medium"
+            >
+              términos y condiciones
+            </button>{' '}
+            y la{' '}
+            <button
+              type="button"
+              onClick={() => setShowPrivacyModal(true)}
+              className="text-blue-600 hover:text-blue-500 underline font-medium"
+            >
+              política de privacidad
+            </button>
+          </span>
+          <Tooltip content="Debes leer y aceptar los términos legales antes de crear tu cuenta. Haz clic en los enlaces para ver los detalles.">
+            <HelpIcon className="flex-shrink-0 mt-0.5" />
+          </Tooltip>
         </label>
       </div>
 
@@ -233,5 +305,24 @@ export default function RegisterForm() {
         </button>
       </div>
     </form>
+
+    {/* Encuesta Post-Registro */}
+    {showSurvey && (
+      <PostRegistrationSurvey 
+        onSubmit={handleSurveySubmit}
+        onClose={handleSurveyClose}
+      />
+    )}
+
+    {/* Modales Legales */}
+    <TermsModal 
+      isOpen={showTermsModal}
+      onClose={() => setShowTermsModal(false)}
+    />
+    <PrivacyModal 
+      isOpen={showPrivacyModal}
+      onClose={() => setShowPrivacyModal(false)}
+    />
+  </>
   )
 }
