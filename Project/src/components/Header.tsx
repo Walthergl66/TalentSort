@@ -3,7 +3,11 @@
 
 import { useState } from 'react'
 
-export default function Header() {
+type HeaderProps = {
+  onAuthClick?: () => void
+}
+
+export default function Header({ onAuthClick }: HeaderProps) {
   const [language, setLanguage] = useState<'es' | 'en'>('es')
 
   const toggleLanguage = () => {
@@ -45,6 +49,14 @@ export default function Header() {
               className="flex items-center space-x-1 px-3 py-1 text-sm text-gray-600 hover:text-gray-900 transition-colors border border-gray-300 rounded-md"
             >
               <span>{language === 'es' ? 'ES' : 'EN'}</span>
+            </button>
+
+            {/* Botón opcional para abrir modal de autenticación si se proporciona la prop */}
+            <button
+              onClick={() => onAuthClick?.()}
+              className="ml-2 bg-blue-600 text-white px-3 py-1 text-sm rounded-md hover:bg-blue-700 transition-colors"
+            >
+              Iniciar sesión
             </button>
           </div>
         </div>
