@@ -6,7 +6,11 @@ import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import Tooltip, { HelpIcon } from '@/components/common/Tooltip'
 
-export default function LoginForm() {
+interface LoginFormProps {
+  onSwitchToRegister?: () => void
+}
+
+export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -245,6 +249,17 @@ export default function LoginForm() {
       >
         {loading ? 'Iniciando sesión...' : isBlocked ? '🔒 Bloqueado' : 'Iniciar sesión'}
       </button>
+
+      <div className="text-center text-sm text-gray-600 pt-2 border-t border-gray-200 mt-4">
+        ¿No tienes cuenta?{' '}
+        <button
+          type="button"
+          onClick={onSwitchToRegister}
+          className="text-blue-600 hover:text-blue-500 font-medium"
+        >
+          Regístrate gratis
+        </button>
+      </div>
     </form>
   )
 }

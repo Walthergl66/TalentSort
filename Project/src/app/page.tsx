@@ -325,7 +325,7 @@ export default function Home() {
               </div>
 
               <div className="pt-2">
-                {activeForm === 'login' ? <LoginForm /> : <RegisterForm />}
+                {activeForm === 'login' ? <LoginForm onSwitchToRegister={() => setActiveForm('register')} /> : <RegisterForm onSwitchToLogin={() => setActiveForm('login')} />}
               </div>
             </div>
           </div>

@@ -65,15 +65,15 @@ export default function PostRegistrationSurvey({ onClose, onSubmit }: PostRegist
   }) => (
     <div className="mb-6">
       <p className="text-sm font-medium text-gray-700 mb-3">{question}</p>
-      <div className="flex items-center justify-between gap-2">
-        <span className="text-xs text-gray-500 w-24 text-right">{leftLabel}</span>
-        <div className="flex gap-2">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-2">
+        <span className="text-xs text-gray-500 sm:w-24 sm:text-right order-1 sm:order-none">{leftLabel}</span>
+        <div className="flex gap-2 justify-center order-2 sm:order-none">
           {[1, 2, 3, 4, 5].map((value) => (
             <button
               key={value}
               type="button"
               onClick={() => setResponses({ ...responses, [field]: value })}
-              className={`w-12 h-12 rounded-lg border-2 font-semibold transition-all duration-200 ${
+              className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg border-2 font-semibold transition-all duration-200 ${
                 responses[field] === value
                   ? 'border-indigo-600 bg-indigo-600 text-white shadow-lg scale-110'
                   : 'border-gray-300 bg-white text-gray-600 hover:border-indigo-400 hover:scale-105'
@@ -83,46 +83,46 @@ export default function PostRegistrationSurvey({ onClose, onSubmit }: PostRegist
             </button>
           ))}
         </div>
-        <span className="text-xs text-gray-500 w-24">{rightLabel}</span>
+        <span className="text-xs text-gray-500 sm:w-24 order-3 sm:order-none text-center sm:text-left">{rightLabel}</span>
       </div>
     </div>
   )
 
   if (submitted) {
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-        <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-center">
+      <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[60] p-4">
+        <div className="bg-white rounded-2xl shadow-2xl p-6 sm:p-8 max-w-md w-full text-center animate-fadeIn">
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h3 className="text-2xl font-bold text-gray-800 mb-2">¡Gracias por tu feedback!</h3>
-          <p className="text-gray-600">Tu opinión nos ayuda a mejorar la experiencia de registro.</p>
+          <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">¡Gracias por tu feedback!</h3>
+          <p className="text-sm sm:text-base text-gray-600">Tu opinión nos ayuda a mejorar la experiencia de registro.</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto">
-      <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-2xl w-full my-8">
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[60] p-4 overflow-y-auto">
+      <div className="bg-white rounded-2xl shadow-2xl p-6 sm:p-8 w-full max-w-2xl my-8 animate-slideUp">
         {/* Header */}
-        <div className="flex items-start justify-between mb-6">
+        <div className="flex items-start justify-between mb-4 sm:mb-6">
           <div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">
               ¿Cómo fue tu experiencia de registro?
             </h2>
-            <p className="text-sm text-gray-600">
+            <p className="text-xs sm:text-sm text-gray-600">
               Ayúdanos a mejorar respondiendo estas 5 preguntas rápidas (1-2 min)
             </p>
           </div>
           <button
             onClick={handleSkip}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
+            className="text-gray-400 hover:text-gray-600 transition-colors p-1 sm:p-2 -mr-2 flex-shrink-0"
             title="Cerrar"
           >
-            <X className="w-6 h-6" />
+            <X className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
         </div>
 
@@ -174,23 +174,23 @@ export default function PostRegistrationSurvey({ onClose, onSubmit }: PostRegist
               value={responses.feedback}
               onChange={(e) => setResponses({ ...responses, feedback: e.target.value })}
               placeholder="Comparte tus comentarios, sugerencias o problemas que encontraste..."
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none"
+              className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none text-sm"
               rows={3}
             />
           </div>
 
           {/* Botones */}
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             <button
               type="submit"
-              className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:from-indigo-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl"
+              className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:from-indigo-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl text-sm sm:text-base"
             >
               Enviar Respuestas
             </button>
             <button
               type="button"
               onClick={handleSkip}
-              className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+              className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-colors text-sm sm:text-base"
             >
               Omitir
             </button>
