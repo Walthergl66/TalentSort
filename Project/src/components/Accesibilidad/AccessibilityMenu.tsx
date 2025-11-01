@@ -6,15 +6,56 @@ import "./accessibility.css"
 export const AccessibilityMenu: React.FC = () => {
   const { state, setState, reset, speakPage } = useAccessibility()
   const [open, setOpen] = useState(false)
+  const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null)
   const dialogRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false)
+      // ESC para cerrar
+      if (e.key === "Escape") {
+        setOpen(false)
+        setActiveSubmenu(null)
+      }
+      
+      // Alt + A para abrir/cerrar el menú
+      if (e.altKey && e.key === "a") {
+        e.preventDefault()
+        setOpen(v => !v)
+      }
+
+      // Atajos de teclado cuando el menú está abierto
+      if (open) {
+        // Alt + 1: Alto contraste
+        if (e.altKey && e.key === "1") {
+          e.preventDefault()
+          setState({ highContrast: !state.highContrast })
+        }
+        // Alt + 2: Aumentar texto
+        if (e.altKey && e.key === "2") {
+          e.preventDefault()
+          setState({ fontScale: Math.min(state.fontScale + 0.1, 1.6) })
+        }
+        // Alt + 3: Reducir texto
+        if (e.altKey && e.key === "3") {
+          e.preventDefault()
+          setState({ fontScale: Math.max(state.fontScale - 0.1, 0.8) })
+        }
+        // Alt + 4: Navegación por teclado
+        if (e.altKey && e.key === "4") {
+          e.preventDefault()
+          setState({ keyboardNavigation: !state.keyboardNavigation })
+        }
+        // Alt + 5: Leer página
+        if (e.altKey && e.key === "5") {
+          e.preventDefault()
+          setState({ ttsEnabled: true })
+          speakPage()
+        }
+      }
     }
     window.addEventListener("keydown", onKey)
     return () => window.removeEventListener("keydown", onKey)
-  }, [])
+  }, [open, state, setState, speakPage])
 
   useEffect(() => {
     if (open && dialogRef.current) dialogRef.current.focus()
@@ -25,6 +66,10 @@ export const AccessibilityMenu: React.FC = () => {
     setState({ [k]: !state[k] })
   }
 
+  const toggleSubmenu = (submenu: string) => {
+    setActiveSubmenu(activeSubmenu === submenu ? null : submenu)
+  }
+
   return (
     <div className="a11y-menu-root">
       <button
@@ -32,7 +77,7 @@ export const AccessibilityMenu: React.FC = () => {
         aria-expanded={open}
         className="a11y-toggle-button"
         onClick={() => setOpen(v => !v)}
-        title="Abrir menú de accesibilidad"
+        title="Abrir menú de accesibilidad (Alt + A)"
         aria-label="Menú de accesibilidad"
       >
         {/* Icono: persona en silla de ruedas (inline SVG) */}
@@ -52,96 +97,176 @@ export const AccessibilityMenu: React.FC = () => {
           aria-label="Menú de accesibilidad"
           tabIndex={-1}
           ref={dialogRef}
-          className="a11y-menu"
+          className="a11y-menu a11y-menu-lateral"
         >
           <header className="a11y-menu-header">
             <h3>Accesibilidad</h3>
-            <button onClick={() => setOpen(false)} aria-label="Cerrar menú">✕</button>
+            <button onClick={() => setOpen(false)} aria-label="Cerrar menú (ESC)">✕</button>
           </header>
 
-          <section>
-            <h4>Visual</h4>
-            <label>
-              <input
-                type="checkbox"
-                checked={state.highContrast}
-                onChange={() => toggle("highContrast")}
-              />
-              Alto contraste
-            </label>
+          {/* Información de atajos */}
+          <div className="a11y-shortcuts-info">
+            <p className="text-xs text-gray-600 mb-2">
+              <strong>Atajos de teclado:</strong>
+            </p>
+            <ul className="text-xs text-gray-500 space-y-1">
+              <li><kbd>Alt+A</kbd> Abrir/Cerrar menú</li>
+              <li><kbd>Alt+1</kbd> Alto contraste</li>
+              <li><kbd>Alt+2/3</kbd> Ajustar texto</li>
+              <li><kbd>Alt+4</kbd> Nav. teclado</li>
+              <li><kbd>Alt+5</kbd> Leer página</li>
+              <li><kbd>ESC</kbd> Cerrar</li>
+            </ul>
+          </div>
 
-            <label>
-              Nivel de contraste:
-              <select value={state.contrastLevel} onChange={(e) => setState({ contrastLevel: e.target.value as any })}>
-                <option value="soft">Suave</option>
-                <option value="medium">Medio</option>
-                <option value="high">Alto</option>
-              </select>
-            </label>
+          {/* Submenú: Visual */}
+          <section className="a11y-submenu">
+            <button 
+              className="a11y-submenu-header"
+              onClick={() => toggleSubmenu('visual')}
+              aria-expanded={activeSubmenu === 'visual'}
+            >
+              <span className="flex items-center gap-2">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+                Visual
+              </span>
+              <span className="a11y-submenu-arrow">{activeSubmenu === 'visual' ? '▼' : '▶'}</span>
+            </button>
+            
+            {activeSubmenu === 'visual' && (
+              <div className="a11y-submenu-content">
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={state.highContrast}
+                    onChange={() => toggle("highContrast")}
+                  />
+                  <span>Alto contraste <kbd className="a11y-kbd">Alt+1</kbd></span>
+                </label>
 
-            <label>
-              Tamaño de texto: <strong>{Math.round(state.fontScale * 100)}%</strong>
-              <input
-                aria-label="Escala de fuente"
-                type="range"
-                min={0.8}
-                max={1.6}
-                step={0.1}
-                value={state.fontScale}
-                onChange={(e) => setState({ fontScale: Number(e.target.value) })}
-              />
-            </label>
+                <label>
+                  Nivel de contraste:
+                  <select value={state.contrastLevel} onChange={(e) => setState({ contrastLevel: e.target.value as any })}>
+                    <option value="soft">Suave</option>
+                    <option value="medium">Medio</option>
+                    <option value="high">Alto</option>
+                  </select>
+                </label>
 
-            <label>
-              <input type="checkbox" checked={state.letterSpacing} onChange={() => toggle("letterSpacing")} />
-              Aumentar espaciado entre letras y líneas
-            </label>
+                <label>
+                  <span className="flex justify-between items-center">
+                    Tamaño de texto: <strong>{Math.round(state.fontScale * 100)}%</strong>
+                    <span className="text-xs">
+                      <kbd className="a11y-kbd">Alt+2/3</kbd>
+                    </span>
+                  </span>
+                  <input
+                    aria-label="Escala de fuente"
+                    type="range"
+                    min={0.8}
+                    max={1.6}
+                    step={0.1}
+                    value={state.fontScale}
+                    onChange={(e) => setState({ fontScale: Number(e.target.value) })}
+                  />
+                </label>
 
+                <label>
+                  <input type="checkbox" checked={state.letterSpacing} onChange={() => toggle("letterSpacing")} />
+                  Aumentar espaciado entre letras y líneas
+                </label>
+              </div>
+            )}
           </section>
 
-          <section>
-            <h4>Motriz / Operable</h4>
-            <label>
-              <input type="checkbox" checked={state.keyboardNavigation} onChange={() => toggle("keyboardNavigation")} />
-              Navegación por teclado (mejor foco)
-            </label>
+          {/* Submenú: Motriz / Operable */}
+          <section className="a11y-submenu">
+            <button 
+              className="a11y-submenu-header"
+              onClick={() => toggleSubmenu('motor')}
+              aria-expanded={activeSubmenu === 'motor'}
+            >
+              <span className="flex items-center gap-2">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                </svg>
+                Motriz / Operable
+              </span>
+              <span className="a11y-submenu-arrow">{activeSubmenu === 'motor' ? '▼' : '▶'}</span>
+            </button>
+            
+            {activeSubmenu === 'motor' && (
+              <div className="a11y-submenu-content">
+                <label>
+                  <input type="checkbox" checked={state.keyboardNavigation} onChange={() => toggle("keyboardNavigation")} />
+                  <span>Navegación por teclado <kbd className="a11y-kbd">Alt+4</kbd></span>
+                </label>
 
-            <label>
-              <input type="checkbox" checked={state.largeButtons} onChange={() => toggle("largeButtons")} />
-              Botones grandes
-            </label>
+                <label>
+                  <input type="checkbox" checked={state.largeButtons} onChange={() => toggle("largeButtons")} />
+                  Botones grandes
+                </label>
 
-            <label>
-              <input type="checkbox" checked={state.reducedMotion} onChange={() => toggle("reducedMotion")} />
-              Reducir animaciones
-            </label>
+                <label>
+                  <input type="checkbox" checked={state.reducedMotion} onChange={() => toggle("reducedMotion")} />
+                  Reducir animaciones
+                </label>
+              </div>
+            )}
           </section>
 
-          <section>
-            <h4>Audible / Multimedia</h4>
-            <label>
-              <input type="checkbox" checked={state.captionsEnabled} onChange={() => toggle("captionsEnabled")} />
-              Subtítulos / transcripciones automáticas (cuando estén disponibles)
-            </label>
+          {/* Submenú: Audible / Multimedia */}
+          <section className="a11y-submenu">
+            <button 
+              className="a11y-submenu-header"
+              onClick={() => toggleSubmenu('audio')}
+              aria-expanded={activeSubmenu === 'audio'}
+            >
+              <span className="flex items-center gap-2">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15.536a5 5 0 001.414 1.414m2.828-9.9a9 9 0 0112.728 0" />
+                </svg>
+                Audible / Multimedia
+              </span>
+              <span className="a11y-submenu-arrow">{activeSubmenu === 'audio' ? '▼' : '▶'}</span>
+            </button>
+            
+            {activeSubmenu === 'audio' && (
+              <div className="a11y-submenu-content">
+                <label>
+                  <input type="checkbox" checked={state.captionsEnabled} onChange={() => toggle("captionsEnabled")} />
+                  Subtítulos / transcripciones automáticas
+                </label>
 
-                    <label>
-                      <input type="checkbox" checked={state.hoverToSpeak} onChange={() => { setState({ hoverToSpeak: !state.hoverToSpeak, ttsEnabled: state.hoverToSpeak ? state.ttsEnabled : true }) }} />
-                      Leer al pasar el cursor (hover-to-speak)
-                    </label>
+                <label>
+                  <input type="checkbox" checked={state.hoverToSpeak} onChange={() => { setState({ hoverToSpeak: !state.hoverToSpeak, ttsEnabled: state.hoverToSpeak ? state.ttsEnabled : true }) }} />
+                  Leer al pasar el cursor (hover-to-speak)
+                </label>
 
-            <label>
-              <input
-                type="checkbox"
-                checked={state.liveTranscriptionEnabled}
-                onChange={() => setState({ liveTranscriptionEnabled: !state.liveTranscriptionEnabled })}
-              />
-              Transcripción en vivo (Web Speech API)
-            </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={state.liveTranscriptionEnabled}
+                    onChange={() => setState({ liveTranscriptionEnabled: !state.liveTranscriptionEnabled })}
+                  />
+                  Transcripción en vivo (Web Speech API)
+                </label>
 
-            <div className="a11y-tts-controls">
-              <button onClick={() => { setState({ ttsEnabled: true }); speakPage() }}>Leer página</button>
-              <button onClick={() => { if ('speechSynthesis' in window) window.speechSynthesis.cancel(); setState({ ttsEnabled: false }) }}>Detener lectura</button>
-            </div>
+                <div className="a11y-tts-controls">
+                  <button onClick={() => { setState({ ttsEnabled: true }); speakPage() }}>
+                    <span className="flex items-center gap-2">
+                      🔊 Leer página <kbd className="a11y-kbd">Alt+5</kbd>
+                    </span>
+                  </button>
+                  <button onClick={() => { if ('speechSynthesis' in window) window.speechSynthesis.cancel(); setState({ ttsEnabled: false }) }}>
+                    🔇 Detener lectura
+                  </button>
+                </div>
+              </div>
+            )}
           </section>
 
           <footer className="a11y-menu-footer">

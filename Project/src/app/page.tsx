@@ -6,16 +6,22 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import LoginForm from '@/components/auth/LoginForm'
 import RegisterForm from '@/components/auth/RegisterForm'
+import { AccessibilityProvider } from '@/components/Accesibilidad/AccessibilityProvider'
+import { AccessibilityMenu } from '@/components/Accesibilidad/AccessibilityMenu'
 
 export default function Home() {
   const [activeForm, setActiveForm] = useState<'login' | 'register'>('login')
   const [showAuthModal, setShowAuthModal] = useState(false)
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
-      <Header onAuthClick={() => setShowAuthModal(true)} />
-      
-      <main className="flex-grow">
+    <AccessibilityProvider>
+      <div className="min-h-screen flex flex-col bg-white">
+        <Header onAuthClick={() => setShowAuthModal(true)} />
+        
+        {/* Menú de Accesibilidad */}
+        <AccessibilityMenu />
+        
+        <main className="flex-grow">
         {/* Hero Section - Mejorada */}
         <section className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 py-24 overflow-hidden">
           {/* Background Elements */}
@@ -332,5 +338,6 @@ export default function Home() {
         </div>
       )}
     </div>
+    </AccessibilityProvider>
   )
 }
