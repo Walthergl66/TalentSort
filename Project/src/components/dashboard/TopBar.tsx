@@ -2,6 +2,7 @@
 
 import { Fragment } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { supabase } from '@/lib/supabase'
 
 interface TopBarProps {
@@ -13,6 +14,9 @@ interface TopBarProps {
 export default function TopBar({ user, profile, onMenuClick }: TopBarProps) {
   const router = useRouter()
   const pathname = usePathname()
+  const t = useTranslations('topBar')
+  const tp = useTranslations('topBar.pages')
+  const tpr = useTranslations('profile.subscriptionTiers')
 
   const handleSignOut = async () => {
     await supabase.auth.signOut()
@@ -20,20 +24,12 @@ export default function TopBar({ user, profile, onMenuClick }: TopBarProps) {
   }
 
   const getPageTitle = () => {
-    switch (pathname) {
-      case '/dashboard':
-        return 'Panel de Control'
-      case '/dashboard/candidates':
-        return 'Candidatos'
-      case '/dashboard/positions':
-        return 'Posiciones'
-      case '/dashboard/analytics':
-        return 'Analíticas'
-      case '/dashboard/settings':
-        return 'Configuración'
-      default:
-        return 'Dashboard'
-    }
+    if (pathname.includes('/candidates')) return tp('candidates')
+    if (pathname.includes('/positions')) return tp('positions')
+    if (pathname.includes('/analytics')) return tp('analytics')
+    if (pathname.includes('/settings')) return tp('settings')
+    if (pathname === '/dashboard') return tp('dashboard')
+    return tp('dashboard')
   }
 
   return (
@@ -45,7 +41,7 @@ export default function TopBar({ user, profile, onMenuClick }: TopBarProps) {
             <button
               onClick={onMenuClick}
               className="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-              aria-label="Abrir menú de navegación"
+              aria-label={t('openMenu')}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -64,7 +60,7 @@ export default function TopBar({ user, profile, onMenuClick }: TopBarProps) {
             {/* Botón de notificaciones */}
             <button
               className="relative p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-              aria-label="Ver notificaciones"
+              aria-label={t('notifications')}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5 5v-5zM12 3a9 9 0 11-9 9 9 9 0 019-9z" />
@@ -76,7 +72,7 @@ export default function TopBar({ user, profile, onMenuClick }: TopBarProps) {
             <div className="relative group">
               <button
                 className="flex items-center space-x-3 p-2 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                aria-label="Menú de usuario"
+                aria-label={t('userMenu')}
               >
                 <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
                   <span className="text-sm font-medium text-white">
@@ -85,10 +81,10 @@ export default function TopBar({ user, profile, onMenuClick }: TopBarProps) {
                 </div>
                 <div className="hidden md:block text-left">
                   <p className="text-sm font-medium text-gray-900">
-                    {profile?.full_name || 'Usuario'}
+                    {profile?.full_name || t('user')}
                   </p>
                   <p className="text-xs text-gray-500">
-                    {profile?.company_name || 'Empresa'}
+                    {profile?.company_name || t('company')}
                   </p>
                 </div>
                 <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -103,20 +99,20 @@ export default function TopBar({ user, profile, onMenuClick }: TopBarProps) {
                     onClick={() => router.push('/dashboard/settings')}
                     className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   >
-                    Configuración
+                    {tp('settings')}
                   </button>
                   <button
                     onClick={() => router.push('/dashboard/profile')}
                     className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   >
-                    Mi Perfil
+                    {t('profile')}
                   </button>
                   <div className="border-t border-gray-100"></div>
                   <button
                     onClick={handleSignOut}
                     className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
                   >
-                    Cerrar Sesión
+                    {t('logout')}
                   </button>
                 </div>
               </div>

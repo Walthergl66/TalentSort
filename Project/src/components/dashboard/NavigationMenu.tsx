@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter, usePathname } from 'next/navigation'
-import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 interface NavigationMenuProps {
   isOpen: boolean
@@ -9,59 +9,59 @@ interface NavigationMenuProps {
   profile: any
 }
 
-const navigationItems = [
+const getNavigationItems = (t: any, td: any) => [
   {
-    name: 'Dashboard',
+    name: t('dashboard'),
     href: '/dashboard',
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" />
       </svg>
     ),
-    description: 'Resumen de mi perfil'
+    description: td('dashboard')
   },
   {
-    name: 'Mi CV',
+    name: t('myCv'),
     href: '/dashboard/cv',
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
       </svg>
     ),
-    description: 'Gestionar mis CVs'
+    description: td('myCv')
   },
   {
-    name: 'Buscar Trabajos',
+    name: t('searchJobs'),
     href: '/dashboard/jobs',
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
       </svg>
     ),
-    description: 'Explorar oportunidades'
+    description: td('searchJobs')
   },
   {
-    name: 'Mis Postulaciones',
+    name: t('myApplications'),
     href: '/dashboard/applications',
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3a2 2 0 012-2h4a2 2 0 012 2v4m-6 0V6a2 2 0 012-2h2a2 2 0 012 2v1m-6 0h6m-6 0l1 10a2 2 0 002 2h4a2 2 0 002-2l1-10" />
       </svg>
     ),
-    description: 'Estado de aplicaciones'
+    description: td('myApplications')
   },
   {
-    name: 'Mi Perfil',
+    name: t('myProfile'),
     href: '/dashboard/profile',
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
       </svg>
     ),
-    description: 'Información personal'
+    description: td('myProfile')
   },
   {
-    name: 'Vista Previa',
+    name: t('preview'),
     href: '/dashboard/profile/preview',
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -69,10 +69,10 @@ const navigationItems = [
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
       </svg>
     ),
-    description: 'Cómo me ven los reclutadores'
+    description: td('preview')
   },
   {
-    name: 'Configuración',
+    name: t('settings'),
     href: '/dashboard/settings',
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -80,13 +80,19 @@ const navigationItems = [
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
       </svg>
     ),
-    description: 'Preferencias del sistema'
+    description: td('settings')
   }
 ]
 
 export default function NavigationMenu({ isOpen, onClose, profile }: NavigationMenuProps) {
   const router = useRouter()
   const pathname = usePathname()
+  const t = useTranslations('navigation')
+  const td = useTranslations('navigation.descriptions')
+  const tp = useTranslations('profile.subscriptionTiers')
+  const th = useTranslations('header')
+  
+  const navigationItems = getNavigationItems(t, td)
 
   return (
     <>
@@ -96,7 +102,7 @@ export default function NavigationMenu({ isOpen, onClose, profile }: NavigationM
           isOpen ? 'w-64' : 'w-16'
         }`}
         role="navigation"
-        aria-label="Navegación principal"
+        aria-label={th('mainNavigation')}
       >
         <div className="flex flex-col h-full">
           {/* Logo/Título */}
@@ -109,7 +115,7 @@ export default function NavigationMenu({ isOpen, onClose, profile }: NavigationM
               </div>
               {isOpen && (
                 <span className="ml-3 text-lg font-semibold text-gray-900">
-                  Talent AI
+                  {th('talentAI')}
                 </span>
               )}
             </div>
@@ -126,11 +132,11 @@ export default function NavigationMenu({ isOpen, onClose, profile }: NavigationM
                 </div>
                 <div className="ml-3">
                   <p className="text-sm font-medium text-gray-900">
-                    {profile.full_name || 'Usuario'}
+                    {profile.full_name || tp('user')}
                   </p>
                   <p className="text-xs text-gray-500">
-                    {profile.subscription_tier === 'free' ? 'Plan Gratuito' : 
-                     profile.subscription_tier === 'pro' ? 'Plan Pro' : 'Plan Enterprise'}
+                    {profile.subscription_tier === 'free' ? tp('free') : 
+                     profile.subscription_tier === 'pro' ? tp('pro') : tp('enterprise')}
                   </p>
                 </div>
               </div>
@@ -179,7 +185,7 @@ export default function NavigationMenu({ isOpen, onClose, profile }: NavigationM
                 onClick={() => router.push('/dashboard/cv/upload')}
                 className="w-full bg-blue-600 text-white text-sm font-medium py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200"
               >
-                Subir CV
+                {tp('uploadCv')}
               </button>
             </div>
           )}

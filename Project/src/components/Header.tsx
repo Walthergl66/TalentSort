@@ -15,13 +15,9 @@ type HeaderProps = {
 }
 
 export default function Header({ onAuthClick, showSearch = false, onSearch, searchSuggestions = [] }: HeaderProps) {
-  const [language, setLanguage] = useState<'es' | 'en'>('es')
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const t = useTranslations('common')
-
-  const toggleLanguage = () => {
-    setLanguage(language === 'es' ? 'en' : 'es')
-  }
+  const th = useTranslations('header')
 
   const handleSearch = (query: string) => {
     if (onSearch) {
@@ -40,7 +36,7 @@ export default function Header({ onAuthClick, showSearch = false, onSearch, sear
             </div>
             <div>
               <h1 className="text-lg font-semibold text-gray-900">
-                TalentAI
+                {th('talentAI')}
               </h1>
             </div>
           </div>
@@ -59,15 +55,15 @@ export default function Header({ onAuthClick, showSearch = false, onSearch, sear
 
           {/* Navegación y acciones */}
           <div className="flex items-center space-x-4">
-            <nav className="hidden md:flex items-center space-x-6">
+            <nav className="hidden md:flex items-center space-x-6" aria-label={th('mainNavigation')}>
               <a href="#audience" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
-                {t('features')}
+                {th('features')}
               </a>
               <a href="#how-it-works" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
-                Cómo Funciona
+                {th('howItWorks')}
               </a>
               <a href="#cta" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
-                {t('contact')}
+                {th('contact')}
               </a>
             </nav>
 
@@ -76,7 +72,7 @@ export default function Header({ onAuthClick, showSearch = false, onSearch, sear
               <button
                 onClick={() => setIsSearchOpen(!isSearchOpen)}
                 className="lg:hidden p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
-                aria-label="Abrir búsqueda"
+                aria-label={th('openSearch')}
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />

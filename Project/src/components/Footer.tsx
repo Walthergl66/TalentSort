@@ -1,47 +1,54 @@
 // components/Footer.tsx
+'use client'
+
+import { useTranslations } from 'next-intl'
+
 export default function Footer() {
+  const t = useTranslations('footer')
+  const th = useTranslations('header')
+
   return (
     <footer className="bg-white border-t border-gray-200 py-8">
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-4 gap-8 text-sm">
           <div>
-            <h3 className="font-semibold text-gray-900 mb-4">TalentAI</h3>
+            <h3 className="font-semibold text-gray-900 mb-4">{th('talentAI')}</h3>
             <p className="text-gray-600">
-              Plataforma inteligente para reclutamiento y gestión de talento con IA.
+              {t('description')}
             </p>
           </div>
 
           <div>
-            <h4 className="font-medium text-gray-900 mb-4">Producto</h4>
+            <h4 className="font-medium text-gray-900 mb-4">{t('product')}</h4>
             <ul className="space-y-2 text-gray-600">
-              <li><a href="#" className="hover:text-gray-900">Características</a></li>
-              <li><a href="#" className="hover:text-gray-900">Precios</a></li>
-              <li><a href="#" className="hover:text-gray-900">API</a></li>
+              <li><a href="#" className="hover:text-gray-900">{t('features')}</a></li>
+              <li><a href="#" className="hover:text-gray-900">{t('pricing')}</a></li>
+              <li><a href="#" className="hover:text-gray-900">{t('api')}</a></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-medium text-gray-900 mb-4">Soporte</h4>
+            <h4 className="font-medium text-gray-900 mb-4">{t('support')}</h4>
             <ul className="space-y-2 text-gray-600">
-              <li><a href="#" className="hover:text-gray-900">Documentación</a></li>
-              <li><a href="#" className="hover:text-gray-900">Contacto</a></li>
-              <li><a href="#" className="hover:text-gray-900">Estado</a></li>
+              <li><a href="#" className="hover:text-gray-900">{t('documentation')}</a></li>
+              <li><a href="#" className="hover:text-gray-900">{t('contact')}</a></li>
+              <li><a href="#" className="hover:text-gray-900">{t('status')}</a></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-medium text-gray-900 mb-4">Legal</h4>
+            <h4 className="font-medium text-gray-900 mb-4">{t('legal')}</h4>
             <ul className="space-y-2 text-gray-600">
-              <li><a href="#" className="hover:text-gray-900">Privacidad</a></li>
-              <li><a href="#" className="hover:text-gray-900">Términos</a></li>
-              <li><a href="#" className="hover:text-gray-900">Seguridad</a></li>
+              <li><a href="#" className="hover:text-gray-900">{t('privacy')}</a></li>
+              <li><a href="#" className="hover:text-gray-900">{t('terms')}</a></li>
+              <li><a href="#" className="hover:text-gray-900">{t('security')}</a></li>
             </ul>
           </div>
         </div>
 
         <div className="border-t border-gray-200 mt-8 pt-6 text-center">
           <p className="text-sm text-gray-500">
-            © {new Date().getFullYear()} TalentAI. Todos los derechos reservados.
+            © {new Date().getFullYear()} {th('talentAI')}. {t('copyright')}.
           </p>
         </div>
       </div>

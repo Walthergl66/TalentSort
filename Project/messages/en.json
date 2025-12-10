@@ -10,6 +10,39 @@
     "contact": "Contact"
   },
   "home": {
+    "video": {
+      "badge": "Video Tutorial",
+      "title": "Learn to stand out",
+      "titleHighlight": "with your CV",
+      "subtitle": "Discover the best practices to create a CV that attracts recruiters and beats ATS systems in 2024",
+      "videoTitle": "How to make your CV attractive to recruiters and ATS 2024",
+      "accessibilityNotice": {
+        "title": "Accessibility feature enabled",
+        "description": "If you have automatic captions enabled in the accessibility menu, you will see real-time transcriptions of the video audio while it plays. This feature uses speech recognition to generate dynamic subtitles."
+      }
+    },
+    "aiFeatures": {
+      "title": "State-of-the-art",
+      "titleHighlight": "AI Technology",
+      "technologies": {
+        "nlp": {
+          "name": "Advanced NLP",
+          "description": "Natural language processing to understand contexts"
+        },
+        "ml": {
+          "name": "Machine Learning",
+          "description": "Models that improve with every interaction"
+        },
+        "cv": {
+          "name": "Computer Vision",
+          "description": "Analysis of documents and complex formats"
+        },
+        "analytics": {
+          "name": "Predictive Analytics",
+          "description": "Success and retention prediction"
+        }
+      }
+    },
     "hero": {
       "badge": "Powered by Advanced AI",
       "title": "Talent AI",
@@ -95,10 +128,10 @@
       }
     },
     "cta": {
-      "title": "Ready to revolutionize your hiring?",
-      "subtitle": "Join hundreds of companies that have transformed their recruitment process",
-      "button": "Start now",
-      "noCard": "No credit card required"
+      "title": "Ready for the future of recruitment?",
+      "subtitle": "Join the most innovative companies that are already transforming the way they find talent.",
+      "button": "Start Free",
+      "noCard": "No credit card"
     }
   },
   "dashboard": {
@@ -114,6 +147,18 @@
       "activeCvs": "Active CVs",
       "pendingReviews": "Pending Reviews",
       "avgScore": "Avg Score"
+    },
+    "candidatesPage": {
+      "title": "Candidate Management",
+      "subtitle": "Manage and evaluate candidates in your pipeline",
+      "uploadNewCv": "Upload New CV",
+      "searchLabel": "Search candidates",
+      "searchPlaceholder": "Search by name or skills...",
+      "noResults": "No candidates found",
+      "filters": {
+        "status": "Status",
+        "sortBy": "Sort by"
+      }
     }
   },
   "auth": {
@@ -136,13 +181,6 @@
       "signIn": "Sign in"
     }
   },
-  "footer": {
-    "product": "Product",
-    "company": "Company",
-    "resources": "Resources",
-    "legal": "Legal",
-    "copyright": "All rights reserved"
-  },
   "search": {
     "placeholder": "Search content: companies, candidates, technology...",
     "ariaLabel": "Search field",
@@ -153,5 +191,196 @@
     "noResults": "No content found for your search",
     "searching": "Searching...",
     "tryThese": "Try searching: Companies, Candidates, Agencies, How it works, AI Technology"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "myCv": "My CV",
+    "searchJobs": "Search Jobs",
+    "myApplications": "My Applications",
+    "myProfile": "My Profile",
+    "preview": "Preview",
+    "settings": "Settings",
+    "candidates": "Candidates",
+    "positions": "Positions",
+    "analytics": "Analytics",
+    "descriptions": {
+      "dashboard": "Profile overview",
+      "myCv": "Manage my CVs",
+      "searchJobs": "Explore opportunities",
+      "myApplications": "Application status",
+      "myProfile": "Personal information",
+      "preview": "How recruiters see me",
+      "settings": "System preferences"
+    }
+  },
+  "header": {
+    "talentAI": "TalentAI",
+    "features": "Features",
+    "howItWorks": "How It Works",
+    "contact": "Contact",
+    "openSearch": "Open search",
+    "mainNavigation": "Main navigation",
+    "openMenu": "Open navigation menu"
+  },
+  "footer": {
+    "description": "Intelligent platform for recruitment and talent management with AI.",
+    "product": "Product",
+    "support": "Support",
+    "legal": "Legal",
+    "features": "Features",
+    "pricing": "Pricing",
+    "api": "API",
+    "documentation": "Documentation",
+    "contact": "Contact",
+    "status": "Status",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "security": "Security",
+    "copyright": "All rights reserved"
+  },
+  "topBar": {
+    "userMenu": "User menu",
+    "notifications": "Notifications",
+    "profile": "Profile",
+    "logout": "Logout",
+    "user": "User",
+    "company": "Company",
+    "pages": {
+      "dashboard": "Dashboard",
+      "candidates": "Candidates",
+      "positions": "Positions",
+      "analytics": "Analytics",
+      "settings": "Settings"
+    }
+  },
+  "profile": {
+    "preview": {
+      "title": "Profile Preview",
+      "subtitle": "This is how recruiters see your profile",
+      "editProfile": "Edit Profile",
+      "completeProfile": "Complete my profile",
+      "incompleteWarning": "Your profile is incomplete. Complete your information to improve your opportunities.",
+      "nameNotSpecified": "Name not specified",
+      "titleNotSpecified": "Professional title not specified",
+      "back": "Back",
+      "skills": "Skills",
+      "experience": "Experience",
+      "education": "Education",
+      "languages": "Languages",
+      "noData": "Not specified"
+    },
+    "subscriptionTiers": {
+      "free": "Free Plan",
+      "pro": "Pro Plan",
+      "enterprise": "Enterprise Plan",
+      "user": "User"
+    },
+    "uploadCv": "Upload CV"
+  },
+  "accessibility": {
+    "menu": {
+      "title": "Accessibility",
+      "close": "Close accessibility menu",
+      "visual": "Visual",
+      "audio": "Audio / Multimedia",
+      "interaction": "Interaction",
+      "reset": "Reset",
+      "highContrast": "High contrast",
+      "fontSize": "Text size",
+      "letterSpacing": "Letter spacing",
+      "keyboardNavigation": "Keyboard navigation",
+      "largeButtons": "Large buttons",
+      "reducedMotion": "Reduced motion",
+      "textToSpeech": "Text to speech (TTS)",
+      "readPage": "Read page",
+      "stop": "Stop",
+      "pause": "Pause",
+      "resume": "Resume",
+      "voiceControl": "Voice control",
+      "captions": "Auto captions",
+      "liveTranscription": "Live transcription",
+      "hoverToSpeak": "Hover to speak",
+      "keyboardShortcuts": {
+        "title": "Keyboard shortcuts",
+        "highContrast": "High contrast",
+        "increaseText": "Increase text",
+        "decreaseText": "Decrease text",
+        "keyboardNav": "Keyboard navigation",
+        "readPage": "Read page"
+      }
+    },
+    "voiceControl": {
+      "listening": "Listening...",
+      "clickToActivate": "Click to activate",
+      "commands": {
+        "highContrast": "enable high contrast / disable high contrast",
+        "text": "increase text / decrease text / restore text",
+        "spacing": "enable spacing / disable spacing",
+        "keyboard": "enable keyboard navigation / disable keyboard navigation",
+        "buttons": "enable large buttons / disable large buttons",
+        "animations": "reduce animations / enable animations",
+        "captions": "enable captions / disable captions",
+        "transcription": "enable transcription / disable transcription",
+        "hover": "enable hover reading / disable hover reading",
+        "help": "help",
+        "reset": "reset all",
+        "disable": "disable voice command"
+      },
+      "feedback": {
+        "highContrastOn": "High contrast enabled",
+        "highContrastOff": "High contrast disabled",
+        "textIncreased": "Text increased",
+        "textDecreased": "Text decreased",
+        "textRestored": "Text size restored",
+        "spacingOn": "Letter spacing enabled",
+        "spacingOff": "Letter spacing disabled",
+        "keyboardNavOn": "Keyboard navigation enabled",
+        "keyboardNavOff": "Keyboard navigation disabled",
+        "largeButtonsOn": "Large buttons enabled",
+        "largeButtonsOff": "Large buttons disabled",
+        "animationsReduced": "Animations reduced",
+        "animationsOn": "Animations enabled",
+        "captionsOn": "Captions enabled",
+        "captionsOff": "Captions disabled",
+        "transcriptionOn": "Live transcription enabled",
+        "transcriptionOff": "Live transcription disabled",
+        "hoverOn": "Hover to speak enabled",
+        "hoverOff": "Hover to speak disabled",
+        "help": "Available commands: enable or disable high contrast, increase or decrease text, enable or disable captions, enable or disable transcription, enable or disable keyboard navigation, enable or disable large buttons, reduce or enable animations, disable voice command",
+        "reset": "Settings reset",
+        "disabling": "Disabling voice control"
+      }
+    },
+    "skipToContent": "Skip to main content"
+  },
+  "modals": {
+    "auth": {
+      "loginTitle": "Login",
+      "registerTitle": "Sign Up",
+      "close": "Close"
+    },
+    "terms": {
+      "understood": "Understood"
+    },
+    "survey": {
+      "title": "Help us improve",
+      "description": "Complete a brief survey",
+      "timeEstimate": "It will only take 1-2 minutes",
+      "accept": "Yes, I want to help",
+      "decline": "Not now"
+    }
+  },
+  "actions": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit",
+    "confirm": "Confirm",
+    "search": "Search"
   }
 }

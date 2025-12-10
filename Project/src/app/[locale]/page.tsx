@@ -214,21 +214,21 @@ export default function Home() {
                 <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
                 </svg>
-                <span className="text-blue-700 text-sm font-semibold">Video Tutorial</span>
+                <span className="text-blue-700 text-sm font-semibold">{t('video.badge')}</span>
               </div>
               <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
-                Aprende a destacar 
-                <span className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent"> con tu CV</span>
+                {t('video.title')} 
+                <span className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent"> {t('video.titleHighlight')}</span>
               </h2>
               <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-                Descubre las mejores prácticas para crear un CV que atraiga a reclutadores y supere los sistemas ATS en 2024
+                {t('video.subtitle')}
               </p>
             </div>
 
             <div className="max-w-5xl mx-auto">
               <VideoPlayer 
                 src="/Cómo hacer atractivo tu C.V. y destaque para los reclutadores y los ATS este 2024.mp4"
-                title="Cómo hacer atractivo tu C.V. para reclutadores y ATS 2024"
+                title={t('video.videoTitle')}
                 className="shadow-2xl"
               />
               
@@ -241,13 +241,9 @@ export default function Home() {
                   </div>
                   <div className="flex-1">
                     <h3 className="text-lg font-semibold text-slate-900 mb-2">
-                      Función de accesibilidad activada
+                      {t('video.accessibilityNotice.title')}
                     </h3>
-                    <p className="text-slate-600">
-                      Si tienes habilitados los <strong>subtítulos automáticos</strong> en el menú de accesibilidad, 
-                      verás transcripciones en tiempo real del audio del video mientras se reproduce. 
-                      Esta función utiliza reconocimiento de voz para generar subtítulos dinámicos.
-                    </p>
+                    <p className="text-slate-600" dangerouslySetInnerHTML={{ __html: t('video.accessibilityNotice.description').replace('subtítulos automáticos', '<strong>subtítulos automáticos</strong>').replace('automatic captions', '<strong>automatic captions</strong>') }} />
                   </div>
                 </div>
               </div>
@@ -420,17 +416,17 @@ export default function Home() {
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                Tecnología IA de 
-                <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"> última generación</span>
+                {t('aiFeatures.title')} 
+                <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"> {t('aiFeatures.titleHighlight')}</span>
               </h2>
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
               {[
-                { name: "NLP Avanzado", desc: "Procesamiento de lenguaje natural para entender contextos" },
-                { name: "Machine Learning", desc: "Modelos que mejoran con cada interacción" },
-                { name: "Computer Vision", desc: "Análisis de documentos y formatos complejos" },
-                { name: "Predictive Analytics", desc: "Predicción de éxito y retención" }
+                { name: t('aiFeatures.technologies.nlp.name'), desc: t('aiFeatures.technologies.nlp.description') },
+                { name: t('aiFeatures.technologies.ml.name'), desc: t('aiFeatures.technologies.ml.description') },
+                { name: t('aiFeatures.technologies.cv.name'), desc: t('aiFeatures.technologies.cv.description') },
+                { name: t('aiFeatures.technologies.analytics.name'), desc: t('aiFeatures.technologies.analytics.description') }
               ].map((tech, index) => (
                 <div key={index} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center group hover:bg-white/10 transition-all duration-300">
                   <div className="w-12 h-12 bg-blue-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
@@ -455,25 +451,22 @@ export default function Home() {
           <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=2000')] bg-cover bg-center opacity-10"></div>
           <div className="container mx-auto px-4 text-center relative z-10">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              ¿Listo para el futuro del reclutamiento?
+              {t('cta.title')}
             </h2>
             <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-              Únete a las empresas más innovadoras que ya están transformando su forma de encontrar talento.
+              {t('cta.subtitle')}
             </p>
             <button 
               onClick={() => setShowAuthModal(true)}
               className="group bg-white text-blue-600 hover:bg-slate-100 px-12 py-5 rounded-2xl font-semibold text-lg transition-all duration-300 shadow-2xl transform hover:scale-105"
             >
               <span className="flex items-center gap-3">
-                Comenzar Gratis 
+                {t('cta.button')} 
                 <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </span>
             </button>
-            <p className="text-blue-200/80 text-sm mt-4">
-              Sin tarjeta de crédito • Prueba de 14 días
-            </p>
           </div>
         </section>
       </main>
@@ -487,7 +480,7 @@ export default function Home() {
             <div className="p-8">
               <div className="flex justify-between items-center mb-8">
                 <h3 className="text-2xl font-bold text-slate-900">
-                  {activeForm === 'login' ? 'Iniciar Sesión' : 'Registrarse'}
+                  {activeForm === 'login' ? tc('login') : tc('register')}
                 </h3>
                 <button 
                   onClick={() => setShowAuthModal(false)}

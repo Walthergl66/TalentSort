@@ -10,6 +10,39 @@
     "contact": "Contacto"
   },
   "home": {
+    "video": {
+      "badge": "Video Tutorial",
+      "title": "Aprende a destacar",
+      "titleHighlight": "con tu CV",
+      "subtitle": "Descubre las mejores prácticas para crear un CV que atraiga a reclutadores y supere los sistemas ATS en 2024",
+      "videoTitle": "Cómo hacer atractivo tu C.V. para reclutadores y ATS 2024",
+      "accessibilityNotice": {
+        "title": "Función de accesibilidad activada",
+        "description": "Si tienes habilitados los subtítulos automáticos en el menú de accesibilidad, verás transcripciones en tiempo real del audio del video mientras se reproduce. Esta función utiliza reconocimiento de voz para generar subtítulos dinámicos."
+      }
+    },
+    "aiFeatures": {
+      "title": "Tecnología IA de",
+      "titleHighlight": "última generación",
+      "technologies": {
+        "nlp": {
+          "name": "NLP Avanzado",
+          "description": "Procesamiento de lenguaje natural para entender contextos"
+        },
+        "ml": {
+          "name": "Machine Learning",
+          "description": "Modelos que mejoran con cada interacción"
+        },
+        "cv": {
+          "name": "Computer Vision",
+          "description": "Análisis de documentos y formatos complejos"
+        },
+        "analytics": {
+          "name": "Predictive Analytics",
+          "description": "Predicción de éxito y retención"
+        }
+      }
+    },
     "hero": {
       "badge": "Potenciado por IA Avanzada",
       "title": "Talent AI",
@@ -95,10 +128,10 @@
       }
     },
     "cta": {
-      "title": "¿Listo para revolucionar tu contratación?",
-      "subtitle": "Únete a cientos de empresas que han transformado su proceso de reclutamiento",
-      "button": "Comenzar ahora",
-      "noCard": "No se requiere tarjeta de crédito"
+      "title": "¿¿Listo para el futuro del reclutamiento?",
+      "subtitle": "Únete a las empresas más innovadoras que ya están transformando su forma de encontrar talento.",
+      "button": "Comenzar Gratis",
+      "noCard": "Sin tarjeta de crédito"
     }
   },
   "dashboard": {
@@ -114,6 +147,18 @@
       "activeCvs": "CVs Activos",
       "pendingReviews": "Revisiones Pendientes",
       "avgScore": "Puntuación Media"
+    },
+    "candidatesPage": {
+      "title": "Gestión de Candidatos",
+      "subtitle": "Administra y evalúa los candidatos de tu pipeline",
+      "uploadNewCv": "Subir Nuevo CV",
+      "searchLabel": "Buscar candidatos",
+      "searchPlaceholder": "Buscar por nombre o habilidades...",
+      "noResults": "No se encontraron candidatos",
+      "filters": {
+        "status": "Estado",
+        "sortBy": "Ordenar por"
+      }
     }
   },
   "auth": {
@@ -153,5 +198,196 @@
     "noResults": "No se encontró contenido para tu búsqueda",
     "searching": "Buscando...",
     "tryThese": "Intenta buscar: Empresas, Candidatos, Agencias, Cómo funciona, Tecnología IA"
+  },
+  "navigation": {
+    "dashboard": "Panel de Control",
+    "myCv": "Mi CV",
+    "searchJobs": "Buscar Trabajos",
+    "myApplications": "Mis Postulaciones",
+    "myProfile": "Mi Perfil",
+    "preview": "Vista Previa",
+    "settings": "Configuración",
+    "candidates": "Candidatos",
+    "positions": "Posiciones",
+    "analytics": "Analíticas",
+    "descriptions": {
+      "dashboard": "Resumen de mi perfil",
+      "myCv": "Gestionar mis CVs",
+      "searchJobs": "Explorar oportunidades",
+      "myApplications": "Estado de aplicaciones",
+      "myProfile": "Información personal",
+      "preview": "Cómo me ven los reclutadores",
+      "settings": "Preferencias del sistema"
+    }
+  },
+  "header": {
+    "talentAI": "TalentAI",
+    "features": "Características",
+    "howItWorks": "Cómo Funciona",
+    "contact": "Contacto",
+    "openSearch": "Abrir búsqueda",
+    "mainNavigation": "Navegación principal",
+    "openMenu": "Abrir menú de navegación"
+  },
+  "footer": {
+    "description": "Plataforma inteligente para reclutamiento y gestión de talento con IA.",
+    "product": "Producto",
+    "support": "Soporte",
+    "legal": "Legal",
+    "features": "Características",
+    "pricing": "Precios",
+    "api": "API",
+    "documentation": "Documentación",
+    "contact": "Contacto",
+    "status": "Estado",
+    "privacy": "Privacidad",
+    "terms": "Términos",
+    "security": "Seguridad",
+    "copyright": "Todos los derechos reservados"
+  },
+  "topBar": {
+    "userMenu": "Menú de usuario",
+    "notifications": "Notificaciones",
+    "profile": "Perfil",
+    "logout": "Cerrar Sesión",
+    "user": "Usuario",
+    "company": "Empresa",
+    "pages": {
+      "dashboard": "Panel de Control",
+      "candidates": "Candidatos",
+      "positions": "Posiciones",
+      "analytics": "Analíticas",
+      "settings": "Configuración"
+    }
+  },
+  "profile": {
+    "preview": {
+      "title": "Vista Previa del Perfil",
+      "subtitle": "Así es como los reclutadores ven tu perfil",
+      "editProfile": "Editar Perfil",
+      "completeProfile": "Completar mi perfil",
+      "incompleteWarning": "Tu perfil está incompleto. Completa tu información para mejorar tus oportunidades.",
+      "nameNotSpecified": "Nombre no especificado",
+      "titleNotSpecified": "Título profesional no especificado",
+      "back": "Volver",
+      "skills": "Habilidades",
+      "experience": "Experiencia",
+      "education": "Educación",
+      "languages": "Idiomas",
+      "noData": "No especificado"
+    },
+    "subscriptionTiers": {
+      "free": "Plan Gratuito",
+      "pro": "Plan Pro",
+      "enterprise": "Plan Enterprise",
+      "user": "Usuario"
+    },
+    "uploadCv": "Subir CV"
+  },
+  "accessibility": {
+    "menu": {
+      "title": "Accesibilidad",
+      "close": "Cerrar menú de accesibilidad",
+      "visual": "Visual",
+      "audio": "Audible / Multimedia",
+      "interaction": "Interacción",
+      "reset": "Restablecer",
+      "highContrast": "Alto contraste",
+      "fontSize": "Tamaño del texto",
+      "letterSpacing": "Espaciado de texto",
+      "keyboardNavigation": "Navegación por teclado",
+      "largeButtons": "Botones grandes",
+      "reducedMotion": "Reducir animaciones",
+      "textToSpeech": "Lectura por voz (TTS)",
+      "readPage": "Leer página",
+      "stop": "Detener",
+      "pause": "Pausar",
+      "resume": "Reanudar",
+      "voiceControl": "Control por voz",
+      "captions": "Subtítulos automáticos",
+      "liveTranscription": "Transcripción en vivo",
+      "hoverToSpeak": "Leer al pasar el cursor",
+      "keyboardShortcuts": {
+        "title": "Atajos de teclado",
+        "highContrast": "Alto contraste",
+        "increaseText": "Aumentar texto",
+        "decreaseText": "Reducir texto",
+        "keyboardNav": "Navegación por teclado",
+        "readPage": "Leer página"
+      }
+    },
+    "voiceControl": {
+      "listening": "Escuchando...",
+      "clickToActivate": "Click para activar",
+      "commands": {
+        "highContrast": "activar alto contraste / desactivar alto contraste",
+        "text": "aumentar texto / reducir texto / restaurar texto",
+        "spacing": "activar espaciado / desactivar espaciado",
+        "keyboard": "activar navegación teclado / desactivar navegación teclado",
+        "buttons": "activar botones grandes / desactivar botones grandes",
+        "animations": "reducir animaciones / activar animaciones",
+        "captions": "activar subtítulos / desactivar subtítulos",
+        "transcription": "activar transcripción / desactivar transcripción",
+        "hover": "activar lectura cursor / desactivar lectura cursor",
+        "help": "ayuda",
+        "reset": "restablecer todo",
+        "disable": "desactivar comando de voz"
+      },
+      "feedback": {
+        "highContrastOn": "Alto contraste activado",
+        "highContrastOff": "Alto contraste desactivado",
+        "textIncreased": "Texto aumentado",
+        "textDecreased": "Texto reducido",
+        "textRestored": "Tamaño de texto restaurado",
+        "spacingOn": "Espaciado aumentado activado",
+        "spacingOff": "Espaciado aumentado desactivado",
+        "keyboardNavOn": "Navegación por teclado activada",
+        "keyboardNavOff": "Navegación por teclado desactivada",
+        "largeButtonsOn": "Botones grandes activados",
+        "largeButtonsOff": "Botones grandes desactivados",
+        "animationsReduced": "Animaciones reducidas",
+        "animationsOn": "Animaciones activadas",
+        "captionsOn": "Subtítulos activados",
+        "captionsOff": "Subtítulos desactivados",
+        "transcriptionOn": "Transcripción en vivo activada",
+        "transcriptionOff": "Transcripción en vivo desactivada",
+        "hoverOn": "Lectura al pasar activada",
+        "hoverOff": "Lectura al pasar desactivada",
+        "help": "Comandos disponibles: activar o desactivar alto contraste, aumentar o reducir texto, activar o desactivar subtítulos, activar o desactivar transcripción, activar o desactivar navegación teclado, activar o desactivar botones grandes, reducir o activar animaciones, desactivar comando de voz",
+        "reset": "Configuración restablecida",
+        "disabling": "Desactivando control por voz"
+      }
+    },
+    "skipToContent": "Saltar al contenido principal"
+  },
+  "modals": {
+    "auth": {
+      "loginTitle": "Iniciar Sesión",
+      "registerTitle": "Registrarse",
+      "close": "Cerrar"
+    },
+    "terms": {
+      "understood": "Entendido"
+    },
+    "survey": {
+      "title": "Ayúdanos a mejorar",
+      "description": "Completa una breve encuesta",
+      "timeEstimate": "Solo tomará 1-2 minutos",
+      "accept": "Sí, quiero ayudar",
+      "decline": "Ahora no"
+    }
+  },
+  "actions": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "close": "Cerrar",
+    "back": "Volver",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "submit": "Enviar",
+    "confirm": "Confirmar",
+    "search": "Buscar"
   }
 }

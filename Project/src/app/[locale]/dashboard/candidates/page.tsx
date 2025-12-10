@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { supabase } from '@/lib/supabase'
 import DashboardLayout from '@/components/dashboard/DashboardLayout'
 import AccessibilityProvider from '@/components/Accesibilidad/AccessibilityProvider'
@@ -9,6 +10,8 @@ import SearchBar from '@/components/SearchBar'
 
 export default function CandidatesPage() {
   const router = useRouter()
+  const t = useTranslations('dashboard.candidatesPage')
+  const tp = useTranslations('profile')
   const [user, setUser] = useState<any>(null)
   const [candidates, setCandidates] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
@@ -152,17 +155,17 @@ export default function CandidatesPage() {
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h1 className="text-2xl font-bold text-gray-900">
-                Gestión de Candidatos
+                {t('title')}
               </h1>
               <p className="text-sm text-gray-600 mt-1">
-                Administra y evalúa los candidatos de tu pipeline
+                {t('subtitle')}
               </p>
             </div>
             <button
               onClick={() => router.push('/dashboard/candidates/upload')}
               className="mt-4 sm:mt-0 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
-              Subir Nuevo CV
+              {t('uploadNewCv')}
             </button>
           </div>
 
@@ -172,11 +175,11 @@ export default function CandidatesPage() {
               {/* Barra de búsqueda principal */}
               <div>
                 <label htmlFor="search" className="block text-sm font-medium text-gray-700 mb-2">
-                  Buscar candidatos
+                  {t('searchLabel')}
                 </label>
                 <SearchBar
                   onSearch={(query) => setSearchTerm(query)}
-                  placeholder="Buscar por nombre o habilidades..."
+                  placeholder={t('searchPlaceholder')}
                   suggestions={allSkills}
                   variant="default"
                   showSuggestions={true}

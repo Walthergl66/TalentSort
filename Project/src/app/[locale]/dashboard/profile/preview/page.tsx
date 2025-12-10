@@ -2,12 +2,15 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { supabase } from '@/lib/supabase'
 import DashboardLayout from '@/components/dashboard/DashboardLayout'
 import AccessibilityProvider from '@/components/Accesibilidad/AccessibilityProvider'
 
 export default function ProfilePreviewPage() {
   const router = useRouter()
+  const t = useTranslations('profile.preview')
+  const ta = useTranslations('actions')
   const [user, setUser] = useState<any>(null)
   const [profile, setProfile] = useState<any>(null)
   const [loading, setLoading] = useState(true)
@@ -158,10 +161,10 @@ export default function ProfilePreviewPage() {
                   </div>
                   <div>
                     <h2 className="text-3xl font-bold">
-                      {profile.full_name || 'Nombre no especificado'}
+                      {profile.full_name || t('nameNotSpecified')}
                     </h2>
                     <p className="text-xl text-blue-100 mt-1">
-                      {profile.title || 'Título profesional no especificado'}
+                      {profile.title || t('titleNotSpecified')}
                     </p>
                     <div className="flex items-center space-x-4 mt-3 text-blue-100">
                       {profile.location && (
