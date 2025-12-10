@@ -54,9 +54,10 @@ export const AccessibilityProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     try {
       const raw = typeof window !== "undefined" ? localStorage.getItem("a11y:settings") : null
-      return raw ? JSON.parse(raw) : defaultState
+      const loaded = raw ? JSON.parse(raw) : defaultState
+      setInternalState(loaded)
     } catch (e) {
-      return defaultState
+      setInternalState(defaultState)
     }
     setIsHydrated(true)
   }, [])

@@ -9,13 +9,24 @@ import SearchBar from './SearchBar'
 
 type HeaderProps = {
   onAuthClick?: () => void
+  showSearch?: boolean
+  onSearch?: (query: string) => void
+  searchSuggestions?: string[]
 }
 
-export default function Header({ onAuthClick }: HeaderProps) {
+export default function Header({ onAuthClick, showSearch = false, onSearch, searchSuggestions = [] }: HeaderProps) {
   const [language, setLanguage] = useState<'es' | 'en'>('es')
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const t = useTranslations('common')
 
   const toggleLanguage = () => {
     setLanguage(language === 'es' ? 'en' : 'es')
+  }
+
+  const handleSearch = (query: string) => {
+    if (onSearch) {
+      onSearch(query)
+    }
   }
 
   return (
@@ -65,7 +76,7 @@ export default function Header({ onAuthClick }: HeaderProps) {
           <div className="lg:hidden pb-4 border-t border-gray-100 pt-4 mt-2">
             <SearchBar
               onSearch={handleSearch}
-              suggestions={suggestions}
+              suggestions={searchSuggestions}
               variant="default"
               autoFocus
             />

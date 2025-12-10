@@ -5,7 +5,7 @@ import {routing} from '@/i18n/routing';
 import type { Metadata } from 'next'
 import AccessibilityProvider from '@/components/Accesibilidad/AccessibilityProvider'
 import AccessibilityMenu from '@/components/Accesibilidad/AccessibilityMenu'
-import './globals.css'
+import '../globals.css'
 import '@/components/Accesibilidad/accessibility.css'
 
 export const metadata: Metadata = {
@@ -77,12 +77,14 @@ export default async function LocaleLayout({
           {locale === 'es' ? 'Saltar al contenido principal' : 'Skip to main content'}
         </a>
         
-        <AccessibilityProvider>
-          <main id="main-content" role="main">
-            {children}
-          </main>
-          <AccessibilityMenu />
-        </AccessibilityProvider>
+        <NextIntlClientProvider messages={messages}>
+          <AccessibilityProvider>
+            <main id="main-content" role="main">
+              {children}
+            </main>
+            <AccessibilityMenu />
+          </AccessibilityProvider>
+        </NextIntlClientProvider>
 
         {/* Script para detectar navegación por teclado */}
         <script
