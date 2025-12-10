@@ -1,0 +1,157 @@
+{
+  "common": {
+    "startFree": "Comenzar Gratis",
+    "viewDemo": "Ver Demo",
+    "login": "Iniciar Sesión",
+    "register": "Registrarse",
+    "logout": "Cerrar Sesión",
+    "features": "Características",
+    "pricing": "Precios",
+    "contact": "Contacto"
+  },
+  "home": {
+    "hero": {
+      "badge": "Potenciado por IA Avanzada",
+      "title": "Talent AI",
+      "subtitle": "El futuro del reclutamiento inteligente",
+      "description": "Transforma tu proceso de selección con nuestra plataforma de IA que analiza CVs, evalúa candidatos y encuentra al talento perfecto en segundos.",
+      "stats": {
+        "accuracy": "Precisión en análisis",
+        "faster": "Más rápido",
+        "companies": "Empresas"
+      }
+    },
+    "audience": {
+      "title": "Diseñado para cada actor del",
+      "titleHighlight": "ecosistema de talento",
+      "subtitle": "Una plataforma unificada que satisface las necesidades específicas de todos los participantes en el proceso de reclutamiento",
+      "companies": {
+        "title": "Empresas",
+        "description": "Encuentra al candidato ideal con nuestro sistema de matching inteligente",
+        "features": [
+          "Análisis masivo de CVs",
+          "Filtros por habilidades técnicas",
+          "Ranking automático IA",
+          "Integración con ATS"
+        ]
+      },
+      "candidates": {
+        "title": "Candidatos",
+        "description": "Destaca entre la multitud y encuentra oportunidades que se ajusten a tu perfil",
+        "features": [
+          "Subida inteligente de CV",
+          "Análisis de perfil con IA",
+          "Recomendaciones personalizadas",
+          "Match con empresas"
+        ]
+      },
+      "agencies": {
+        "title": "Agencias",
+        "description": "Optimiza tu operación y escala tu negocio de reclutamiento",
+        "features": [
+          "Gestión masiva de talento",
+          "Analytics avanzados",
+          "Colaboración en equipo",
+          "Pipeline automation"
+        ]
+      }
+    },
+    "howItWorks": {
+      "title": "Transforma tu proceso en",
+      "titleHighlight": "3 pasos simples",
+      "steps": {
+        "upload": {
+          "title": "Sube & Procesa",
+          "description": "Carga CVs en cualquier formato. Nuestra IA extrae automáticamente información clave como experiencia, habilidades y educación."
+        },
+        "analyze": {
+          "title": "Analiza & Evalúa",
+          "description": "Algoritmos de IA avanzada analizan perfiles, calculan compatibilidad y generan puntuaciones inteligentes."
+        },
+        "decide": {
+          "title": "Decide & Contrata",
+          "description": "Revisa los mejores candidatos, programa entrevistas y toma decisiones informadas respaldadas por datos."
+        }
+      }
+    },
+    "features": {
+      "title": "Características potentes que",
+      "titleHighlight": "marcan la diferencia",
+      "aiAnalysis": {
+        "title": "Análisis con IA",
+        "description": "Modelos de aprendizaje profundo que entienden el contexto y extraen información valiosa"
+      },
+      "smartFilters": {
+        "title": "Filtros Inteligentes",
+        "description": "Filtra por habilidades técnicas, experiencia, ubicación y criterios específicos"
+      },
+      "realTime": {
+        "title": "Dashboard en Tiempo Real",
+        "description": "Seguimiento de tu proceso de contratación con análisis intuitivos y accionables"
+      },
+      "integrations": {
+        "title": "Integraciones",
+        "description": "Conecta con tus herramientas favoritas y sistemas de gestión de candidatos"
+      }
+    },
+    "cta": {
+      "title": "¿Listo para revolucionar tu contratación?",
+      "subtitle": "Únete a cientos de empresas que han transformado su proceso de reclutamiento",
+      "button": "Comenzar ahora",
+      "noCard": "No se requiere tarjeta de crédito"
+    }
+  },
+  "dashboard": {
+    "title": "Panel de Control",
+    "welcome": "Bienvenido de nuevo",
+    "overview": "Vista General",
+    "candidates": "Candidatos",
+    "cvs": "CVs",
+    "profile": "Perfil",
+    "settings": "Configuración",
+    "stats": {
+      "totalCandidates": "Total Candidatos",
+      "activeCvs": "CVs Activos",
+      "pendingReviews": "Revisiones Pendientes",
+      "avgScore": "Puntuación Media"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Inicia sesión en tu cuenta",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "submit": "Iniciar Sesión",
+      "noAccount": "¿No tienes una cuenta?",
+      "signUp": "Regístrate"
+    },
+    "register": {
+      "title": "Crea tu cuenta",
+      "name": "Nombre completo",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "confirmPassword": "Confirmar contraseña",
+      "submit": "Registrarse",
+      "haveAccount": "¿Ya tienes una cuenta?",
+      "signIn": "Inicia sesión"
+    }
+  },
+  "footer": {
+    "product": "Producto",
+    "company": "Empresa",
+    "resources": "Recursos",
+    "legal": "Legal",
+    "copyright": "Todos los derechos reservados"
+  },
+  "search": {
+    "placeholder": "Buscar contenido: empresas, candidatos, tecnología...",
+    "ariaLabel": "Campo de búsqueda",
+    "description": "Ingrese términos de búsqueda y presione Enter para buscar",
+    "clearSearch": "Limpiar búsqueda",
+    "suggestions": "Sugerencias",
+    "keyboardHints": "↑↓ para navegar • Enter para buscar • Esc para cerrar",
+    "noResults": "No se encontró contenido para tu búsqueda",
+    "searching": "Buscando...",
+    "tryThese": "Intenta buscar: Empresas, Candidatos, Agencias, Cómo funciona, Tecnología IA"
+  }
+}

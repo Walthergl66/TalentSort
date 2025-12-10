@@ -1,0 +1,157 @@
+{
+  "common": {
+    "startFree": "Start Free",
+    "viewDemo": "View Demo",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "features": "Features",
+    "pricing": "Pricing",
+    "contact": "Contact"
+  },
+  "home": {
+    "hero": {
+      "badge": "Powered by Advanced AI",
+      "title": "Talent AI",
+      "subtitle": "The future of intelligent recruitment",
+      "description": "Transform your selection process with our AI platform that analyzes CVs, evaluates candidates, and finds the perfect talent in seconds.",
+      "stats": {
+        "accuracy": "Accuracy in analysis",
+        "faster": "Faster",
+        "companies": "Companies"
+      }
+    },
+    "audience": {
+      "title": "Designed for every player in the",
+      "titleHighlight": "talent ecosystem",
+      "subtitle": "A unified platform that meets the specific needs of all participants in the recruitment process",
+      "companies": {
+        "title": "Companies",
+        "description": "Find the ideal candidate with our intelligent matching system",
+        "features": [
+          "Massive CV analysis",
+          "Technical skills filters",
+          "AI automatic ranking",
+          "ATS integration"
+        ]
+      },
+      "candidates": {
+        "title": "Candidates",
+        "description": "Stand out from the crowd and find opportunities that fit your profile",
+        "features": [
+          "Intelligent CV upload",
+          "AI profile analysis",
+          "Personalized recommendations",
+          "Company matching"
+        ]
+      },
+      "agencies": {
+        "title": "Agencies",
+        "description": "Optimize your operation and scale your recruitment business",
+        "features": [
+          "Massive talent management",
+          "Advanced analytics",
+          "Team collaboration",
+          "Pipeline automation"
+        ]
+      }
+    },
+    "howItWorks": {
+      "title": "Transform your process in",
+      "titleHighlight": "3 simple steps",
+      "steps": {
+        "upload": {
+          "title": "Upload & Process",
+          "description": "Upload CVs in any format. Our AI automatically extracts key information such as experience, skills and education."
+        },
+        "analyze": {
+          "title": "Analyze & Evaluate",
+          "description": "Advanced AI algorithms analyze profiles, calculate compatibility and generate intelligent scores."
+        },
+        "decide": {
+          "title": "Decide & Hire",
+          "description": "Review top candidates, schedule interviews and make informed decisions backed by data."
+        }
+      }
+    },
+    "features": {
+      "title": "Powerful features that",
+      "titleHighlight": "make the difference",
+      "aiAnalysis": {
+        "title": "AI Analysis",
+        "description": "Deep learning models that understand context and extract valuable information"
+      },
+      "smartFilters": {
+        "title": "Smart Filters",
+        "description": "Filter by technical skills, experience, location and specific criteria"
+      },
+      "realTime": {
+        "title": "Real-Time Dashboard",
+        "description": "Track your hiring process with intuitive and actionable analytics"
+      },
+      "integrations": {
+        "title": "Integrations",
+        "description": "Connect with your favorite tools and applicant management systems"
+      }
+    },
+    "cta": {
+      "title": "Ready to revolutionize your hiring?",
+      "subtitle": "Join hundreds of companies that have transformed their recruitment process",
+      "button": "Start now",
+      "noCard": "No credit card required"
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome back",
+    "overview": "Overview",
+    "candidates": "Candidates",
+    "cvs": "CVs",
+    "profile": "Profile",
+    "settings": "Settings",
+    "stats": {
+      "totalCandidates": "Total Candidates",
+      "activeCvs": "Active CVs",
+      "pendingReviews": "Pending Reviews",
+      "avgScore": "Avg Score"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Login to your account",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Login",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign up"
+    },
+    "register": {
+      "title": "Create your account",
+      "name": "Full name",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "submit": "Sign up",
+      "haveAccount": "Already have an account?",
+      "signIn": "Sign in"
+    }
+  },
+  "footer": {
+    "product": "Product",
+    "company": "Company",
+    "resources": "Resources",
+    "legal": "Legal",
+    "copyright": "All rights reserved"
+  },
+  "search": {
+    "placeholder": "Search content: companies, candidates, technology...",
+    "ariaLabel": "Search field",
+    "description": "Enter search terms and press Enter to search",
+    "clearSearch": "Clear search",
+    "suggestions": "Suggestions",
+    "keyboardHints": "↑↓ to navigate • Enter to search • Esc to close",
+    "noResults": "No content found for your search",
+    "searching": "Searching...",
+    "tryThese": "Try searching: Companies, Candidates, Agencies, How it works, AI Technology"
+  }
+}

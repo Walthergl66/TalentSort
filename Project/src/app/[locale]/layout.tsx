@@ -1,7 +1,11 @@
+import {NextIntlClientProvider} from 'next-intl';
+import {getMessages} from 'next-intl/server';
+import {notFound} from 'next/navigation';
+import {routing} from '@/i18n/routing';
 import type { Metadata } from 'next'
 import AccessibilityProvider from '@/components/Accesibilidad/AccessibilityProvider'
 import AccessibilityMenu from '@/components/Accesibilidad/AccessibilityMenu'
-import './globals.css'
+import '../globals.css'
 import '@/components/Accesibilidad/accessibility.css'
 
 export const metadata: Metadata = {
@@ -31,13 +35,30 @@ export const metadata: Metadata = {
   }
 }
 
-export default function RootLayout({
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({locale}));
+}
+
+export default async function LocaleLayout({
   children,
+  params
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
+  params: Promise<{locale: string}>;
 }) {
+  const {locale} = await params;
+  
+  // Ensure that the incoming `locale` is valid
+  if (!routing.locales.includes(locale as 'en' | 'es')) {
+    notFound();
+  }
+ 
+  // Providing all messages to the client
+  // side is the easiest way to get started
+  const messages = await getMessages();
+
   return (
-    <html lang="es" dir="ltr">
+    <html lang={locale} dir="ltr">
       <head>
         {/* Enlaces de skip para accesibilidad */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -53,15 +74,17 @@ export default function RootLayout({
           href="#main-content" 
           className="skip-link sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:rounded"
         >
-          Saltar al contenido principal
+          {locale === 'es' ? 'Saltar al contenido principal' : 'Skip to main content'}
         </a>
         
-        <AccessibilityProvider>
-          <main id="main-content" role="main">
-            {children}
-          </main>
-          <AccessibilityMenu />
-        </AccessibilityProvider>
+        <NextIntlClientProvider messages={messages}>
+          <AccessibilityProvider>
+            <main id="main-content" role="main">
+              {children}
+            </main>
+            <AccessibilityMenu />
+          </AccessibilityProvider>
+        </NextIntlClientProvider>
 
         {/* Script para detectar navegación por teclado */}
         <script
@@ -81,5 +104,5 @@ export default function RootLayout({
         />
       </body>
     </html>
-  )
+  );
 }

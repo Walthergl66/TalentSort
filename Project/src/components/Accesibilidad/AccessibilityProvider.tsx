@@ -45,20 +45,29 @@ export const useAccessibility = () => {
 }
 
 export const AccessibilityProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [state, setInternalState] = useState<AccessibilityState>(() => {
+  const [state, setInternalState] = useState<AccessibilityState>(defaultState)
+  const [isHydrated, setIsHydrated] = useState(false)
+
+  // Load from localStorage only on client after hydration
+  useEffect(() => {
     try {
-      const raw = typeof window !== "undefined" ? localStorage.getItem("a11y:settings") : null
-      return raw ? JSON.parse(raw) : defaultState
-    } catch (e) {
-      return defaultState
+      const raw = localStorage.getItem("a11y:settings")
+      if (raw) {
+        setInternalState(JSON.parse(raw))
+      }
+    } catch {
+      // Ignore errors
     }
-  })
+    setIsHydrated(true)
+  }, [])
 
   useEffect(() => {
-    // persist
+    // persist only after hydration
+    if (!isHydrated) return
+    
     try {
       localStorage.setItem("a11y:settings", JSON.stringify(state))
-    } catch (e) {
+    } catch {
       // ignore
     }
 
@@ -86,7 +95,7 @@ export const AccessibilityProvider: React.FC<{ children: React.ReactNode }> = ({
 
     if (state.customColor) root.style.setProperty("--a11y-accent", state.customColor)
     else root.style.removeProperty("--a11y-accent")
-  }, [state])
+  }, [state, isHydrated])
 
   // hover-to-speak: speak text when pointer moves over elements (optional)
   useEffect(() => {

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import DashboardLayout from '@/components/dashboard/DashboardLayout'
 import AccessibilityProvider from '@/components/Accesibilidad/AccessibilityProvider'
+import SearchBar from '@/components/SearchBar'
 
 export default function CandidatesPage() {
   const router = useRouter()
@@ -14,6 +15,7 @@ export default function CandidatesPage() {
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
   const [sortBy, setSortBy] = useState('created_at')
+  const [allSkills, setAllSkills] = useState<string[]>([])
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -59,6 +61,15 @@ export default function CandidatesPage() {
       }
 
       setCandidates(data || [])
+      
+      // Extraer todas las habilidades únicas para sugerencias
+      const skillsSet = new Set<string>()
+      data?.forEach(candidate => {
+        if (Array.isArray(candidate.skills)) {
+          candidate.skills.forEach((skill: string) => skillsSet.add(skill))
+        }
+      })
+      setAllSkills(Array.from(skillsSet))
     } catch (error) {
       console.error('Error:', error)
     } finally {
@@ -155,58 +166,96 @@ export default function CandidatesPage() {
             </button>
           </div>
 
-          {/* Filtros y búsqueda */}
+          {/* Filtros y búsqueda mejorados */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="space-y-4">
+              {/* Barra de búsqueda principal */}
               <div>
                 <label htmlFor="search" className="block text-sm font-medium text-gray-700 mb-2">
                   Buscar candidatos
                 </label>
-                <input
-                  id="search"
-                  type="text"
-                  placeholder="Nombre o habilidades..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                <SearchBar
+                  onSearch={(query) => setSearchTerm(query)}
+                  placeholder="Buscar por nombre o habilidades..."
+                  suggestions={allSkills}
+                  variant="default"
+                  showSuggestions={true}
                 />
               </div>
-              
-              <div>
-                <label htmlFor="status-filter" className="block text-sm font-medium text-gray-700 mb-2">
-                  Estado
-                </label>
-                <select
-                  id="status-filter"
-                  value={statusFilter}
-                  onChange={(e) => setStatusFilter(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                >
-                  <option value="all">Todos los estados</option>
-                  <option value="pending">Pendiente</option>
-                  <option value="processed">Procesado</option>
-                  <option value="reviewed">Revisado</option>
-                  <option value="shortlisted">Lista corta</option>
-                  <option value="rejected">Rechazado</option>
-                </select>
+
+              {/* Filtros adicionales */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="status-filter" className="block text-sm font-medium text-gray-700 mb-2">
+                    Estado
+                  </label>
+                  <select
+                    id="status-filter"
+                    value={statusFilter}
+                    onChange={(e) => setStatusFilter(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                  >
+                    <option value="all">Todos los estados</option>
+                    <option value="pending">Pendiente</option>
+                    <option value="processed">Procesado</option>
+                    <option value="reviewed">Revisado</option>
+                    <option value="shortlisted">Lista corta</option>
+                    <option value="rejected">Rechazado</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="sort-by" className="block text-sm font-medium text-gray-700 mb-2">
+                    Ordenar por
+                  </label>
+                  <select
+                    id="sort-by"
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                  >
+                    <option value="created_at">Fecha de carga</option>
+                    <option value="ai_score">Puntuación IA</option>
+                    <option value="candidate_name">Nombre</option>
+                    <option value="experience_years">Años experiencia</option>
+                  </select>
+                </div>
               </div>
 
-              <div>
-                <label htmlFor="sort-by" className="block text-sm font-medium text-gray-700 mb-2">
-                  Ordenar por
-                </label>
-                <select
-                  id="sort-by"
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                >
-                  <option value="created_at">Fecha de carga</option>
-                  <option value="ai_score">Puntuación IA</option>
-                  <option value="candidate_name">Nombre</option>
-                  <option value="experience_years">Años experiencia</option>
-                </select>
-              </div>
+              {/* Resumen de filtros activos */}
+              {(searchTerm || statusFilter !== 'all') && (
+                <div className="flex items-center gap-2 pt-2">
+                  <span className="text-sm text-gray-600">Filtros activos:</span>
+                  {searchTerm && (
+                    <span className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-700 text-sm rounded-full">
+                      {searchTerm}
+                      <button
+                        onClick={() => setSearchTerm('')}
+                        className="hover:text-blue-900"
+                        aria-label="Limpiar búsqueda"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                    </span>
+                  )}
+                  {statusFilter !== 'all' && (
+                    <span className="inline-flex items-center gap-1 px-3 py-1 bg-purple-100 text-purple-700 text-sm rounded-full">
+                      {statusFilter}
+                      <button
+                        onClick={() => setStatusFilter('all')}
+                        className="hover:text-purple-900"
+                        aria-label="Limpiar filtro de estado"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                    </span>
+                  )}
+                </div>
+              )}
             </div>
           </div>
 
