@@ -261,14 +261,14 @@ export const AccessibilityMenu: React.FC = () => {
                   Leer al pasar el cursor (hover-to-speak)
                 </label>
 
-                <label>
+                {/* <label>
                   <input
                     type="checkbox"
                     checked={state.liveTranscriptionEnabled}
                     onChange={() => setState({ liveTranscriptionEnabled: !state.liveTranscriptionEnabled })}
                   />
                   Transcripción en vivo (Web Speech API)
-                </label>
+                </label> */}
 
                 <div className="a11y-tts-controls">
                   <button onClick={() => { setState({ ttsEnabled: true }); speakPage() }}>

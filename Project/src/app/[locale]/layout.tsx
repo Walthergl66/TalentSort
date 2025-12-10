@@ -5,6 +5,7 @@ import {routing} from '@/i18n/routing';
 import type { Metadata } from 'next'
 import AccessibilityProvider from '@/components/Accesibilidad/AccessibilityProvider'
 import AccessibilityMenu from '@/components/Accesibilidad/AccessibilityMenu'
+import VoiceControl from '@/components/Accesibilidad/VoiceControl'
 import '../globals.css'
 import '@/components/Accesibilidad/accessibility.css'
 
@@ -83,6 +84,7 @@ export default async function LocaleLayout({
               {children}
             </main>
             <AccessibilityMenu />
+            <VoiceControl />
           </AccessibilityProvider>
         </NextIntlClientProvider>
 
