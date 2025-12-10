@@ -1,5 +1,6 @@
 :root{
   --a11y-font-scale: 1;
+  --a11y-font-family: system-ui;
   --a11y-accent: #006eff;
 }
 
@@ -77,8 +78,40 @@
   filter: none !important;
 }
 
-/* Font scaling */
-html { font-size: calc(16px * var(--a11y-font-scale)); }
+/* Font scaling - escalado gradual en el elemento raíz */
+html {
+  font-size: calc(16px * var(--a11y-font-scale)) !important;
+}
+
+/* Los elementos heredan el tamaño de forma natural a través de rem/em */
+body {
+  font-size: 1rem;
+  font-family: var(--a11y-font-family) !important;
+}
+
+/* Aplicar la fuente personalizada a todos los elementos */
+* {
+  font-family: var(--a11y-font-family) !important;
+}
+
+/* Mantener proporciones relativas sin multiplicar de nuevo */
+h1 { font-size: 2rem !important; }
+h2 { font-size: 1.5rem !important; }
+h3 { font-size: 1.17rem !important; }
+h4 { font-size: 1rem !important; }
+h5 { font-size: 0.83rem !important; }
+h6 { font-size: 0.67rem !important; }
+
+p, span, div, li, td, th {
+  font-size: inherit;
+}
+
+small { font-size: 0.875rem !important; }
+
+/* Botones, inputs y controles heredan el tamaño */
+button, input, select, textarea, label {
+  font-size: 1rem !important;
+}
 
 /* Letter spacing */
 .a11y-letter-spacing * {

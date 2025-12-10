@@ -175,6 +175,21 @@ export const AccessibilityMenu: React.FC = () => {
                 </label>
 
                 <label>
+                  Familia de fuente:
+                  <select value={state.fontFamily} onChange={(e) => setState({ fontFamily: e.target.value })}>
+                    <option value="system-ui">Sistema (predeterminada)</option>
+                    <option value="Arial, sans-serif">Arial</option>
+                    <option value="'Times New Roman', serif">Times New Roman</option>
+                    <option value="'Courier New', monospace">Courier New</option>
+                    <option value="Georgia, serif">Georgia</option>
+                    <option value="Verdana, sans-serif">Verdana</option>
+                    <option value="'Comic Sans MS', cursive">Comic Sans MS</option>
+                    <option value="Tahoma, sans-serif">Tahoma</option>
+                    <option value="'Trebuchet MS', sans-serif">Trebuchet MS</option>
+                  </select>
+                </label>
+
+                <label>
                   <input type="checkbox" checked={state.letterSpacing} onChange={() => toggle("letterSpacing")} />
                   Aumentar espaciado entre letras y líneas
                 </label>

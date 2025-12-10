@@ -25,12 +25,13 @@ export default function LiveTranscription() {
       return
     }
 
-  const rec = new SpeechRecognition()
+    const rec = new SpeechRecognition()
     rec.lang = "es-ES"
     rec.interimResults = true
     rec.continuous = true
+    rec.maxAlternatives = 1
 
-  rec.onresult = (ev: any) => {
+    rec.onresult = (ev: any) => {
       // Build transcript from results
       try {
         const parts: string[] = []
@@ -38,13 +39,34 @@ export default function LiveTranscription() {
           parts.push(ev.results[i][0].transcript)
         }
         setTranscript(parts.join(" "))
+        setError(null) // Limpiar error si funciona
       } catch (e) {
         // ignore
       }
     }
 
-    rec.onstart = () => setActive(true)
-    rec.onend = () => setActive(false)
+    rec.onstart = () => {
+      setActive(true)
+      setError(null)
+      setTranscript("")
+    }
+    
+    rec.onend = () => {
+      setActive(false)
+      // Auto-reiniciar si está habilitado
+      if (state.liveTranscriptionEnabled) {
+        setTimeout(() => {
+          try {
+            if (recognitionRef.current && state.liveTranscriptionEnabled) {
+              recognitionRef.current.start()
+            }
+          } catch (e) {
+            // El micrófono puede no estar disponible
+          }
+        }, 500)
+      }
+    }
+    
     rec.onerror = (e: any) => {
       // Map known errors to friendly messages and keep raw for diagnostics
       try {
@@ -57,13 +79,13 @@ export default function LiveTranscription() {
         else if (r.includes('not-allowed') || r.includes('permission')) friendly = 'Permiso denegado: habilita el micrófono en el navegador'
         else if (r.includes('no-speech')) friendly = 'No se detectó voz en el micrófono'
         else if (r.includes('audio-capture')) friendly = 'No se detectó dispositivo de entrada (micrófono)'
+        else if (r.includes('aborted')) friendly = 'Reconocimiento interrumpido'
         setError(friendly)
         console.error('SpeechRecognition raw error:', raw)
       } catch (ex) {
         setError('Error de reconocimiento de voz')
       }
       setActive(false)
-      try { rec.stop() } catch (err) {}
     }
 
     recognitionRef.current = rec

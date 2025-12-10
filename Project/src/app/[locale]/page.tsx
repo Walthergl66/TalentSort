@@ -7,6 +7,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import LoginForm from '@/components/auth/LoginForm'
 import RegisterForm from '@/components/auth/RegisterForm'
+import VideoPlayer from '@/components/VideoPlayer'
 
 export default function Home() {
   const [activeForm, setActiveForm] = useState<'login' | 'register'>('login')
@@ -199,6 +200,55 @@ export default function Home() {
                 <div className="text-center">
                   <div className="text-3xl font-bold text-white mb-2">500+</div>
                   <div className="text-sm text-blue-300">{t('hero.stats.companies')}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Video Section - Cómo hacer atractivo tu CV */}
+        <section className="py-20 bg-gradient-to-br from-blue-50 via-white to-purple-50">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 bg-blue-100 border border-blue-200 rounded-full px-4 py-2 mb-4">
+                <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
+                </svg>
+                <span className="text-blue-700 text-sm font-semibold">Video Tutorial</span>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
+                Aprende a destacar 
+                <span className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent"> con tu CV</span>
+              </h2>
+              <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+                Descubre las mejores prácticas para crear un CV que atraiga a reclutadores y supere los sistemas ATS en 2024
+              </p>
+            </div>
+
+            <div className="max-w-5xl mx-auto">
+              <VideoPlayer 
+                src="/Cómo hacer atractivo tu C.V. y destaque para los reclutadores y los ATS este 2024.mp4"
+                title="Cómo hacer atractivo tu C.V. para reclutadores y ATS 2024"
+                className="shadow-2xl"
+              />
+              
+              <div className="mt-8 bg-white rounded-2xl p-6 shadow-lg border border-slate-200">
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                    <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-lg font-semibold text-slate-900 mb-2">
+                      Función de accesibilidad activada
+                    </h3>
+                    <p className="text-slate-600">
+                      Si tienes habilitados los <strong>subtítulos automáticos</strong> en el menú de accesibilidad, 
+                      verás transcripciones en tiempo real del audio del video mientras se reproduce. 
+                      Esta función utiliza reconocimiento de voz para generar subtítulos dinámicos.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

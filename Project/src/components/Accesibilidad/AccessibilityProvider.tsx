@@ -5,6 +5,7 @@ type AccessibilityState = {
   highContrast: boolean
   contrastLevel: "soft" | "medium" | "high"
   fontScale: number
+  fontFamily: string
   letterSpacing: boolean
   reducedMotion: boolean
   keyboardNavigation: boolean
@@ -27,6 +28,7 @@ const defaultState: AccessibilityState = {
   highContrast: false,
   contrastLevel: "medium",
   fontScale: 1,
+  fontFamily: "system-ui",
   letterSpacing: false,
   reducedMotion: false,
   keyboardNavigation: false,
@@ -82,6 +84,7 @@ export const AccessibilityProvider: React.FC<{ children: React.ReactNode }> = ({
     root.classList.add(`a11y-contrast-${state.contrastLevel}`)
 
     root.style.setProperty("--a11y-font-scale", String(state.fontScale))
+    root.style.setProperty("--a11y-font-family", state.fontFamily)
     if (state.letterSpacing) root.classList.add("a11y-letter-spacing")
     else root.classList.remove("a11y-letter-spacing")
 
