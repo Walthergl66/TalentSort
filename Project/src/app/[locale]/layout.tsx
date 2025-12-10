@@ -5,7 +5,7 @@ import {routing} from '@/i18n/routing';
 import type { Metadata } from 'next'
 import AccessibilityProvider from '@/components/Accesibilidad/AccessibilityProvider'
 import AccessibilityMenu from '@/components/Accesibilidad/AccessibilityMenu'
-import '../globals.css'
+import './globals.css'
 import '@/components/Accesibilidad/accessibility.css'
 
 export const metadata: Metadata = {
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   creator: 'Talent AI',
   publisher: 'Talent AI',
   robots: 'index, follow',
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=5',
+  // viewport moved to dedicated export `viewport` (see Next.js metadata API)
   openGraph: {
     title: 'Talent AI - Sistema de Reclutamiento Inteligente',
     description: 'Optimiza tu proceso de reclutamiento con inteligencia artificial',
@@ -77,14 +77,12 @@ export default async function LocaleLayout({
           {locale === 'es' ? 'Saltar al contenido principal' : 'Skip to main content'}
         </a>
         
-        <NextIntlClientProvider messages={messages}>
-          <AccessibilityProvider>
-            <main id="main-content" role="main">
-              {children}
-            </main>
-            <AccessibilityMenu />
-          </AccessibilityProvider>
-        </NextIntlClientProvider>
+        <AccessibilityProvider>
+          <main id="main-content" role="main">
+            {children}
+          </main>
+          <AccessibilityMenu />
+        </AccessibilityProvider>
 
         {/* Script para detectar navegación por teclado */}
         <script

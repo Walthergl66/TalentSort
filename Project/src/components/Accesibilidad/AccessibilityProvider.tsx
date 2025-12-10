@@ -11,6 +11,7 @@ type AccessibilityState = {
   largeButtons: boolean
   ttsEnabled: boolean
   hoverToSpeak: boolean
+  liveTranscriptionEnabled: boolean
   captionsEnabled: boolean
   customColor?: string | null
 }
@@ -32,6 +33,7 @@ const defaultState: AccessibilityState = {
   largeButtons: false,
   ttsEnabled: false,
   hoverToSpeak: false,
+  liveTranscriptionEnabled: false,
   captionsEnabled: false,
   customColor: null,
 }
@@ -51,12 +53,10 @@ export const AccessibilityProvider: React.FC<{ children: React.ReactNode }> = ({
   // Load from localStorage only on client after hydration
   useEffect(() => {
     try {
-      const raw = localStorage.getItem("a11y:settings")
-      if (raw) {
-        setInternalState(JSON.parse(raw))
-      }
-    } catch {
-      // Ignore errors
+      const raw = typeof window !== "undefined" ? localStorage.getItem("a11y:settings") : null
+      return raw ? JSON.parse(raw) : defaultState
+    } catch (e) {
+      return defaultState
     }
     setIsHydrated(true)
   }, [])

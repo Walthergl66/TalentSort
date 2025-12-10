@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import DashboardLayout from '@/components/dashboard/DashboardLayout'
 import AccessibilityProvider from '@/components/Accesibilidad/AccessibilityProvider'
+import { LabelWithTooltip } from '@/components/common/Tooltip'
 
 export default function ProfilePage() {
   const router = useRouter()
@@ -332,10 +333,14 @@ export default function ProfilePage() {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Nombre Completo *
-                    </label>
+                    <LabelWithTooltip
+                      label="Nombre Completo"
+                      tooltip="Tu nombre completo tal como aparece en documentos oficiales"
+                      required
+                      htmlFor="full_name"
+                    />
                     <input
+                      id="full_name"
                       type="text"
                       value={profile.full_name || ''}
                       onChange={(e) => setProfile((prev: any) => ({ ...prev, full_name: e.target.value }))}
@@ -345,10 +350,13 @@ export default function ProfilePage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Email
-                    </label>
+                    <LabelWithTooltip
+                      label="Email"
+                      tooltip="Tu correo electrónico principal de contacto. Los reclutadores te contactarán a este email."
+                      htmlFor="email"
+                    />
                     <input
+                      id="email"
                       type="email"
                       value={profile.email || ''}
                       onChange={(e) => setProfile((prev: any) => ({ ...prev, email: e.target.value }))}
@@ -358,10 +366,13 @@ export default function ProfilePage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Teléfono
-                    </label>
+                    <LabelWithTooltip
+                      label="Teléfono"
+                      tooltip="Tu número de teléfono con código de país. Ejemplo: +52 123 456 7890"
+                      htmlFor="phone"
+                    />
                     <input
+                      id="phone"
                       type="tel"
                       value={profile.phone || ''}
                       onChange={(e) => setProfile((prev: any) => ({ ...prev, phone: e.target.value }))}
@@ -371,10 +382,13 @@ export default function ProfilePage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Ubicación
-                    </label>
+                    <LabelWithTooltip
+                      label="Ubicación"
+                      tooltip="Tu ciudad y país actual. Esto ayuda a encontrar oportunidades cercanas."
+                      htmlFor="location"
+                    />
                     <input
+                      id="location"
                       type="text"
                       value={profile.location || ''}
                       onChange={(e) => setProfile((prev: any) => ({ ...prev, location: e.target.value }))}
@@ -385,10 +399,13 @@ export default function ProfilePage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Título Profesional
-                  </label>
+                  <LabelWithTooltip
+                    label="Título Profesional"
+                    tooltip="Tu cargo o posición profesional actual. Ejemplo: Desarrollador Full Stack Senior, Ingeniero de Software"
+                    htmlFor="title"
+                  />
                   <input
+                    id="title"
                     type="text"
                     value={profile.title || ''}
                     onChange={(e) => setProfile((prev: any) => ({ ...prev, title: e.target.value }))}
@@ -398,10 +415,13 @@ export default function ProfilePage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Biografía Profesional
-                  </label>
+                  <LabelWithTooltip
+                    label="Biografía Profesional"
+                    tooltip="Resume tu experiencia, logros principales y objetivos profesionales en 2-3 párrafos breves."
+                    htmlFor="bio"
+                  />
                   <textarea
+                    id="bio"
                     value={profile.bio || ''}
                     onChange={(e) => setProfile((prev: any) => ({ ...prev, bio: e.target.value }))}
                     rows={4}
@@ -417,10 +437,13 @@ export default function ProfilePage() {
                   </h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        LinkedIn
-                      </label>
+                      <LabelWithTooltip
+                        label="LinkedIn"
+                        tooltip="Tu perfil profesional de LinkedIn. Aumenta tu visibilidad ante reclutadores."
+                        htmlFor="linkedin"
+                      />
                       <input
+                        id="linkedin"
                         type="url"
                         value={profile.social_links?.linkedin || ''}
                         onChange={(e) => setProfile((prev: any) => ({
@@ -432,10 +455,13 @@ export default function ProfilePage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        GitHub
-                      </label>
+                      <LabelWithTooltip
+                        label="GitHub"
+                        tooltip="Tu perfil de GitHub. Esencial para desarrolladores - muestra tus proyectos y contribuciones."
+                        htmlFor="github"
+                      />
                       <input
+                        id="github"
                         type="url"
                         value={profile.social_links?.github || ''}
                         onChange={(e) => setProfile((prev: any) => ({
@@ -447,10 +473,13 @@ export default function ProfilePage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Portfolio
-                      </label>
+                      <LabelWithTooltip
+                        label="Portfolio"
+                        tooltip="Tu sitio web personal o portfolio profesional donde muestras tus trabajos y proyectos."
+                        htmlFor="portfolio"
+                      />
                       <input
+                        id="portfolio"
                         type="url"
                         value={profile.social_links?.portfolio || ''}
                         onChange={(e) => setProfile((prev: any) => ({
@@ -462,10 +491,13 @@ export default function ProfilePage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Twitter
-                      </label>
+                      <LabelWithTooltip
+                        label="Twitter"
+                        tooltip="Tu cuenta profesional de Twitter/X (opcional). Útil para networking profesional."
+                        htmlFor="twitter"
+                      />
                       <input
+                        id="twitter"
                         type="url"
                         value={profile.social_links?.twitter || ''}
                         onChange={(e) => setProfile((prev: any) => ({
@@ -488,10 +520,13 @@ export default function ProfilePage() {
                 </h3>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Años de Experiencia
-                  </label>
+                  <LabelWithTooltip
+                    label="Años de Experiencia"
+                    tooltip="Selecciona tu total de años de experiencia profesional. Esto ayuda a las empresas a evaluar tu nivel de seniority."
+                    htmlFor="experience_years"
+                  />
                   <select
+                    id="experience_years"
                     value={profile.experience_years || 0}
                     onChange={(e) => setProfile((prev: any) => ({ ...prev, experience_years: parseInt(e.target.value) }))}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -778,10 +813,13 @@ export default function ProfilePage() {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Tipo de Trabajo
-                    </label>
+                    <LabelWithTooltip
+                      label="Tipo de Trabajo"
+                      tooltip="Especifica el tipo de contratación que buscas: tiempo completo, medio tiempo, freelance, etc."
+                      htmlFor="job_type"
+                    />
                     <select
+                      id="job_type"
                       value={profile.preferences?.job_type || 'full-time'}
                       onChange={(e) => setProfile((prev: any) => ({
                         ...prev,
@@ -798,10 +836,13 @@ export default function ProfilePage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Expectativa Salarial (mensual)
-                    </label>
+                    <LabelWithTooltip
+                      label="Expectativa Salarial (mensual)"
+                      tooltip="Indica tu rango salarial esperado en tu moneda local. Esto ayuda a las empresas a hacer ofertas acordes a tus expectativas. Ejemplo: $50,000 - $70,000"
+                      htmlFor="salary_expectation"
+                    />
                     <input
+                      id="salary_expectation"
                       type="text"
                       value={profile.preferences?.salary_expectation || ''}
                       onChange={(e) => setProfile((prev: any) => ({
@@ -814,10 +855,13 @@ export default function ProfilePage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Disponibilidad
-                    </label>
+                    <LabelWithTooltip
+                      label="Disponibilidad"
+                      tooltip="Indica cuándo podrías comenzar a trabajar. 'Inmediata' significa que puedes empezar en menos de 2 semanas."
+                      htmlFor="availability"
+                    />
                     <select
+                      id="availability"
                       value={profile.preferences?.availability || 'immediate'}
                       onChange={(e) => setProfile((prev: any) => ({
                         ...prev,
@@ -846,8 +890,13 @@ export default function ProfilePage() {
                       }))}
                       className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                     />
-                    <label htmlFor="remote-work" className="ml-2 text-sm text-gray-900">
+                    <label htmlFor="remote-work" className="ml-2 text-sm text-gray-900 flex items-center gap-1.5">
                       Abierto a trabajo remoto
+                      <LabelWithTooltip
+                        label=""
+                        tooltip="Indica si estás dispuesto a trabajar de forma remota/desde casa. Esto amplia tus oportunidades a nivel nacional e internacional."
+                        htmlFor=""
+                      />
                     </label>
                   </div>
 
@@ -862,8 +911,13 @@ export default function ProfilePage() {
                       }))}
                       className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                     />
-                    <label htmlFor="willing-relocate" className="ml-2 text-sm text-gray-900">
+                    <label htmlFor="willing-relocate" className="ml-2 text-sm text-gray-900 flex items-center gap-1.5">
                       Dispuesto a reubicarse
+                      <LabelWithTooltip
+                        label=""
+                        tooltip="Indica si estás dispuesto a mudarte a otra ciudad o país por una oportunidad laboral. Algunas empresas ofrecen paquetes de reubicación."
+                        htmlFor=""
+                      />
                     </label>
                   </div>
                 </div>

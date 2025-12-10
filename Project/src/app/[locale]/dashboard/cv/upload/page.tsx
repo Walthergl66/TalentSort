@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import DashboardLayout from '@/components/dashboard/DashboardLayout'
 import AccessibilityProvider from '@/components/Accesibilidad/AccessibilityProvider'
+import Tooltip, { HelpIcon } from '@/components/common/Tooltip'
 
 export default function UploadCVPage() {
   const router = useRouter()
@@ -145,8 +146,11 @@ export default function UploadCVPage() {
           {/* Header */}
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">
+              <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
                 Subir mi CV
+                <Tooltip content="Sube tu currículum en formato PDF o Word. Nuestro sistema de IA lo analizará automáticamente para extraer tu información profesional.">
+                  <HelpIcon className="w-5 h-5" />
+                </Tooltip>
               </h1>
               <p className="text-sm text-gray-600 mt-1">
                 Sube tu CV para análisis automático y mejoras de perfil
@@ -206,9 +210,12 @@ export default function UploadCVPage() {
                   >
                     Seleccionar archivo
                   </label>
-                  <p className="text-sm text-gray-500 mt-4">
-                    Formatos soportados: PDF, DOC, DOCX (máx. 10MB)
-                  </p>
+                  <div className="flex items-center justify-center gap-2 text-sm text-gray-500 mt-4">
+                    <span>Formatos soportados: PDF, DOC, DOCX (máx. 10MB)</span>
+                    <Tooltip content="Recomendamos PDF para mejor extracción de datos. El archivo debe ser de texto, no imagen escaneada.">
+                      <HelpIcon className="w-4 h-4" />
+                    </Tooltip>
+                  </div>
                 </div>
               ) : (
                 <div className="space-y-6">
