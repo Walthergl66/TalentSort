@@ -134,6 +134,23 @@
       "noCard": "Sin tarjeta de crédito"
     }
   },
+  "topBar": {
+    "openMenu": "Abrir menú",
+    "notifications": "Notificaciones",
+    "userMenu": "Menú de usuario",
+    "user": "Usuario",
+    "company": "Empresa",
+    "profile": "Mi Perfil",
+    "logout": "Cerrar Sesión",
+    "signOut": "Cerrar Sesión",
+    "pages": {
+      "dashboard": "Panel de Control",
+      "candidates": "Candidatos",
+      "positions": "Posiciones",
+      "analytics": "Análisis",
+      "settings": "Configuración"
+    }
+  },
   "dashboard": {
     "title": "Panel de Control",
     "welcome": "Bienvenido de nuevo",
@@ -244,21 +261,6 @@
     "terms": "Términos",
     "security": "Seguridad",
     "copyright": "Todos los derechos reservados"
-  },
-  "topBar": {
-    "userMenu": "Menú de usuario",
-    "notifications": "Notificaciones",
-    "profile": "Perfil",
-    "logout": "Cerrar Sesión",
-    "user": "Usuario",
-    "company": "Empresa",
-    "pages": {
-      "dashboard": "Panel de Control",
-      "candidates": "Candidatos",
-      "positions": "Posiciones",
-      "analytics": "Analíticas",
-      "settings": "Configuración"
-    }
   },
   "profile": {
     "preview": {

@@ -134,6 +134,23 @@
       "noCard": "No credit card"
     }
   },
+  "topBar": {
+    "openMenu": "Open menu",
+    "notifications": "Notifications",
+    "userMenu": "User menu",
+    "user": "User",
+    "company": "Company",
+    "profile": "My Profile",
+    "logout": "Sign Out",
+    "signOut": "Sign Out",
+    "pages": {
+      "dashboard": "Dashboard",
+      "candidates": "Candidates",
+      "positions": "Positions",
+      "analytics": "Analytics",
+      "settings": "Settings"
+    }
+  },
   "dashboard": {
     "title": "Dashboard",
     "welcome": "Welcome back",
@@ -237,21 +254,6 @@
     "terms": "Terms",
     "security": "Security",
     "copyright": "All rights reserved"
-  },
-  "topBar": {
-    "userMenu": "User menu",
-    "notifications": "Notifications",
-    "profile": "Profile",
-    "logout": "Logout",
-    "user": "User",
-    "company": "Company",
-    "pages": {
-      "dashboard": "Dashboard",
-      "candidates": "Candidates",
-      "positions": "Positions",
-      "analytics": "Analytics",
-      "settings": "Settings"
-    }
   },
   "profile": {
     "preview": {
