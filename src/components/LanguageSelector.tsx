@@ -3,11 +3,13 @@
 import { useLocale } from 'next-intl';
 import { useRouter, usePathname } from '@/i18n/routing';
 import { useState, useTransition, useEffect } from 'react';
+import { usePathname as useNextPathname } from 'next/navigation';
 
 export default function LanguageSelector() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
+  const nextPathname = useNextPathname();
   const [isPending, startTransition] = useTransition();
   const [isOpen, setIsOpen] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -26,6 +28,7 @@ export default function LanguageSelector() {
     }
 
     startTransition(() => {
+      // Simplemente cambiar el locale usando router.replace manteniendo la misma ruta
       router.replace(pathname, { locale: newLocale });
       setIsOpen(false);
       setShowSuccess(true);
