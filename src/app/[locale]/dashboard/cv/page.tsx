@@ -30,20 +30,60 @@ export default function MyCVsPage() {
 
   const fetchCVs = async (userId: string) => {
     try {
+      console.log('🔍 Fetching CVs for user:', userId)
+      
+      // Verificar configuración de Supabase
+      const { data: { session } } = await supabase.auth.getSession()
+      console.log('🔐 Session status:', {
+        hasSession: !!session,
+        userId: session?.user?.id,
+        email: session?.user?.email
+      })
+
       const { data, error } = await supabase
         .from('user_cvs')
         .select('*')
         .eq('user_id', userId)
         .order('created_at', { ascending: false })
 
+      console.log('📦 Raw response:', { 
+        data, 
+        error,
+        errorType: error ? typeof error : 'no error',
+        errorKeys: error ? Object.keys(error) : []
+      })
+
       if (error) {
-        console.error('Error fetching CVs:', error)
+        const errorInfo = {
+          message: error.message || 'Unknown error',
+          details: error.details || 'No details',
+          hint: error.hint || 'No hint',
+          code: error.code || 'No code',
+          full: JSON.stringify(error, null, 2)
+        }
+        
+        console.error('❌ Error fetching CVs:', errorInfo)
+        
+        // Mensajes de error específicos
+        let userMessage = 'Error al cargar los CVs: '
+        
+        if (error.code === 'PGRST116') {
+          userMessage += 'La tabla "user_cvs" no existe. Por favor, ejecuta el script de creación de tablas.'
+        } else if (error.message?.includes('permission') || error.message?.includes('policy')) {
+          userMessage += 'Problema de permisos. Verifica las políticas RLS en Supabase.'
+        } else {
+          userMessage += error.message || 'Error desconocido'
+        }
+        
+        alert(userMessage)
         return
       }
 
+      console.log('✅ CVs fetched successfully:', data?.length || 0, 'CVs')
       setCvs(data || [])
     } catch (error) {
-      console.error('Error:', error)
+      console.error('❌ Unexpected error:', error)
+      alert('Error inesperado al cargar los CVs. Por favor, recarga la página.')
     } finally {
       setLoading(false)
     }
