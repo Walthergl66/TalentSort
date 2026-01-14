@@ -280,7 +280,7 @@ export default function UploadCVPage() {
           </div>
 
           {!analysisResult ? (
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-8">
               {!selectedFile ? (
                 <div
                   className={`border-2 border-dashed rounded-lg p-12 text-center transition-colors ${
@@ -415,7 +415,7 @@ export default function UploadCVPage() {
               </div>
 
               {/* Puntuación IA */}
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
                 <div className="text-center">
                   <h3 className="text-lg font-medium text-gray-900 mb-4">
                     Puntuación de tu CV
@@ -438,7 +438,7 @@ export default function UploadCVPage() {
 
               {/* Información extraída */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
                   <h4 className="text-lg font-medium text-gray-900 mb-4">
                     Información Profesional
                   </h4>
@@ -458,7 +458,7 @@ export default function UploadCVPage() {
                   </dl>
                 </div>
 
-                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
                   <h4 className="text-lg font-medium text-gray-900 mb-4">
                     Habilidades Detectadas
                   </h4>
@@ -477,7 +477,7 @@ export default function UploadCVPage() {
 
               {/* Fortalezas y áreas de mejora */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
                   <h4 className="text-lg font-medium text-green-900 mb-4">
                     Fortalezas
                   </h4>
@@ -493,7 +493,7 @@ export default function UploadCVPage() {
                   </ul>
                 </div>
 
-                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
                   <h4 className="text-lg font-medium text-orange-900 mb-4">
                     Áreas de Mejora
                   </h4>

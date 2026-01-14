@@ -137,7 +137,8 @@ export default function JobDetailPage() {
     setApplying(true)
 
     try {
-      const { error } = await supabase
+      // Paso 1: Crear la aplicación
+      const { data: applicationData, error: insertError } = await supabase
         .from('job_applications')
         .insert({
           job_id: jobId,
@@ -145,12 +146,95 @@ export default function JobDetailPage() {
           cv_id: selectedCVId,
           status: 'pending'
         })
+        .select()
+        .single()
 
-      if (error) throw error
+      if (insertError) throw insertError
 
-      setHasApplied(true)
-      setShowApplyModal(false)
-      alert('¡Aplicación enviada exitosamente!')
+      // Paso 2: Analizar automáticamente con IA
+      try {
+        // Obtener datos del CV
+        const { data: cvData, error: cvError } = await supabase
+          .from('user_cvs')
+          .select('cv_text, file_name, summary, skills, experience_years, current_position, candidate_name, candidate_email')
+          .eq('id', selectedCVId)
+          .single()
+
+        if (!cvError && cvData) {
+          // Construir texto del CV
+          const cvText = `
+INFORMACIÓN DEL CANDIDATO
+Nombre: ${cvData.candidate_name || 'No especificado'}
+Email: ${cvData.candidate_email || 'No especificado'}
+Posición actual: ${cvData.current_position || 'No especificada'}
+Años de experiencia: ${cvData.experience_years || 0}
+
+HABILIDADES
+${cvData.skills && cvData.skills.length > 0 ? cvData.skills.join(', ') : 'No especificadas'}
+
+RESUMEN PROFESIONAL
+${cvData.summary || 'El candidato ha presentado su currículum para evaluación.'}
+
+ARCHIVO CV
+Nombre del archivo: ${cvData.file_name || 'No disponible'}
+          `.trim()
+
+          // Llamar a la API de análisis
+          const analysisResponse = await fetch('/api/analyze-cv', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              cv_text: cvText,
+              job_description: vacancy?.description || '',
+              required_skills: vacancy?.skills_required || [],
+              required_experience: vacancy?.experience_years || 0
+            })
+          })
+
+          if (analysisResponse.ok) {
+            const aiResult = await analysisResponse.json()
+            
+            // Guardar resultados en la aplicación (para uso del candidato)
+            await supabase
+              .from('job_applications')
+              .update({
+                ai_score: aiResult.score || 0,
+                match_percentage: aiResult.match_percentage || 0
+              })
+              .eq('id', applicationData.id)
+
+            // Mostrar feedback al candidato
+            const matchPercentage = aiResult.match_percentage || 0
+            const califica = matchPercentage >= 60
+            
+            setHasApplied(true)
+            setShowApplyModal(false)
+            
+            alert(
+              '¡Aplicación enviada exitosamente!\n\n' +
+              `Compatibilidad con el puesto: ${matchPercentage}%\n\n` +
+              (califica 
+                ? '✓ Tu perfil es compatible con los requisitos del puesto.'
+                : '⚠ Tu perfil no cumple completamente con los requisitos. La empresa revisará tu aplicación.')
+            )
+          } else {
+            // Si falla el análisis, solo informar que se envió la aplicación
+            setHasApplied(true)
+            setShowApplyModal(false)
+            alert('¡Aplicación enviada exitosamente!')
+          }
+        } else {
+          setHasApplied(true)
+          setShowApplyModal(false)
+          alert('¡Aplicación enviada exitosamente!')
+        }
+      } catch (analysisError) {
+        console.error('Error en análisis automático:', analysisError)
+        // Continuar aunque falle el análisis
+        setHasApplied(true)
+        setShowApplyModal(false)
+        alert('¡Aplicación enviada exitosamente!')
+      }
     } catch (error: any) {
       console.error('Error applying:', error)
       alert('Error al enviar la aplicación: ' + error.message)

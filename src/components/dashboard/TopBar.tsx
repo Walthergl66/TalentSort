@@ -32,7 +32,7 @@ export default function TopBar({ user, profile }: TopBarProps) {
   }
 
   return (
-    <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-30">
+    <header className="fixed top-0 left-0 right-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 z-30">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Lado izquierdo - Logo y nombre del proyecto */}
@@ -42,7 +42,7 @@ export default function TopBar({ user, profile }: TopBarProps) {
               alt="TalentSort Logo" 
               className="h-8 w-8 object-contain"
             />
-            <h1 className="text-xl font-bold text-gray-900">
+            <h1 className="text-xl font-bold text-gray-900 dark:text-white">
               TalentSort
             </h1>
           </div>
@@ -51,7 +51,7 @@ export default function TopBar({ user, profile }: TopBarProps) {
           <div className="flex items-center space-x-4">
             {/* Botón de notificaciones */}
             <button
-              className="relative p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className="relative p-2 text-gray-600 hover:text-gray-900 dark:text-white hover:bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
               aria-label={t('notifications')}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -74,12 +74,12 @@ export default function TopBar({ user, profile }: TopBarProps) {
                   </span>
                 </div>
                 <div className="hidden md:block text-left">
-                  <p className="text-sm font-medium text-gray-900">
+                  <p className="text-sm font-medium text-gray-900 dark:text-white">
                     {profile?.role === 'company'
                       ? (profile?.company_name || tpr('company'))
                       : (profile?.full_name || tpr('user'))}
                   </p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
                     {profile?.role === 'company' ? tpr('company') : tpr('user')}
                   </p>
                 </div>
@@ -89,17 +89,17 @@ export default function TopBar({ user, profile }: TopBarProps) {
               </button>
 
               {/* Dropdown del perfil */}
-              <div className="absolute right-0 mt-0 w-48 bg-white rounded-md shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 pointer-events-none group-hover:pointer-events-auto">
+              <div className="absolute right-0 mt-0 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg border border-gray-200 dark:border-gray-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 pointer-events-none group-hover:pointer-events-auto">
                 <div className="py-1 mt-2">
                   <button
                     onClick={() => router.push('/dashboard/settings')}
-                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100"
                   >
                     {tp('settings')}
                   </button>
                   <button
                     onClick={() => router.push('/dashboard/profile')}
-                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100"
                   >
                     {t('profile')}
                   </button>

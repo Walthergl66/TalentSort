@@ -154,7 +154,7 @@ export default function OverviewStats() {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {[...Array(6)].map((_, index) => (
-          <div key={index} className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div key={index} className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
             <div className="animate-pulse">
               <div className="flex items-center">
                 <div className="w-12 h-12 bg-gray-200 rounded-lg"></div>
@@ -175,7 +175,7 @@ export default function OverviewStats() {
       {statItems.map((item, index) => (
         <div
           key={index}
-          className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200"
+          className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-shadow duration-200"
         >
           <div className="flex items-center">
             <div className="flex-shrink-0">
@@ -186,9 +186,9 @@ export default function OverviewStats() {
               </div>
             </div>
             <div className="ml-4 flex-1">
-              <p className="text-sm font-medium text-gray-600">{item.name}</p>
+              <p className="text-sm font-medium text-gray-600 dark:text-gray-400">{item.name}</p>
               <div className="flex items-baseline">
-                <p className="text-2xl font-semibold text-gray-900">
+                <p className="text-2xl font-semibold text-gray-900 dark:text-white">
                   {item.value}
                 </p>
                 <span
@@ -197,7 +197,7 @@ export default function OverviewStats() {
                       ? 'text-green-600'
                       : item.changeType === 'negative'
                       ? 'text-red-600'
-                      : 'text-gray-500'
+                      : 'text-gray-500 dark:text-gray-400'
                   }`}
                 >
                   {item.change}

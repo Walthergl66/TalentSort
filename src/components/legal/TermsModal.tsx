@@ -14,13 +14,13 @@ export default function TermsModal({ isOpen, onClose }: TermsModalProps) {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto">
       <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full my-8 max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between rounded-t-2xl">
-          <h2 className="text-2xl font-bold text-gray-800">
+        <div className="sticky top-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4 flex items-center justify-between rounded-t-2xl">
+          <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200">
             📜 Términos y Condiciones
           </h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
+            className="text-gray-400 hover:text-gray-600 dark:text-gray-400 transition-colors"
             title="Cerrar"
           >
             <X className="w-6 h-6" />
@@ -28,7 +28,7 @@ export default function TermsModal({ isOpen, onClose }: TermsModalProps) {
         </div>
 
         {/* Contenido */}
-        <div className="px-6 py-6 space-y-6 text-gray-700">
+        <div className="px-6 py-6 space-y-6 text-gray-700 dark:text-gray-300">
           {/* Última actualización */}
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
             <p className="text-sm text-blue-800">
@@ -38,7 +38,7 @@ export default function TermsModal({ isOpen, onClose }: TermsModalProps) {
 
           {/* 1. Aceptación de términos */}
           <section>
-            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3">
               1. Aceptación de Términos
             </h3>
             <p className="mb-2">
@@ -47,7 +47,7 @@ export default function TermsModal({ isOpen, onClose }: TermsModalProps) {
               por estos Términos y Condiciones. Si no está de acuerdo con alguna parte 
               de estos términos, no debe utilizar nuestros servicios.
             </p>
-            <p className="text-sm italic text-gray-600">
+            <p className="text-sm italic text-gray-600 dark:text-gray-400">
               El uso continuado de la Plataforma constituye la aceptación de cualquier 
               modificación a estos términos.
             </p>
@@ -55,7 +55,7 @@ export default function TermsModal({ isOpen, onClose }: TermsModalProps) {
 
           {/* 2. Descripción del servicio */}
           <section>
-            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3">
               2. Descripción del Servicio
             </h3>
             <p className="mb-3">
@@ -72,12 +72,12 @@ export default function TermsModal({ isOpen, onClose }: TermsModalProps) {
 
           {/* 3. Registro y cuenta de usuario */}
           <section>
-            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3">
               3. Registro y Cuenta de Usuario
             </h3>
             <div className="space-y-3">
               <div>
-                <h4 className="font-semibold text-gray-700 mb-1">3.1 Requisitos</h4>
+                <h4 className="font-semibold text-gray-700 dark:text-gray-300 mb-1">3.1 Requisitos</h4>
                 <p>
                   Para utilizar la Plataforma, debe crear una cuenta proporcionando 
                   información precisa, completa y actualizada. Usted es responsable de:
@@ -89,7 +89,7 @@ export default function TermsModal({ isOpen, onClose }: TermsModalProps) {
                 </ul>
               </div>
               <div>
-                <h4 className="font-semibold text-gray-700 mb-1">3.2 Elegibilidad</h4>
+                <h4 className="font-semibold text-gray-700 dark:text-gray-300 mb-1">3.2 Elegibilidad</h4>
                 <p>
                   Debe ser mayor de 18 años y tener capacidad legal para celebrar 
                   contratos vinculantes.
@@ -100,7 +100,7 @@ export default function TermsModal({ isOpen, onClose }: TermsModalProps) {
 
           {/* 4. Uso aceptable */}
           <section>
-            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3">
               4. Uso Aceptable
             </h3>
             <p className="mb-3">Usted se compromete a NO:</p>
@@ -117,7 +117,7 @@ export default function TermsModal({ isOpen, onClose }: TermsModalProps) {
 
           {/* 5. Propiedad intelectual */}
           <section>
-            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3">
               5. Propiedad Intelectual
             </h3>
             <p className="mb-2">
@@ -135,7 +135,7 @@ export default function TermsModal({ isOpen, onClose }: TermsModalProps) {
 
           {/* 6. Contenido del usuario */}
           <section>
-            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3">
               6. Contenido del Usuario
             </h3>
             <div className="space-y-3">
@@ -153,7 +153,7 @@ export default function TermsModal({ isOpen, onClose }: TermsModalProps) {
 
           {/* 7. Privacidad y protección de datos */}
           <section>
-            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3">
               7. Privacidad y Protección de Datos
             </h3>
             <p>
@@ -175,7 +175,7 @@ export default function TermsModal({ isOpen, onClose }: TermsModalProps) {
 
           {/* 8. Terminación */}
           <section>
-            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3">
               8. Terminación de Cuenta
             </h3>
             <div className="space-y-2">
@@ -198,7 +198,7 @@ export default function TermsModal({ isOpen, onClose }: TermsModalProps) {
 
           {/* 9. Limitación de responsabilidad */}
           <section>
-            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3">
               9. Limitación de Responsabilidad
             </h3>
             <div className="bg-gray-50 border border-gray-300 rounded-lg p-4 space-y-2">
@@ -222,7 +222,7 @@ export default function TermsModal({ isOpen, onClose }: TermsModalProps) {
 
           {/* 10. Modificaciones */}
           <section>
-            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3">
               10. Modificaciones a los Términos
             </h3>
             <p>
@@ -235,7 +235,7 @@ export default function TermsModal({ isOpen, onClose }: TermsModalProps) {
 
           {/* 11. Ley aplicable */}
           <section>
-            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3">
               11. Ley Aplicable y Jurisdicción
             </h3>
             <p>
@@ -246,7 +246,7 @@ export default function TermsModal({ isOpen, onClose }: TermsModalProps) {
 
           {/* 12. Contacto */}
           <section>
-            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3">
               12. Contacto
             </h3>
             <p className="mb-2">
@@ -263,7 +263,7 @@ export default function TermsModal({ isOpen, onClose }: TermsModalProps) {
 
           {/* Resumen ejecutivo */}
           <section className="border-t-2 border-gray-200 pt-6">
-            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3">
               Resumen Ejecutivo
             </h3>
             <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-4">

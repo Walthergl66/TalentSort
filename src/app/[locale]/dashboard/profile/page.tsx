@@ -369,7 +369,7 @@ export default function ProfilePage() {
               </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <LabelWithTooltip label="Nombre de la Empresa" tooltip="Nombre legal o comercial de la empresa" required htmlFor="company_name" />
@@ -378,7 +378,7 @@ export default function ProfilePage() {
                     type="text"
                     value={profile.full_name || ''}
                     onChange={(e) => setProfile((prev: any) => ({ ...prev, full_name: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                     placeholder="Ej: TalentSort S.A. de C.V."
                   />
                 </div>
@@ -389,7 +389,7 @@ export default function ProfilePage() {
                     type="email"
                     value={profile.email || ''}
                     onChange={(e) => setProfile((prev: any) => ({ ...prev, email: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                     placeholder="empresa@email.com"
                   />
                 </div>
@@ -400,7 +400,7 @@ export default function ProfilePage() {
                     type="tel"
                     value={profile.phone || ''}
                     onChange={(e) => setProfile((prev: any) => ({ ...prev, phone: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                     placeholder="+52 123 456 7890"
                   />
                 </div>
@@ -411,7 +411,7 @@ export default function ProfilePage() {
                     type="text"
                     value={profile.location || ''}
                     onChange={(e) => setProfile((prev: any) => ({ ...prev, location: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                     placeholder="Ciudad, País"
                   />
                 </div>
@@ -425,7 +425,7 @@ export default function ProfilePage() {
                       ...prev, 
                       social_links: { ...prev.social_links, portfolio: e.target.value }
                     }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                     placeholder="https://www.empresa.com"
                   />
                 </div>
@@ -439,7 +439,7 @@ export default function ProfilePage() {
                       ...prev, 
                       social_links: { ...prev.social_links, linkedin: e.target.value }
                     }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                     placeholder="https://linkedin.com/company/..."
                   />
                 </div>
@@ -450,7 +450,7 @@ export default function ProfilePage() {
                     value={profile.bio || ''}
                     onChange={(e) => setProfile((prev: any) => ({ ...prev, bio: e.target.value }))}
                     rows={4}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                     placeholder="Describe la misión, visión y valores de tu empresa..."
                   />
                 </div>
@@ -529,7 +529,7 @@ export default function ProfilePage() {
           </div>
 
           {/* Contenido de las tabs */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200">
             {/* Tab: Resumen */}
             {activeTab === 'overview' && (
               <div className="p-6 space-y-6">
@@ -667,7 +667,7 @@ export default function ProfilePage() {
                       type="text"
                       value={profile.full_name || ''}
                       onChange={(e) => setProfile((prev: any) => ({ ...prev, full_name: e.target.value }))}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                       placeholder="Juan Pérez"
                     />
                   </div>
@@ -678,7 +678,7 @@ export default function ProfilePage() {
                       type="text"
                       value={profile.title || ''}
                       onChange={(e) => setProfile((prev: any) => ({ ...prev, title: e.target.value }))}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                       placeholder="Desarrollador Full Stack"
                     />
                   </div>
@@ -689,7 +689,7 @@ export default function ProfilePage() {
                       type="email"
                       value={profile.email || ''}
                       onChange={(e) => setProfile((prev: any) => ({ ...prev, email: e.target.value }))}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                       placeholder="correo@ejemplo.com"
                     />
                   </div>
@@ -700,7 +700,7 @@ export default function ProfilePage() {
                       type="tel"
                       value={profile.phone || ''}
                       onChange={(e) => setProfile((prev: any) => ({ ...prev, phone: e.target.value }))}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                       placeholder="+52 123 456 7890"
                     />
                   </div>
@@ -711,7 +711,7 @@ export default function ProfilePage() {
                       type="text"
                       value={profile.location || ''}
                       onChange={(e) => setProfile((prev: any) => ({ ...prev, location: e.target.value }))}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                       placeholder="Ciudad de México, México"
                     />
                   </div>
@@ -724,7 +724,7 @@ export default function ProfilePage() {
                       max="50"
                       value={profile.experience_years || 0}
                       onChange={(e) => setProfile((prev: any) => ({ ...prev, experience_years: parseInt(e.target.value) || 0 }))}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                     />
                   </div>
                   <div className="md:col-span-2">
@@ -734,7 +734,7 @@ export default function ProfilePage() {
                       value={profile.bio || ''}
                       onChange={(e) => setProfile((prev: any) => ({ ...prev, bio: e.target.value }))}
                       rows={4}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                       placeholder="Describe tu experiencia, logros y lo que te apasiona..."
                     />
                   </div>
@@ -754,7 +754,7 @@ export default function ProfilePage() {
                           ...prev, 
                           social_links: { ...prev.social_links, linkedin: e.target.value }
                         }))}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                         placeholder="https://linkedin.com/in/..."
                       />
                     </div>
@@ -768,7 +768,7 @@ export default function ProfilePage() {
                           ...prev, 
                           social_links: { ...prev.social_links, github: e.target.value }
                         }))}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                         placeholder="https://github.com/..."
                       />
                     </div>
@@ -782,7 +782,7 @@ export default function ProfilePage() {
                           ...prev, 
                           social_links: { ...prev.social_links, portfolio: e.target.value }
                         }))}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                         placeholder="https://miportafolio.com"
                       />
                     </div>
@@ -796,7 +796,7 @@ export default function ProfilePage() {
                           ...prev, 
                           social_links: { ...prev.social_links, twitter: e.target.value }
                         }))}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                         placeholder="https://twitter.com/..."
                       />
                     </div>
@@ -828,53 +828,53 @@ export default function ProfilePage() {
                       <div key={index} className="border border-gray-200 rounded-lg p-4">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Institución</label>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Institución</label>
                             <input
                               type="text"
                               value={edu.institution || ''}
                               onChange={(e) => updateEducation(index, 'institution', e.target.value)}
-                              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                               placeholder="Universidad o institución"
                             />
                           </div>
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Título</label>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Título</label>
                             <input
                               type="text"
                               value={edu.degree || ''}
                               onChange={(e) => updateEducation(index, 'degree', e.target.value)}
-                              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                               placeholder="Licenciatura, Maestría, etc."
                             />
                           </div>
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Campo de estudio</label>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Campo de estudio</label>
                             <input
                               type="text"
                               value={edu.field || ''}
                               onChange={(e) => updateEducation(index, 'field', e.target.value)}
-                              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                               placeholder="Ingeniería en Sistemas, etc."
                             />
                           </div>
                           <div className="flex space-x-4">
                             <div className="flex-1">
-                              <label className="block text-sm font-medium text-gray-700 mb-1">Año inicio</label>
+                              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Año inicio</label>
                               <input
                                 type="text"
                                 value={edu.year_start || ''}
                                 onChange={(e) => updateEducation(index, 'year_start', e.target.value)}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                                 placeholder="2018"
                               />
                             </div>
                             <div className="flex-1">
-                              <label className="block text-sm font-medium text-gray-700 mb-1">Año fin</label>
+                              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Año fin</label>
                               <input
                                 type="text"
                                 value={edu.year_end || ''}
                                 onChange={(e) => updateEducation(index, 'year_end', e.target.value)}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                                 placeholder="2022"
                                 disabled={edu.current}
                               />
@@ -1014,14 +1014,14 @@ export default function ProfilePage() {
                 <h2 className="text-lg font-semibold text-gray-900">Preferencias Laborales</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Tipo de empleo</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tipo de empleo</label>
                     <select
                       value={profile.preferences?.job_type || 'full-time'}
                       onChange={(e) => setProfile((prev: any) => ({ 
                         ...prev, 
                         preferences: { ...prev.preferences, job_type: e.target.value }
                       }))}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                     >
                       <option value="full-time">Tiempo completo</option>
                       <option value="part-time">Medio tiempo</option>
@@ -1031,14 +1031,14 @@ export default function ProfilePage() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Disponibilidad</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Disponibilidad</label>
                     <select
                       value={profile.preferences?.availability || 'immediate'}
                       onChange={(e) => setProfile((prev: any) => ({ 
                         ...prev, 
                         preferences: { ...prev.preferences, availability: e.target.value }
                       }))}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                     >
                       <option value="immediate">Inmediata</option>
                       <option value="2-weeks">2 semanas</option>
@@ -1047,7 +1047,7 @@ export default function ProfilePage() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Expectativa salarial</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Expectativa salarial</label>
                     <input
                       type="text"
                       value={profile.preferences?.salary_expectation || ''}
@@ -1055,7 +1055,7 @@ export default function ProfilePage() {
                         ...prev, 
                         preferences: { ...prev.preferences, salary_expectation: e.target.value }
                       }))}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                       placeholder="$30,000 - $40,000 MXN"
                     />
                   </div>

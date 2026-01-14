@@ -195,7 +195,7 @@ export default function SettingsPage() {
           <div className="flex flex-col lg:flex-row gap-6">
             {/* Sidebar de secciones */}
             <div className="w-full lg:w-64 flex-shrink-0">
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                 {sections.map((section) => (
                   <button
                     key={section.id}
@@ -215,7 +215,7 @@ export default function SettingsPage() {
 
             {/* Contenido principal */}
             <div className="flex-1">
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
                 {/* Información Personal */}
                 {activeSection === 'personal' && (
                   <div className="space-y-6">
@@ -259,40 +259,40 @@ export default function SettingsPage() {
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                           Teléfono
                         </label>
                         <input
                           type="tel"
                           value={personalInfo.phone}
                           onChange={(e) => setPersonalInfo({ ...personalInfo, phone: e.target.value })}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                           placeholder="+52 123 456 7890"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                           Ubicación
                         </label>
                         <input
                           type="text"
                           value={personalInfo.location}
                           onChange={(e) => setPersonalInfo({ ...personalInfo, location: e.target.value })}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                           placeholder="Ciudad, País"
                         />
                       </div>
 
                       <div className="md:col-span-2">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                           Descripción / Bio
                         </label>
                         <textarea
                           value={personalInfo.bio}
                           onChange={(e) => setPersonalInfo({ ...personalInfo, bio: e.target.value })}
                           rows={4}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                           placeholder="Cuéntanos sobre ti..."
                         />
                       </div>

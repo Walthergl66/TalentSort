@@ -13,6 +13,7 @@ export default function CandidateApplicationsPage() {
   const [user, setUser] = useState<any>(null);
   const [applications, setApplications] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [cvsData, setCvsData] = useState<any[]>([]);
   const [analyzingId, setAnalyzingId] = useState<string | null>(null);
@@ -29,6 +30,13 @@ export default function CandidateApplicationsPage() {
     }
     setUser(session.user);
     await fetchApplications(session.user.id);
+  };
+
+  const handleRefresh = async () => {
+    if (!user?.id) return;
+    setRefreshing(true);
+    await fetchApplications(user.id);
+    setRefreshing(false);
   };
 
   const fetchApplications = async (userId: string) => {
@@ -334,20 +342,37 @@ export default function CandidateApplicationsPage() {
     }
 
     try {
-      const { error } = await supabase
+      console.log('[cancelar] Intentando cancelar aplicación:', applicationId);
+      console.log('[cancelar] Usuario ID:', user?.id);
+      
+      const { data, error } = await supabase
         .from('job_applications')
         .delete()
         .eq('id', applicationId)
-        .eq('candidate_id', user.id); // Seguridad adicional
+        .eq('candidate_id', user.id)
+        .select(); // Agregar select para ver qué se eliminó
 
-      if (error) throw error;
+      console.log('[cancelar] Resultado de delete:', { data, error });
+
+      if (error) {
+        console.error('[cancelar] Error de Supabase:', error);
+        throw error;
+      }
+
+      if (!data || data.length === 0) {
+        console.warn('[cancelar] No se eliminó ningún registro. Posible problema de permisos RLS.');
+        alert('No se pudo cancelar la postulación. Esto puede ser un problema de permisos. Por favor, contacta al soporte.');
+        return;
+      }
 
       // Actualizar el estado local
       setApplications(applications.filter(app => app.id !== applicationId));
       alert('Postulación cancelada exitosamente');
-    } catch (error) {
-      console.error('Error al cancelar postulación:', error);
-      alert('Error al cancelar la postulación. Por favor, intenta de nuevo.');
+      
+      console.log('[cancelar] Postulación cancelada exitosamente');
+    } catch (error: any) {
+      console.error('[cancelar] Error al cancelar postulación:', error);
+      alert(`Error al cancelar la postulación: ${error.message || 'Error desconocido'}`);
     }
   };
 
@@ -368,9 +393,26 @@ export default function CandidateApplicationsPage() {
       <DashboardLayout user={user}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-              Mis Postulaciones
-            </h1>
+            <div className="flex items-center justify-between mb-2">
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+                Mis Postulaciones
+              </h1>
+              <button
+                onClick={handleRefresh}
+                disabled={refreshing}
+                className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium rounded-lg transition-colors"
+              >
+                <svg 
+                  className={`w-5 h-5 ${refreshing ? 'animate-spin' : ''}`} 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                {refreshing ? 'Actualizando...' : 'Actualizar'}
+              </button>
+            </div>
             <p className="text-gray-600 dark:text-gray-400">
               Seguimiento del estado de tus aplicaciones
             </p>

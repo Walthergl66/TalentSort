@@ -14,14 +14,14 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto">
       <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full my-8 max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between rounded-t-2xl">
-          <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
+        <div className="sticky top-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4 flex items-center justify-between rounded-t-2xl">
+          <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 flex items-center gap-2">
             <Shield className="w-7 h-7 text-indigo-600" />
             Política de Privacidad
           </h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
+            className="text-gray-400 hover:text-gray-600 dark:text-gray-400 transition-colors"
             title="Cerrar"
           >
             <X className="w-6 h-6" />
@@ -29,7 +29,7 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
         </div>
 
         {/* Contenido */}
-        <div className="px-6 py-6 space-y-6 text-gray-700">
+        <div className="px-6 py-6 space-y-6 text-gray-700 dark:text-gray-300">
           {/* Última actualización */}
           <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
             <p className="text-sm text-indigo-800">
@@ -43,14 +43,14 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
 
           {/* 1. Información que recopilamos */}
           <section>
-            <h3 className="text-xl font-semibold text-gray-800 mb-3 flex items-center gap-2">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3 flex items-center gap-2">
               <Database className="w-5 h-5 text-indigo-600" />
               1. Información que Recopilamos
             </h3>
             
             <div className="space-y-4">
               <div className="bg-gray-50 rounded-lg p-4">
-                <h4 className="font-semibold text-gray-700 mb-2">
+                <h4 className="font-semibold text-gray-700 dark:text-gray-300 mb-2">
                   1.1 Información que usted proporciona directamente:
                 </h4>
                 <ul className="list-disc list-inside space-y-1 ml-4">
@@ -63,7 +63,7 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
               </div>
 
               <div className="bg-gray-50 rounded-lg p-4">
-                <h4 className="font-semibold text-gray-700 mb-2">
+                <h4 className="font-semibold text-gray-700 dark:text-gray-300 mb-2">
                   1.2 Información recopilada automáticamente:
                 </h4>
                 <ul className="list-disc list-inside space-y-1 ml-4">
@@ -78,7 +78,7 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
 
           {/* 2. Cómo usamos su información */}
           <section>
-            <h3 className="text-xl font-semibold text-gray-800 mb-3 flex items-center gap-2">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3 flex items-center gap-2">
               <Eye className="w-5 h-5 text-indigo-600" />
               2. Cómo Usamos su Información
             </h3>
@@ -87,7 +87,7 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
               <p>Utilizamos su información personal para:</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div className="border border-gray-200 rounded-lg p-3">
-                  <div className="font-semibold text-gray-700 mb-1">Servicios principales</div>
+                  <div className="font-semibold text-gray-700 dark:text-gray-300 mb-1">Servicios principales</div>
                   <ul className="text-sm space-y-1">
                     <li>• Crear y gestionar su cuenta</li>
                     <li>• Procesar CVs con IA</li>
@@ -96,7 +96,7 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
                   </ul>
                 </div>
                 <div className="border border-gray-200 rounded-lg p-3">
-                  <div className="font-semibold text-gray-700 mb-1">Mejora del servicio</div>
+                  <div className="font-semibold text-gray-700 dark:text-gray-300 mb-1">Mejora del servicio</div>
                   <ul className="text-sm space-y-1">
                     <li>• Analizar patrones de uso</li>
                     <li>• Mejorar algoritmos de IA</li>
@@ -105,7 +105,7 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
                   </ul>
                 </div>
                 <div className="border border-gray-200 rounded-lg p-3">
-                  <div className="font-semibold text-gray-700 mb-1">Comunicaciones</div>
+                  <div className="font-semibold text-gray-700 dark:text-gray-300 mb-1">Comunicaciones</div>
                   <ul className="text-sm space-y-1">
                     <li>• Confirmaciones de registro</li>
                     <li>• Recuperación de contraseña</li>
@@ -114,7 +114,7 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
                   </ul>
                 </div>
                 <div className="border border-gray-200 rounded-lg p-3">
-                  <div className="font-semibold text-gray-700 mb-1">Cumplimiento legal</div>
+                  <div className="font-semibold text-gray-700 dark:text-gray-300 mb-1">Cumplimiento legal</div>
                   <ul className="text-sm space-y-1">
                     <li>• Cumplir con leyes aplicables</li>
                     <li>• Responder a solicitudes legales</li>
@@ -128,7 +128,7 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
 
           {/* 3. Compartir información */}
           <section>
-            <h3 className="text-xl font-semibold text-gray-800 mb-3 flex items-center gap-2">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3 flex items-center gap-2">
               <UserCheck className="w-5 h-5 text-indigo-600" />
               3. Compartir su Información
             </h3>
@@ -168,7 +168,7 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
 
           {/* 4. Seguridad de datos */}
           <section>
-            <h3 className="text-xl font-semibold text-gray-800 mb-3 flex items-center gap-2">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3 flex items-center gap-2">
               <Lock className="w-5 h-5 text-indigo-600" />
               4. Seguridad de sus Datos
             </h3>
@@ -209,7 +209,7 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
                   </ul>
                 </div>
               </div>
-              <p className="text-xs text-gray-600 italic mt-3">
+              <p className="text-xs text-gray-600 dark:text-gray-400 italic mt-3">
                 Ningún sistema es 100% seguro. Si detecta actividad sospechosa, contáctenos 
                 inmediatamente.
               </p>
@@ -218,7 +218,7 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
 
           {/* 5. Sus derechos */}
           <section>
-            <h3 className="text-xl font-semibold text-gray-800 mb-3 flex items-center gap-2">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3 flex items-center gap-2">
               <Globe className="w-5 h-5 text-indigo-600" />
               5. Sus Derechos (GDPR/CCPA)
             </h3>
@@ -226,27 +226,27 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
             <div className="space-y-3">
               <p className="font-semibold">Usted tiene derecho a:</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div className="bg-white border-2 border-indigo-200 rounded-lg p-3">
+                <div className="bg-white dark:bg-gray-800 border-2 border-indigo-200 dark:border-indigo-700 rounded-lg p-3">
                   <div className="font-semibold text-indigo-700 mb-1">Acceso</div>
                   <p className="text-sm">Solicitar una copia de todos sus datos personales</p>
                 </div>
-                <div className="bg-white border-2 border-purple-200 rounded-lg p-3">
+                <div className="bg-white dark:bg-gray-800 border-2 border-purple-200 dark:border-purple-700 rounded-lg p-3">
                   <div className="font-semibold text-purple-700 mb-1">Rectificación</div>
                   <p className="text-sm">Corregir información inexacta o incompleta</p>
                 </div>
-                <div className="bg-white border-2 border-red-200 rounded-lg p-3">
+                <div className="bg-white dark:bg-gray-800 border-2 border-red-200 dark:border-red-700 rounded-lg p-3">
                   <div className="font-semibold text-red-700 mb-1">Eliminación</div>
                   <p className="text-sm">Solicitar la eliminación de sus datos ("derecho al olvido")</p>
                 </div>
-                <div className="bg-white border-2 border-orange-200 rounded-lg p-3">
+                <div className="bg-white dark:bg-gray-800 border-2 border-orange-200 dark:border-orange-700 rounded-lg p-3">
                   <div className="font-semibold text-orange-700 mb-1">Oposición</div>
                   <p className="text-sm">Oponerse al procesamiento de sus datos</p>
                 </div>
-                <div className="bg-white border-2 border-green-200 rounded-lg p-3">
+                <div className="bg-white dark:bg-gray-800 border-2 border-green-200 dark:border-green-700 rounded-lg p-3">
                   <div className="font-semibold text-green-700 mb-1">Portabilidad</div>
                   <p className="text-sm">Recibir sus datos en formato estructurado (JSON/CSV)</p>
                 </div>
-                <div className="bg-white border-2 border-blue-200 rounded-lg p-3">
+                <div className="bg-white dark:bg-gray-800 border-2 border-blue-200 dark:border-blue-700 rounded-lg p-3">
                   <div className="font-semibold text-blue-700 mb-1">Restricción</div>
                   <p className="text-sm">Limitar el procesamiento de sus datos</p>
                 </div>
@@ -267,7 +267,7 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
 
           {/* 6. Cookies */}
           <section>
-            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3">
               6. Cookies y Tecnologías Similares
             </h3>
             
@@ -296,7 +296,7 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
 
           {/* 7. Retención de datos */}
           <section>
-            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3">
               7. Retención de Datos
             </h3>
             
@@ -316,7 +316,7 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
                   excepciones legales)
                 </li>
               </ul>
-              <p className="text-sm text-gray-600 mt-3">
+              <p className="text-sm text-gray-600 dark:text-gray-400 mt-3">
                 Los datos anonimizados pueden conservarse indefinidamente para análisis 
                 estadísticos.
               </p>
@@ -325,7 +325,7 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
 
           {/* 8. Transferencias internacionales */}
           <section>
-            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3">
               8. Transferencias Internacionales
             </h3>
             <p>
@@ -342,7 +342,7 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
 
           {/* 9. Menores de edad */}
           <section>
-            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3">
               9. Menores de Edad
             </h3>
             <div className="bg-red-50 border border-red-300 rounded-lg p-4">
@@ -359,7 +359,7 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
 
           {/* 10. Cambios a esta política */}
           <section>
-            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3">
               10. Cambios a esta Política
             </h3>
             <p>
@@ -372,7 +372,7 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
 
           {/* 11. Contacto */}
           <section>
-            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3">
               11. Contacto - Oficial de Protección de Datos
             </h3>
             <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
@@ -390,7 +390,7 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
 
           {/* Resumen ejecutivo */}
           <section className="border-t-2 border-gray-200 pt-6">
-            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3">
               Resumen Ejecutivo
             </h3>
             <div className="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg p-4">

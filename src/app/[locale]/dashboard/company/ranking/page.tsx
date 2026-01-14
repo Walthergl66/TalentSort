@@ -186,7 +186,7 @@ export default function RankingPage() {
             <select
               value={selectedVacancy}
               onChange={(e) => setSelectedVacancy(e.target.value)}
-              className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
             >
               <option value="all">Todas las vacantes ({candidates.length})</option>
               {vacancies.map((vacancy) => {
@@ -244,8 +244,8 @@ export default function RankingPage() {
                 >
                   <div className="flex items-start gap-4">
                     {/* Ranking Badge */}
-                    <div className="text-3xl font-bold">
-                      {getRankBadge(index)}
+                    <div className="text-3xl font-bold text-gray-900 dark:text-white">
+                      #{index + 1}
                     </div>
 
                     {/* Info del postulante */}

@@ -75,7 +75,7 @@ export default function SkillsAnalytics() {
 
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
         <div className="animate-pulse">
           <div className="h-6 bg-gray-200 rounded w-1/4 mb-6"></div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -96,9 +96,9 @@ export default function SkillsAnalytics() {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-lg font-semibold text-gray-900">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
           Análisis del Mercado Laboral
         </h3>
         <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">
@@ -109,7 +109,7 @@ export default function SkillsAnalytics() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Market Demand Chart */}
         <div>
-          <h4 className="text-sm font-medium text-gray-900 mb-4">
+          <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-4">
             Habilidades Más Demandadas en el Mercado
           </h4>
           <div className="space-y-3">
@@ -118,7 +118,7 @@ export default function SkillsAnalytics() {
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-1">
                     <div className="flex items-center space-x-2">
-                      <span className="text-sm font-medium text-gray-900">
+                      <span className="text-sm font-medium text-gray-900 dark:text-white">
                         {skill.name}
                       </span>
                       {skill.userHasSkill && (
@@ -130,7 +130,7 @@ export default function SkillsAnalytics() {
                         </span>
                       )}
                     </div>
-                    <span className="text-sm text-gray-500">
+                    <span className="text-sm text-gray-500 dark:text-gray-400">
                       {skill.demand} empleos
                     </span>
                   </div>
@@ -150,7 +150,7 @@ export default function SkillsAnalytics() {
 
         {/* Salary Potential */}
         <div>
-          <h4 className="text-sm font-medium text-gray-900 mb-4">
+          <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-4">
             Potencial Salarial por Habilidad
           </h4>
           <div className="space-y-4">
@@ -163,15 +163,15 @@ export default function SkillsAnalytics() {
                   <div className={`w-3 h-3 rounded-full ${
                     skill.userHasSkill ? 'bg-green-400' : 'bg-gray-400'
                   }`}></div>
-                  <span className="text-sm font-medium text-gray-900">
+                  <span className="text-sm font-medium text-gray-900 dark:text-white">
                     {skill.name}
                   </span>
                 </div>
                 <div className="text-right">
-                  <span className="text-sm font-semibold text-gray-900">
+                  <span className="text-sm font-semibold text-gray-900 dark:text-white">
                     ${skill.avgSalary.toLocaleString()}
                   </span>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
                     Salario promedio
                   </p>
                 </div>
@@ -185,34 +185,34 @@ export default function SkillsAnalytics() {
       <div className="mt-8 pt-6 border-t border-gray-200">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="text-center">
-            <p className="text-2xl font-semibold text-gray-900">
+            <p className="text-2xl font-semibold text-gray-900 dark:text-white">
               {skillsData.length}
             </p>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-600 dark:text-gray-400">
               Tus habilidades
             </p>
           </div>
           <div className="text-center">
-            <p className="text-2xl font-semibold text-gray-900">
+            <p className="text-2xl font-semibold text-gray-900 dark:text-white">
               {marketDemand.filter(skill => skill.userHasSkill).length}
             </p>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-600 dark:text-gray-400">
               Skills demandadas que tienes
             </p>
           </div>
           <div className="text-center">
-            <p className="text-2xl font-semibold text-gray-900">
+            <p className="text-2xl font-semibold text-gray-900 dark:text-white">
               {marketDemand.length > 0 ? Math.round(marketDemand.filter(skill => skill.userHasSkill).reduce((acc, skill) => acc + skill.avgSalary, 0) / Math.max(1, marketDemand.filter(skill => skill.userHasSkill).length)) : 0}
             </p>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-600 dark:text-gray-400">
               Potencial salarial promedio
             </p>
           </div>
           <div className="text-center">
-            <p className="text-2xl font-semibold text-gray-900">
+            <p className="text-2xl font-semibold text-gray-900 dark:text-white">
               {marketDemand.length - marketDemand.filter(skill => skill.userHasSkill).length}
             </p>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-600 dark:text-gray-400">
               Skills por aprender
             </p>
           </div>

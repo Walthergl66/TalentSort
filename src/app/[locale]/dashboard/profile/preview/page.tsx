@@ -149,7 +149,7 @@ export default function ProfilePreviewPage() {
           </div>
 
           {/* Profile Card */}
-          <div className="bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 overflow-hidden">
             {/* Header section */}
             <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-8 text-white">
               <div className="flex items-start justify-between">

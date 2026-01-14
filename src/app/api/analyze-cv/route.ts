@@ -48,9 +48,9 @@ export async function POST(request: NextRequest) {
     });
     
     console.log('[analyze-cv] Respuesta de IA recibida:', {
-      hasScore: !!respuesta.score,
+      hasScore: 'score' in respuesta,
       score: respuesta.score,
-      hasMatchPercentage: !!respuesta.match_percentage,
+      hasMatchPercentage: 'match_percentage' in respuesta,
       matchPercentage: respuesta.match_percentage,
       hasError: !!respuesta.error
     });

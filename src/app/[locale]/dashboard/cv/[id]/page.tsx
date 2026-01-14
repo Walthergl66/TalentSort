@@ -273,7 +273,7 @@ ${cv.areas_improvement && cv.areas_improvement.length > 0 ? cv.areas_improvement
           </div>
 
           {/* Puntuación principal */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-8 text-center">
             <div className="inline-flex items-center justify-center w-32 h-32 rounded-full bg-gradient-to-br from-blue-50 to-blue-100 mb-6">
               <span className={`text-4xl font-bold ${cv.ai_score >= 80 ? 'text-green-600' : cv.ai_score >= 60 ? 'text-yellow-600' : 'text-red-600'}`}>
                 {cv.ai_score}%
@@ -313,7 +313,7 @@ ${cv.areas_improvement && cv.areas_improvement.length > 0 ? cv.areas_improvement
 
           {/* Información profesional */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">
                 Información Profesional
               </h3>
@@ -341,7 +341,7 @@ ${cv.areas_improvement && cv.areas_improvement.length > 0 ? cv.areas_improvement
               </dl>
             </div>
 
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">
                 Información del Archivo
               </h3>
@@ -372,7 +372,7 @@ ${cv.areas_improvement && cv.areas_improvement.length > 0 ? cv.areas_improvement
 
           {/* Habilidades */}
           {cv.skills && cv.skills.length > 0 && (
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">
                 Habilidades Detectadas
               </h3>
@@ -391,7 +391,7 @@ ${cv.areas_improvement && cv.areas_improvement.length > 0 ? cv.areas_improvement
 
           {/* Resumen IA */}
           {cv.summary && (
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">
                 Resumen Generado por IA
               </h3>
@@ -404,7 +404,7 @@ ${cv.areas_improvement && cv.areas_improvement.length > 0 ? cv.areas_improvement
           {/* Fortalezas y Áreas de Mejora */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {cv.strengths && cv.strengths.length > 0 && (
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
                 <h3 className="text-lg font-semibold text-green-900 mb-4">
                   Fortalezas Identificadas
                 </h3>
@@ -422,7 +422,7 @@ ${cv.areas_improvement && cv.areas_improvement.length > 0 ? cv.areas_improvement
             )}
 
             {cv.areas_improvement && cv.areas_improvement.length > 0 && (
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
                 <h3 className="text-lg font-semibold text-orange-900 mb-4">
                   Áreas de Mejora
                 </h3>
