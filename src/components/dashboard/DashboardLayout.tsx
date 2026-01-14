@@ -15,14 +15,22 @@ export default function DashboardLayout({ children, user }: DashboardLayoutProps
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [profile, setProfile] = useState<any>(null)
 
+  const handleMouseEnter = () => {
+    setSidebarOpen(true)
+  }
+
+  const handleMouseLeave = () => {
+    setSidebarOpen(false)
+  }
+
   useEffect(() => {
     const fetchProfile = async () => {
       if (!user) return
 
       const { data, error } = await supabase
-        .from('profiles')
+        .from('user_profiles')
         .select('*')
-        .eq('id', user.id)
+        .eq('user_id', user.id)
         .single()
 
       if (data) {
@@ -39,21 +47,23 @@ export default function DashboardLayout({ children, user }: DashboardLayoutProps
       <TopBar 
         user={user} 
         profile={profile}
-        onMenuClick={() => setSidebarOpen(!sidebarOpen)}
       />
 
       <div className="flex">
-        {/* Navegación lateral */}
-        <NavigationMenu 
-          isOpen={sidebarOpen}
-          onClose={() => setSidebarOpen(false)}
-          profile={profile}
-        />
+        {/* Navegación lateral - Solo renderizar cuando el perfil esté cargado */}
+        {profile && (
+          <NavigationMenu 
+            isOpen={sidebarOpen}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            profile={profile}
+          />
+        )}
 
         {/* Contenido principal */}
         <main 
           className={`flex-1 transition-all duration-300 ease-in-out ${
-            sidebarOpen ? 'lg:ml-64' : 'lg:ml-16'
+            profile && sidebarOpen ? 'lg:ml-64' : profile ? 'lg:ml-16' : ''
           }`}
           role="main"
         >
@@ -66,15 +76,6 @@ export default function DashboardLayout({ children, user }: DashboardLayoutProps
 
       {/* Menú de accesibilidad */}
       <AccessibilityMenu />
-
-      {/* Overlay para móvil */}
-      {sidebarOpen && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
-          aria-hidden="true"
-        />
-      )}
     </div>
   )
 }

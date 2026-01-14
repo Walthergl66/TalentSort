@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl'
 import { useRouter, usePathname } from 'next/navigation'
 import LanguageSelector from './LanguageSelector'
 import SearchBar from './SearchBar'
+import ThemeToggle from './ThemeToggle'
 
 type HeaderProps = {
   onAuthClick?: () => void
@@ -26,7 +27,7 @@ export default function Header({ onAuthClick, showSearch = false, onSearch, sear
   }
 
   return (
-    <header className="bg-white border-b border-gray-100 sticky top-0 z-40 backdrop-blur-sm bg-white/95">
+    <header className="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 sticky top-0 z-40 backdrop-blur-sm bg-white/95 dark:bg-gray-800/95 transition-colors">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 gap-4">
           {/* Logo y Nombre */}
@@ -35,7 +36,7 @@ export default function Header({ onAuthClick, showSearch = false, onSearch, sear
               <span className="text-white font-bold text-sm">AI</span>
             </div>
             <div>
-              <h1 className="text-lg font-semibold text-gray-900">
+              <h1 className="text-lg font-semibold text-gray-900 dark:text-white">
                 {th('talentAI')}
               </h1>
             </div>
@@ -56,13 +57,13 @@ export default function Header({ onAuthClick, showSearch = false, onSearch, sear
           {/* Navegación y acciones */}
           <div className="flex items-center space-x-4">
             <nav className="hidden md:flex items-center space-x-6" aria-label={th('mainNavigation')}>
-              <a href="#audience" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
+              <a href="#audience" className="text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors">
                 {th('features')}
               </a>
-              <a href="#how-it-works" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
+              <a href="#how-it-works" className="text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors">
                 {th('howItWorks')}
               </a>
-              <a href="#cta" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
+              <a href="#cta" className="text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors">
                 {th('contact')}
               </a>
             </nav>
@@ -71,7 +72,7 @@ export default function Header({ onAuthClick, showSearch = false, onSearch, sear
             {showSearch && (
               <button
                 onClick={() => setIsSearchOpen(!isSearchOpen)}
-                className="lg:hidden p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+                className="lg:hidden p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
                 aria-label={th('openSearch')}
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -80,6 +81,7 @@ export default function Header({ onAuthClick, showSearch = false, onSearch, sear
               </button>
             )}
             
+            <ThemeToggle />
             <LanguageSelector />
 
             {/* Botón de autenticación */}
@@ -94,7 +96,7 @@ export default function Header({ onAuthClick, showSearch = false, onSearch, sear
 
         {/* Barra de búsqueda móvil (desplegable) */}
         {showSearch && isSearchOpen && (
-          <div className="lg:hidden pb-4 border-t border-gray-100 pt-4 mt-2">
+          <div className="lg:hidden pb-4 border-t border-gray-100 dark:border-gray-700 pt-4 mt-2">
             <SearchBar
               onSearch={handleSearch}
               suggestions={searchSuggestions}

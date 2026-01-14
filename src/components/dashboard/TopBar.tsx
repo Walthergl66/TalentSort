@@ -8,10 +8,9 @@ import { supabase } from '@/lib/supabase'
 interface TopBarProps {
   user: any
   profile: any
-  onMenuClick: () => void
 }
 
-export default function TopBar({ user, profile, onMenuClick }: TopBarProps) {
+export default function TopBar({ user, profile }: TopBarProps) {
   const router = useRouter()
   const pathname = usePathname()
   const t = useTranslations('topBar')
@@ -36,23 +35,11 @@ export default function TopBar({ user, profile, onMenuClick }: TopBarProps) {
     <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-30">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Lado izquierdo - Botón menú y título */}
-          <div className="flex items-center space-x-4">
-            <button
-              onClick={onMenuClick}
-              className="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-              aria-label={t('openMenu')}
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
-            
-            <div className="hidden sm:block">
-              <h1 className="text-lg font-semibold text-gray-900">
-                {getPageTitle()}
-              </h1>
-            </div>
+          {/* Lado izquierdo - Título */}
+          <div className="flex items-center">
+            <h1 className="text-lg font-semibold text-gray-900">
+              {getPageTitle()}
+            </h1>
           </div>
 
           {/* Lado derecho - Notificaciones y perfil */}
@@ -93,8 +80,8 @@ export default function TopBar({ user, profile, onMenuClick }: TopBarProps) {
               </button>
 
               {/* Dropdown del perfil */}
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-40">
-                <div className="py-1">
+              <div className="absolute right-0 mt-0 w-48 bg-white rounded-md shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 pointer-events-none group-hover:pointer-events-auto">
+                <div className="py-1 mt-2">
                   <button
                     onClick={() => router.push('/dashboard/settings')}
                     className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"

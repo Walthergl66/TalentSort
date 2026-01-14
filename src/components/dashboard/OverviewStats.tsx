@@ -45,7 +45,7 @@ export default function OverviewStats() {
 
         // Trabajos activos disponibles
         const { count: activeJobs } = await supabase
-          .from('job_positions')
+          .from('job_vacancies')
           .select('*', { count: 'exact', head: true })
           .eq('status', 'active')
 

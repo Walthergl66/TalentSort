@@ -17,46 +17,46 @@ export default function SkillsAnalytics() {
         // Obtener habilidades del perfil del usuario
         const { data: userProfile } = await supabase
           .from('user_profiles')
-          .select('skills, experience_level')
+          .select('languages')
           .eq('user_id', user.id)
           .single()
 
         // Obtener demanda del mercado (habilidades más buscadas en trabajos activos)
-        const { data: jobPositions } = await supabase
-          .from('job_positions')
-          .select('required_skills, preferred_skills, salary_range')
-          .eq('status', 'active')
+        const { data: jobVacancies } = await supabase
+          .from('job_vacancies')
+          .select('skills_required')
+          .eq('status', 'open')
 
-        if (!jobPositions) return
+        if (!jobVacancies || jobVacancies.length === 0) {
+          setMarketDemand([])
+          setLoading(false)
+          return
+        }
 
         // Procesar demanda del mercado
-        const demandStats: Record<string, { demand: number; avgSalary: number; totalSalary: number, jobs: number }> = {}
+        const demandStats: Record<string, { demand: number; jobs: number }> = {}
         
-        jobPositions.forEach(job => {
-          const allSkills = [...(job.required_skills || []), ...(job.preferred_skills || [])]
-          const salary = job.salary_range ? parseInt(job.salary_range.split('-')[0].replace(/\D/g, '')) : 0
+        jobVacancies.forEach(job => {
+          const skills = Array.isArray(job.skills_required) ? job.skills_required : []
           
-          allSkills.forEach((skill: string) => {
+          skills.forEach((skill: string) => {
             const normalizedSkill = skill.toLowerCase().trim()
             if (!demandStats[normalizedSkill]) {
-              demandStats[normalizedSkill] = { demand: 0, avgSalary: 0, totalSalary: 0, jobs: 0 }
+              demandStats[normalizedSkill] = { demand: 0, jobs: 0 }
             }
             demandStats[normalizedSkill].demand++
-            if (salary > 0) {
-              demandStats[normalizedSkill].totalSalary += salary
-              demandStats[normalizedSkill].jobs++
-            }
+            demandStats[normalizedSkill].jobs++
           })
         })
 
-        // Calcular promedios y crear array ordenado
+        // Crear array ordenado
+        const userSkills = Array.isArray(userProfile?.languages) ? userProfile.languages : []
         const demandArray = Object.entries(demandStats)
           .map(([skill, stats]) => ({
             name: skill.charAt(0).toUpperCase() + skill.slice(1),
             demand: stats.demand,
-            avgSalary: stats.jobs > 0 ? Math.round(stats.totalSalary / stats.jobs) : 0,
-            percentage: Math.round((stats.demand / jobPositions.length) * 100),
-            userHasSkill: userProfile?.skills?.includes(skill) || false
+            percentage: Math.round((stats.demand / jobVacancies.length) * 100),
+            userHasSkill: userSkills.some(s => s.toLowerCase() === skill)
           }))
           .sort((a, b) => b.demand - a.demand)
 

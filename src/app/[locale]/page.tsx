@@ -105,7 +105,7 @@ export default function Home() {
   ]
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900 transition-colors">
       <Header 
         onAuthClick={() => setShowAuthModal(true)} 
         showSearch={true}
@@ -117,17 +117,17 @@ export default function Home() {
         {/* Notificación de búsqueda no encontrada */}
         {searchNotFound && (
           <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 animate-fade-in-down">
-            <div className="bg-white border border-orange-200 rounded-lg shadow-xl px-6 py-4 flex items-center gap-3">
+            <div className="bg-white dark:bg-gray-800 border border-orange-200 dark:border-orange-700 rounded-lg shadow-xl px-6 py-4 flex items-center gap-3">
               <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               <div>
-                <p className="text-sm font-medium text-gray-900">No se encontró contenido</p>
-                <p className="text-xs text-gray-600">Intenta con: empresas, candidatos, IA, cómo funciona</p>
+                <p className="text-sm font-medium text-gray-900 dark:text-white">No se encontró contenido</p>
+                <p className="text-xs text-gray-600 dark:text-gray-400">Intenta con: empresas, candidatos, IA, cómo funciona</p>
               </div>
               <button 
                 onClick={() => setSearchNotFound(false)}
-                className="text-gray-400 hover:text-gray-600"
+                className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -207,20 +207,20 @@ export default function Home() {
         </section>
 
         {/* Video Section - Cómo hacer atractivo tu CV */}
-        <section className="py-20 bg-gradient-to-br from-blue-50 via-white to-purple-50">
+        <section className="py-20 bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
-              <div className="inline-flex items-center gap-2 bg-blue-100 border border-blue-200 rounded-full px-4 py-2 mb-4">
-                <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+              <div className="inline-flex items-center gap-2 bg-blue-100 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-full px-4 py-2 mb-4">
+                <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
                 </svg>
-                <span className="text-blue-700 text-sm font-semibold">{t('video.badge')}</span>
+                <span className="text-blue-700 dark:text-blue-300 text-sm font-semibold">{t('video.badge')}</span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
+              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">
                 {t('video.title')} 
                 <span className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent"> {t('video.titleHighlight')}</span>
               </h2>
-              <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+              <p className="text-xl text-slate-600 dark:text-gray-300 max-w-3xl mx-auto">
                 {t('video.subtitle')}
               </p>
             </div>
@@ -232,18 +232,18 @@ export default function Home() {
                 className="shadow-2xl"
               />
               
-              <div className="mt-8 bg-white rounded-2xl p-6 shadow-lg border border-slate-200">
+              <div className="mt-8 bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-slate-200 dark:border-gray-700">
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                    <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                  <div className="flex-shrink-0 w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                    <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                     </svg>
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-slate-900 mb-2">
+                    <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
                       {t('video.accessibilityNotice.title')}
                     </h3>
-                    <p className="text-slate-600" dangerouslySetInnerHTML={{ __html: t('video.accessibilityNotice.description').replace('subtítulos automáticos', '<strong>subtítulos automáticos</strong>').replace('automatic captions', '<strong>automatic captions</strong>') }} />
+                    <p className="text-slate-600 dark:text-gray-300" dangerouslySetInnerHTML={{ __html: t('video.accessibilityNotice.description').replace('subtítulos automáticos', '<strong>subtítulos automáticos</strong>').replace('automatic captions', '<strong>automatic captions</strong>') }} />
                   </div>
                 </div>
               </div>
@@ -255,36 +255,36 @@ export default function Home() {
         <section 
           ref={audienceRef}
           id="audience"
-          className={`py-20 bg-slate-50 transition-all duration-500 ${
-            highlightedSection === 'audience' ? 'ring-4 ring-yellow-400 ring-offset-4 bg-yellow-50' : ''
+          className={`py-20 bg-slate-50 dark:bg-gray-800 transition-all duration-500 ${
+            highlightedSection === 'audience' ? 'ring-4 ring-yellow-400 ring-offset-4 bg-yellow-50 dark:bg-yellow-900/20' : ''
           }`}
         >
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6">
                 {t('audience.title')}
                 <span className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent"> {t('audience.titleHighlight')}</span>
               </h2>
-              <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+              <p className="text-xl text-slate-600 dark:text-gray-300 max-w-3xl mx-auto">
                 {t('audience.subtitle')}
               </p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {/* Empresas */}
-              <div className="group relative bg-white rounded-3xl p-8 border border-slate-200 hover:border-blue-300 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="group relative bg-white dark:bg-gray-900 rounded-3xl p-8 border border-slate-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-50 dark:from-blue-900/20 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div className="relative z-10">
                   <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-blue-500/25">
                     <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                     </svg>
                   </div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-4">{t('audience.companies.title')}</h3>
-                  <p className="text-slate-600 mb-6">{t('audience.companies.description')}</p>
+                  <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">{t('audience.companies.title')}</h3>
+                  <p className="text-slate-600 dark:text-gray-300 mb-6">{t('audience.companies.description')}</p>
                   <ul className="space-y-3">
                     {t.raw('audience.companies.features').map((feature: string, index: number) => (
-                      <li key={index} className="flex items-center text-slate-700">
+                      <li key={index} className="flex items-center text-slate-700 dark:text-gray-300">
                         <svg className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
@@ -296,19 +296,19 @@ export default function Home() {
               </div>
 
               {/* Candidatos */}
-              <div className="group relative bg-white rounded-3xl p-8 border border-slate-200 hover:border-green-300 transition-all duration-300 hover:shadow-2xl hover:shadow-green-500/10">
-                <div className="absolute inset-0 bg-gradient-to-br from-green-50 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="group relative bg-white dark:bg-gray-900 rounded-3xl p-8 border border-slate-200 dark:border-gray-700 hover:border-green-300 dark:hover:border-green-600 transition-all duration-300 hover:shadow-2xl hover:shadow-green-500/10">
+                <div className="absolute inset-0 bg-gradient-to-br from-green-50 dark:from-green-900/20 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div className="relative z-10">
                   <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-green-500/25">
                     <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
                     </svg>
                   </div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-4">{t('audience.candidates.title')}</h3>
-                  <p className="text-slate-600 mb-6">{t('audience.candidates.description')}</p>
+                  <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">{t('audience.candidates.title')}</h3>
+                  <p className="text-slate-600 dark:text-gray-300 mb-6">{t('audience.candidates.description')}</p>
                   <ul className="space-y-3">
                     {t.raw('audience.candidates.features').map((feature: string, index: number) => (
-                      <li key={index} className="flex items-center text-slate-700">
+                      <li key={index} className="flex items-center text-slate-700 dark:text-gray-300">
                         <svg className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
@@ -320,19 +320,19 @@ export default function Home() {
               </div>
 
               {/* Agencias */}
-              <div className="group relative bg-white rounded-3xl p-8 border border-slate-200 hover:border-purple-300 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/10">
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-50 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="group relative bg-white dark:bg-gray-900 rounded-3xl p-8 border border-slate-200 dark:border-gray-700 hover:border-purple-300 dark:hover:border-purple-600 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/10">
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-50 dark:from-purple-900/20 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div className="relative z-10">
                   <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-purple-500/25">
                     <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H8a2 2 0 01-2-2V8a2 2 0 012-2V6" />
                     </svg>
                   </div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-4">{t('audience.agencies.title')}</h3>
-                  <p className="text-slate-600 mb-6">{t('audience.agencies.description')}</p>
+                  <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">{t('audience.agencies.title')}</h3>
+                  <p className="text-slate-600 dark:text-gray-300 mb-6">{t('audience.agencies.description')}</p>
                   <ul className="space-y-3">
                     {t.raw('audience.agencies.features').map((feature: string, index: number) => (
-                      <li key={index} className="flex items-center text-slate-700">
+                      <li key={index} className="flex items-center text-slate-700 dark:text-gray-300">
                         <svg className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
@@ -350,13 +350,13 @@ export default function Home() {
         <section 
           ref={howItWorksRef}
           id="how-it-works"
-          className={`py-20 bg-white transition-all duration-500 ${
-            highlightedSection === 'howItWorks' ? 'ring-4 ring-yellow-400 ring-offset-4 bg-yellow-50' : ''
+          className={`py-20 bg-white dark:bg-gray-900 transition-all duration-500 ${
+            highlightedSection === 'howItWorks' ? 'ring-4 ring-yellow-400 ring-offset-4 bg-yellow-50 dark:bg-yellow-900/20' : ''
           }`}
         >
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6">
                 {t('howItWorks.title')}
                 <span className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent"> {t('howItWorks.titleHighlight')}</span>
               </h2>
@@ -395,8 +395,8 @@ export default function Home() {
                       {item.step}
                     </div>
                   </div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-4">{item.title}</h3>
-                  <p className="text-slate-600 leading-relaxed">
+                  <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">{item.title}</h3>
+                  <p className="text-slate-600 dark:text-gray-300 leading-relaxed">
                     {item.description}
                   </p>
                 </div>
@@ -476,15 +476,15 @@ export default function Home() {
       {/* Auth Modal - Mejorada */}
       {showAuthModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-3xl shadow-2xl max-w-md w-full mx-auto border border-slate-200">
+          <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl max-w-md w-full mx-auto border border-slate-200 dark:border-gray-700">
             <div className="p-8">
               <div className="flex justify-between items-center mb-8">
-                <h3 className="text-2xl font-bold text-slate-900">
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-white">
                   {activeForm === 'login' ? tc('login') : tc('register')}
                 </h3>
                 <button 
                   onClick={() => setShowAuthModal(false)}
-                  className="text-slate-400 hover:text-slate-600 transition-colors p-2 hover:bg-slate-100 rounded-lg"
+                  className="text-slate-400 dark:text-gray-500 hover:text-slate-600 dark:hover:text-gray-300 transition-colors p-2 hover:bg-slate-100 dark:hover:bg-gray-700 rounded-lg"
                 >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -492,12 +492,12 @@ export default function Home() {
                 </button>
               </div>
 
-              <div className="flex bg-slate-100 rounded-2xl p-1 mb-8">
+              <div className="flex bg-slate-100 dark:bg-gray-700 rounded-2xl p-1 mb-8">
                 <button
                   className={`flex-1 py-3 text-center font-medium text-sm rounded-xl transition-all duration-300 ${
                     activeForm === 'login'
-                      ? 'bg-white text-blue-600 shadow-sm'
-                      : 'text-slate-600 hover:text-slate-800'
+                      ? 'bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 shadow-sm'
+                      : 'text-slate-600 dark:text-gray-300 hover:text-slate-800 dark:hover:text-white'
                   }`}
                   onClick={() => setActiveForm('login')}
                 >
@@ -506,8 +506,8 @@ export default function Home() {
                 <button
                   className={`flex-1 py-3 text-center font-medium text-sm rounded-xl transition-all duration-300 ${
                     activeForm === 'register'
-                      ? 'bg-white text-blue-600 shadow-sm'
-                      : 'text-slate-600 hover:text-slate-800'
+                      ? 'bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 shadow-sm'
+                      : 'text-slate-600 dark:text-gray-300 hover:text-slate-800 dark:hover:text-white'
                   }`}
                   onClick={() => setActiveForm('register')}
                 >

@@ -18,9 +18,8 @@ export default function RecentActivity() {
           .from('job_applications')
           .select(`
             *,
-            job_positions (
-              title,
-              company_name
+            job_vacancies (
+              title
             )
           `)
           .eq('candidate_id', user.id)

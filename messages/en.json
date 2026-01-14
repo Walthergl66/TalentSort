@@ -275,9 +275,9 @@
       "free": "Free Plan",
       "pro": "Pro Plan",
       "enterprise": "Enterprise Plan",
-      "user": "User"
-    },
-    "uploadCv": "Upload CV"
+      "user": "User",
+      "uploadCv": "Upload CV"
+    }
   },
   "accessibility": {
     "menu": {

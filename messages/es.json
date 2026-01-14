@@ -282,9 +282,9 @@
       "free": "Plan Gratuito",
       "pro": "Plan Pro",
       "enterprise": "Plan Enterprise",
-      "user": "Usuario"
-    },
-    "uploadCv": "Subir CV"
+      "user": "Usuario",
+      "uploadCv": "Subir CV"
+    }
   },
   "accessibility": {
     "menu": {

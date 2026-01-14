@@ -12,6 +12,7 @@ export default function CVDetailsPage() {
   const [user, setUser] = useState<any>(null)
   const [cv, setCv] = useState<any>(null)
   const [loading, setLoading] = useState(true)
+  const [reanalyzing, setReanalyzing] = useState(false)
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -69,6 +70,113 @@ export default function CVDetailsPage() {
       hour: '2-digit',
       minute: '2-digit'
     })
+  }
+
+  const handleReanalyze = async () => {
+    if (!cv) return
+
+    const confirm = window.confirm(
+      '¿Deseas volver a analizar este CV con la IA?\n\n' +
+      'Esto actualizará el puntaje, habilidades detectadas y recomendaciones.'
+    )
+
+    if (!confirm) return
+
+    setReanalyzing(true)
+    try {
+      console.log('🔄 Reanalizando CV...')
+
+      // Construir texto del CV a partir de los datos disponibles
+      const cvText = cv.cv_text || `
+INFORMACIÓN DEL CANDIDATO
+Nombre: ${cv.candidate_name || 'No especificado'}
+Email: ${cv.candidate_email || 'No especificado'}
+Posición actual: ${cv.current_position || 'No especificada'}
+Años de experiencia: ${cv.experience_years || 0}
+
+HABILIDADES
+${cv.skills && cv.skills.length > 0 ? cv.skills.join(', ') : 'No especificadas'}
+
+RESUMEN
+${cv.summary || 'Sin resumen disponible'}
+
+FORTALEZAS
+${cv.strengths && cv.strengths.length > 0 ? cv.strengths.join('\n- ') : 'No especificadas'}
+
+ÁREAS DE MEJORA
+${cv.areas_improvement && cv.areas_improvement.length > 0 ? cv.areas_improvement.join('\n- ') : 'No especificadas'}
+      `.trim()
+
+      if (!cvText || cvText.length < 50) {
+        throw new Error('No hay suficiente información en el CV para analizar')
+      }
+
+      console.log('📄 Texto del CV generado:', {
+        length: cvText.length,
+        preview: cvText.substring(0, 200)
+      })
+
+      // Análizar con IA
+      const response = await fetch('/api/analyze-cv', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          cv_text: cvText,
+          job_description: 'Análisis general de perfil profesional',
+          required_skills: cv.skills || [],
+          required_experience: cv.experience_years || 0
+        }),
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        console.error('Error de API:', errorData)
+        throw new Error(errorData.detalles || 'Error al analizar el CV')
+      }
+
+      const analysis = await response.json()
+
+      console.log('✅ Análisis recibido:', analysis)
+
+      // Actualizar CV en base de datos
+      const { error: updateError } = await supabase
+        .from('user_cvs')
+        .update({
+          ai_score: analysis.score,
+          match_percentage: analysis.match_percentage,
+          strengths: analysis.analysis?.strengths || [],
+          areas_improvement: analysis.analysis?.weaknesses || [],
+          summary: analysis.analysis?.evaluation || cv.summary,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', cv.id)
+
+      if (updateError) {
+        throw updateError
+      }
+
+      // Actualizar estado local
+      await fetchCVDetails(cv.id, user.id)
+
+      alert(
+        '✅ CV reanalisado exitosamente\n\n' +
+        `Nuevo puntaje: ${analysis.score}/100\n` +
+        `Coincidencia: ${analysis.match_percentage}%`
+      )
+
+      console.log('✅ Reanálisis completado')
+
+    } catch (error: any) {
+      console.error('❌ Error al reanalizar:', error)
+      alert(
+        '❌ Error al reanalizar el CV\n\n' +
+        (error.message || 'Por favor, intenta nuevamente.')
+      )
+    } finally {
+      setReanalyzing(false)
+    }
   }
 
   if (loading) {
@@ -345,6 +453,25 @@ export default function CVDetailsPage() {
               className="flex-1 border border-gray-300 text-gray-700 px-6 py-3 rounded-md hover:bg-gray-50 font-medium"
             >
               ← Volver a mis CVs
+            </button>
+            <button
+              onClick={handleReanalyze}
+              disabled={reanalyzing}
+              className="flex-1 bg-purple-600 text-white px-6 py-3 rounded-md hover:bg-purple-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            >
+              {reanalyzing ? (
+                <>
+                  <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Reanalizando...
+                </>
+              ) : (
+                <>
+                  🔄 Volver a Analizar con IA
+                </>
+              )}
             </button>
             <button
               onClick={() => router.push('/dashboard/cv/upload')}

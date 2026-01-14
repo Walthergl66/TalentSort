@@ -1,36 +1,107 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎯 TalentSort - Sistema de Reclutamiento Inteligente
 
-## Getting Started
+## 📋 Descripción
 
-First, run the development server:
+TalentSort es una plataforma avanzada de reclutamiento que utiliza inteligencia artificial para analizar CVs, evaluar candidatos y optimizar el proceso de selección de personal. Diseñada con **arquitectura limpia** y **buenas prácticas de desarrollo**.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🏗️ Arquitectura
+
+El proyecto sigue los principios de **Clean Architecture** y **Domain-Driven Design (DDD)**, organizando el código en capas bien definidas:
+
+```
+src/
+├── core/                       # 🎯 Capa de Dominio
+│   ├── entidades/             # Entidades del negocio
+│   ├── objetos-valor/         # Value Objects inmutables
+│   ├── repositorios/          # Interfaces de repositorios
+│   └── casos-uso/             # Lógica de negocio
+│
+├── aplicacion/                # 📊 Capa de Aplicación
+│   ├── dtos/                  # Data Transfer Objects
+│   ├── validadores/           # Validaciones con Zod
+│   └── servicios/             # Servicios de aplicación
+│
+├── infraestructura/           # 🔧 Capa de Infraestructura
+│   ├── base-datos/            # Cliente Supabase
+│   ├── repositorios/          # Implementaciones concretas
+│   └── servicios-externos/    # Servicios externos (IA, etc.)
+│
+├── presentacion/              # 🎨 Capa de Presentación
+│   ├── hooks/                 # Custom React Hooks
+│   └── contextos/             # React Context
+│
+├── compartido/                # 🔄 Código Compartido
+│   ├── constantes/            # Constantes de la aplicación
+│   ├── errores/               # Manejo centralizado de errores
+│   ├── tipos/                 # Tipos TypeScript compartidos
+│   └── utilidades/            # Funciones de utilidad
+│
+├── components/                # 🧩 Componentes React
+└── app/                       # 📱 Next.js App Router
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Principios de Arquitectura
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Separación de Responsabilidades**: Cada capa tiene una responsabilidad clara
+2. **Inversión de Dependencias**: Las capas internas no dependen de las externas
+3. **Independencia de Framework**: El dominio es independiente de Next.js/React
+4. **Testeable**: Código fácil de probar mediante inyección de dependencias
+5. **Mantenible**: Estructura clara y predecible
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚀 Características Principales
 
-## Learn More
+### ✨ Análisis de CVs con IA
+- Extracción automática de texto de PDFs y documentos
+- Análisis inteligente comparando CVs con requisitos de vacantes
+- Puntuación y ranking automático de candidatos
+- Identificación de fortalezas y áreas de mejora
 
-To learn more about Next.js, take a look at the following resources:
+### 👥 Gestión de Candidatos
+- Perfiles detallados de candidatos
+- Historial de aplicaciones
+- Seguimiento del proceso de selección
+- Panel de control con métricas
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 💼 Gestión de Vacantes
+- Creación y publicación de vacantes
+- Requisitos detallados y habilidades requeridas
+- Gestión de estados (Abierta, Cerrada, Borrador)
+- Análisis masivo de aplicaciones
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 🔐 Sistema de Autenticación
+- Registro e inicio de sesión seguro
+- Roles diferenciados (Empresa, Candidato, Admin)
+- Niveles de suscripción (Gratuito, Profesional, Empresarial)
+- Autenticación con Supabase
 
-## Deploy on Vercel
+## 🛠️ Tecnologías
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Next.js 15** - Framework React con App Router
+- **React 19** - Biblioteca de UI
+- **TypeScript** - Tipado estático
+- **Tailwind CSS** - Estilos utilitarios
+- **Supabase** - Base de datos y autenticación
+- **IA Railway** - https://chatagent-saborforaneofork-production.up.railway.app
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📦 Instalación
+
+```bash
+# Instalar dependencias
+npm install
+
+# Configurar variables de entorno (.env.local)
+NEXT_PUBLIC_SUPABASE_URL=tu_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=tu_key
+NEXT_PUBLIC_AI_API_URL=https://chatagent-saborforaneofork-production.up.railway.app
+
+# Ejecutar en desarrollo
+npm run dev
+```
+
+## 📚 Documentación de Arquitectura
+
+Ver [ARQUITECTURA.md](./docs/ARQUITECTURA.md) para detalles completos.
+
+---
+
+⭐ Si este proyecto te resulta útil, considera darle una estrella en GitHub!

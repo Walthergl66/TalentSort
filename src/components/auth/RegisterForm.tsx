@@ -28,7 +28,8 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
     email: '',
     password: '',
     confirmPassword: '',
-    acceptTerms: false
+    acceptTerms: false,
+    role: 'candidate' as 'candidate' | 'company'
   })
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
 
@@ -104,7 +105,8 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
         options: {
           data: {
             full_name: formData.full_name,
-            company_name: formData.company_name
+            company_name: formData.company_name,
+            role: formData.role
           },
           emailRedirectTo: `${window.location.origin}/auth/callback`
         }
@@ -113,9 +115,112 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
       if (error) throw error
 
       if (data.user) {
-        setMessage({ 
-          type: 'success', 
-          text: '¡Registro exitoso! Por favor, verifica tu email para confirmar la cuenta.' 
+        // Esperar un momento para que la sesión se establezca completamente
+        await new Promise(resolve => setTimeout(resolve, 100))
+        
+        // Verificar que tenemos sesión activa
+        const { data: { session } } = await supabase.auth.getSession()
+        
+        console.log('🔍 Sesión actual:', {
+          hasSession: !!session,
+          userId: session?.user?.id,
+          registeredUserId: data.user.id
+        })
+
+        // Crear perfil de usuario en user_profiles
+        console.log('🔍 Intentando crear perfil con datos:', {
+          user_id: data.user.id,
+          email: formData.email,
+          full_name: formData.full_name,
+          company_name: formData.role === 'company' ? formData.company_name : null,
+          role: formData.role
+        })
+
+        const { data: profileData, error: profileError } = await supabase
+          .from('user_profiles')
+          .insert({
+            user_id: data.user.id,
+            email: formData.email,
+            full_name: formData.full_name,
+            company_name: formData.role === 'company' ? formData.company_name : null,
+            role: formData.role
+          })
+          .select()
+
+        if (profileError) {
+          console.error('❌ Error creando perfil:', {
+            message: profileError.message,
+            details: profileError.details,
+            hint: profileError.hint,
+            code: profileError.code
+          })
+          
+          // Si el error es de RLS, dar instrucciones específicas
+          if (profileError.message?.includes('row-level security')) {
+            alert(`⚠️ ERROR DE CONFIGURACIÓN DE BASE DE DATOS\n\n` +
+              `Las políticas RLS necesitan ser reconfiguradas.\n\n` +
+              `SOLUCIÓN RÁPIDA:\n` +
+              `1. Ve a Supabase Dashboard > SQL Editor\n` +
+              `2. Ejecuta estos comandos uno por uno:\n\n` +
+              `-- Deshabilitar RLS temporalmente\n` +
+              `ALTER TABLE user_profiles DISABLE ROW LEVEL SECURITY;\n\n` +
+              `-- O modificar la política de INSERT\n` +
+              `DROP POLICY IF EXISTS "Users can insert their own profile" ON user_profiles;\n` +
+              `CREATE POLICY "Users can insert their own profile" ON user_profiles\n` +
+              `  FOR INSERT WITH CHECK (true);\n\n` +
+              `3. Intenta registrarte nuevamente`)
+          } else {
+            alert(`⚠️ IMPORTANTE: El usuario se creó pero el perfil falló.\n\nError: ${profileError.message}\n\nPor favor ejecuta el script SQL de inicialización en Supabase Dashboard > SQL Editor.\n\nRuta del script: sql/init_database.sql`)
+          }
+        } else {
+          console.log('✅ Perfil creado exitosamente:', profileData)
+        }
+        
+        // Verificar si el email está confirmado automáticamente
+        const isConfirmed = data.user.email_confirmed_at !== null
+        
+        if (isConfirmed) {
+          // Mensaje diferente según el rol
+          if (formData.role === 'company') {
+            setMessage({ 
+              type: 'success', 
+              text: '¡Registro exitoso! 🎉 Bienvenido. Ahora puedes publicar tus ofertas de empleo.' 
+            })
+            
+            // Redirigir a empresas directamente a crear vacantes después de 2 segundos
+            setTimeout(() => {
+              window.location.href = '/dashboard/company/vacancies'
+            }, 2000)
+          } else {
+            setMessage({ 
+              type: 'success', 
+              text: '¡Registro exitoso! Tu cuenta ha sido creada. Puedes iniciar sesión ahora.' 
+            })
+            
+            // Para candidatos, mostrar encuesta después
+            setTimeout(() => {
+              setShowSurveyPrompt(true)
+            }, 1500)
+          }
+        } else {
+          setMessage({ 
+            type: 'success', 
+            text: '¡Registro exitoso! Por favor, verifica tu email para confirmar la cuenta. Si no recibes el correo, revisa tu carpeta de spam o contacta al soporte.' 
+          })
+          
+          // Si no está confirmado, mostrar encuesta de todas formas
+          if (formData.role === 'candidate') {
+            setTimeout(() => {
+              setShowSurveyPrompt(true)
+            }, 1500)
+          }
+        }
+        
+        console.log('📧 Usuario registrado:', {
+          email: data.user.email,
+          confirmed: isConfirmed,
+          userId: data.user.id,
+          role: formData.role
         })
         
         // Limpiar formulario
@@ -125,13 +230,9 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
           email: '',
           password: '',
           confirmPassword: '',
-          acceptTerms: false
+          acceptTerms: false,
+          role: 'candidate'
         })
-
-        // Mostrar modal preguntando si quiere hacer la encuesta después de 1.5 segundos
-        setTimeout(() => {
-          setShowSurveyPrompt(true)
-        }, 1500)
       }
       
     } catch (error: any) {
@@ -212,7 +313,7 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
 
       <div className="grid grid-cols-1 gap-4">
         <div>
-          <label htmlFor="full_name" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="full_name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Nombre Completo *
           </label>
           <input
@@ -222,29 +323,49 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
             required
             value={formData.full_name}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm"
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500"
             placeholder="Tu nombre completo"
           />
         </div>
 
         <div>
-          <label htmlFor="company_name" className="block text-sm font-medium text-gray-700 mb-2">
-            Empresa
+          <label htmlFor="role" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            ¿Qué tipo de usuario eres? *
           </label>
-          <input
-            type="text"
-            id="company_name"
-            name="company_name"
-            value={formData.company_name}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm"
-            placeholder="Nombre de tu empresa (opcional)"
-          />
+          <select
+            id="role"
+            name="role"
+            required
+            value={formData.role}
+            onChange={(e) => setFormData({...formData, role: e.target.value as 'candidate' | 'company'})}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+          >
+            <option value="candidate">🔍 Busco Empleo (Candidato)</option>
+            <option value="company">🏢 Ofrezco Empleo (Empresa)</option>
+          </select>
         </div>
+
+        {formData.role === 'company' && (
+          <div>
+            <label htmlFor="company_name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Nombre de la Empresa *
+            </label>
+            <input
+              type="text"
+              id="company_name"
+              name="company_name"
+              required={formData.role === 'company'}
+              value={formData.company_name}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500"
+              placeholder="Nombre de tu empresa"
+            />
+          </div>
+        )}
       </div>
 
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
           Correo Electrónico *
         </label>
         <input
@@ -254,14 +375,14 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
           required
           value={formData.email}
           onChange={handleChange}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm"
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500"
           placeholder="tu@empresa.com"
         />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-1.5">
+          <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-1.5">
             Contraseña *
             <Tooltip content="Usa al menos 6 caracteres. Recomendamos combinar letras mayúsculas, minúsculas, números y símbolos para mayor seguridad.">
               <HelpIcon />
@@ -275,14 +396,14 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
               required
               value={formData.password}
               onChange={handleChange}
-              className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm"
+              className="w-full px-3 py-2 pr-10 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500"
               placeholder="Mínimo 6 caracteres"
               minLength={6}
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
             >
               {showPassword ? (
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -301,7 +422,7 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
           {formData.password && (
             <div className="mt-2">
               <div className="flex items-center justify-between mb-1">
-                <span className="text-xs text-gray-600">Fortaleza:</span>
+                <span className="text-xs text-gray-600 dark:text-gray-400">Fortaleza:</span>
                 <span className={`text-xs font-medium ${
                   passwordStrength.strength < 40 ? 'text-red-600' :
                   passwordStrength.strength < 70 ? 'text-yellow-600' : 'text-green-600'
@@ -315,20 +436,20 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
                   style={{ width: `${passwordStrength.strength}%` }}
                 />
               </div>
-              <div className="mt-2 text-xs text-gray-500 space-y-1">
-                <p className={formData.password.length >= 8 ? 'text-green-600' : ''}>
+              <div className="mt-2 text-xs text-gray-500 dark:text-gray-400 space-y-1">
+                <p className={formData.password.length >= 8 ? 'text-green-600 dark:text-green-400' : ''}>
                   {formData.password.length >= 8 ? '✓' : '○'} Al menos 8 caracteres
                 </p>
-                <p className={/[A-Z]/.test(formData.password) ? 'text-green-600' : ''}>
+                <p className={/[A-Z]/.test(formData.password) ? 'text-green-600 dark:text-green-400' : ''}>
                   {/[A-Z]/.test(formData.password) ? '✓' : '○'} Una letra mayúscula
                 </p>
-                <p className={/[a-z]/.test(formData.password) ? 'text-green-600' : ''}>
+                <p className={/[a-z]/.test(formData.password) ? 'text-green-600 dark:text-green-400' : ''}>
                   {/[a-z]/.test(formData.password) ? '✓' : '○'} Una letra minúscula
                 </p>
-                <p className={/[0-9]/.test(formData.password) ? 'text-green-600' : ''}>
+                <p className={/[0-9]/.test(formData.password) ? 'text-green-600 dark:text-green-400' : ''}>
                   {/[0-9]/.test(formData.password) ? '✓' : '○'} Un número
                 </p>
-                <p className={/[^A-Za-z0-9]/.test(formData.password) ? 'text-green-600' : ''}>
+                <p className={/[^A-Za-z0-9]/.test(formData.password) ? 'text-green-600 dark:text-green-400' : ''}>
                   {/[^A-Za-z0-9]/.test(formData.password) ? '✓' : '○'} Un carácter especial (!@#$%)
                 </p>
               </div>
@@ -337,7 +458,7 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
         </div>
 
         <div>
-          <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-1.5">
+          <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-1.5">
             Confirmar Contraseña *
             <Tooltip content="Repite la contraseña exactamente como la escribiste arriba para confirmar que la recuerdas.">
               <HelpIcon />
@@ -351,14 +472,14 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
               required
               value={formData.confirmPassword}
               onChange={handleChange}
-              className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm"
+              className="w-full px-3 py-2 pr-10 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500"
               placeholder="Repite tu contraseña"
               minLength={6}
             />
             <button
               type="button"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
             >
               {showConfirmPassword ? (
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -377,14 +498,14 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
           {formData.confirmPassword && (
             <div className="mt-2">
               {formData.password === formData.confirmPassword ? (
-                <p className="text-xs text-green-600 flex items-center gap-1">
+                <p className="text-xs text-green-600 dark:text-green-400 flex items-center gap-1">
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
                   Las contraseñas coinciden
                 </p>
               ) : (
-                <p className="text-xs text-red-600 flex items-center gap-1">
+                <p className="text-xs text-red-600 dark:text-red-400 flex items-center gap-1">
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                   </svg>
@@ -406,7 +527,7 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
           className="mt-1 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
           required
         />
-        <label htmlFor="acceptTerms" className="text-sm text-gray-600 flex items-start gap-1.5">
+        <label htmlFor="acceptTerms" className="text-sm text-gray-600 dark:text-gray-400 flex items-start gap-1.5">
           <span>
             Acepto los{' '}
             <button
@@ -439,7 +560,7 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
         {loading ? 'Creando cuenta...' : 'Crear cuenta'}
       </button>
 
-      <div className="text-center text-sm text-gray-600 pt-2 border-t border-gray-200">
+      <div className="text-center text-sm text-gray-600 dark:text-gray-400 pt-2 border-t border-gray-200 dark:border-gray-700">
         ¿Ya tienes cuenta?{' '}
         <button
           type="button"

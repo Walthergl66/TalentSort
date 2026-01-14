@@ -6,6 +6,7 @@ import type { Metadata } from 'next'
 import AccessibilityProvider from '@/components/Accesibilidad/AccessibilityProvider'
 import AccessibilityMenu from '@/components/Accesibilidad/AccessibilityMenu'
 import VoiceControl from '@/components/Accesibilidad/VoiceControl'
+import { ThemeProvider } from '@/components/ThemeProvider'
 import '../globals.css'
 import '@/components/Accesibilidad/accessibility.css'
 
@@ -69,7 +70,7 @@ export default async function LocaleLayout({
         <meta name="theme-color" content="#3b82f6" />
         <meta name="format-detection" content="telephone=no" />
       </head>
-      <body className="min-h-screen bg-gray-50 font-sans antialiased">
+      <body className="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans antialiased transition-colors duration-200">
         {/* Skip link para navegación por teclado */}
         <a 
           href="#main-content" 
@@ -79,13 +80,15 @@ export default async function LocaleLayout({
         </a>
         
         <NextIntlClientProvider messages={messages}>
-          <AccessibilityProvider>
-            <main id="main-content" role="main">
-              {children}
-            </main>
-            <AccessibilityMenu />
-            <VoiceControl />
-          </AccessibilityProvider>
+          <ThemeProvider>
+            <AccessibilityProvider>
+              <main id="main-content" role="main">
+                {children}
+              </main>
+              <AccessibilityMenu />
+              <VoiceControl />
+            </AccessibilityProvider>
+          </ThemeProvider>
         </NextIntlClientProvider>
 
         {/* Script para detectar navegación por teclado */}

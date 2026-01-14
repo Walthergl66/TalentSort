@@ -41,10 +41,9 @@ export default function CandidatePipeline() {
           .from('job_applications')
           .select(`
             *,
-            job_positions (
+            job_vacancies (
               title,
-              company_name,
-              salary_range
+              location
             )
           `)
           .eq('candidate_id', user.id)
@@ -188,25 +187,25 @@ export default function CandidatePipeline() {
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
                     <span className="text-sm font-medium text-blue-600">
-                      {application.job_positions?.company_name?.charAt(0) || 'C'}
+                      {application.job_vacancies?.title?.charAt(0) || 'C'}
                     </span>
                   </div>
                   <div>
                     <p className="text-sm font-medium text-gray-900">
-                      {application.job_positions?.title || 'Trabajo sin título'}
+                      {application.job_vacancies?.title || 'Trabajo sin título'}
                     </p>
                     <p className="text-xs text-gray-500">
-                      {application.job_positions?.company_name || 'Empresa no especificada'}
+                      {application.job_vacancies?.location || 'Ubicación no especificada'}
                     </p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-3">
                   <div className="text-right">
                     <p className="text-sm font-medium text-gray-900">
-                      {application.job_positions?.salary_range || 'No especificado'}
+                      {new Date(application.created_at).toLocaleDateString('es-ES')}
                     </p>
                     <p className="text-xs text-gray-500">
-                      Salario
+                      Aplicado
                     </p>
                   </div>
                   {getStatusBadge(application.status)}

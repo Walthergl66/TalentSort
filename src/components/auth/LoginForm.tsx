@@ -93,7 +93,24 @@ export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
         }
         // Email no confirmado
         else if (msg.includes('email not confirmed') || msg.includes('confirm')) {
-          errorMessage = '📧 Por favor, verifica tu email antes de iniciar sesión. Revisa tu bandeja de entrada.'
+          errorMessage = '📧 Email no confirmado. Por favor verifica tu correo electrónico.'
+          
+          // Ofrecer reenviar email de confirmación
+          setTimeout(() => {
+            const resend = confirm('¿Quieres que reenviemos el email de confirmación?')
+            if (resend) {
+              supabase.auth.resend({
+                type: 'signup',
+                email: formData.email,
+              }).then(({ error }) => {
+                if (error) {
+                  alert('Error al reenviar: ' + error.message)
+                } else {
+                  alert('✅ Email de confirmación reenviado. Revisa tu bandeja de entrada y spam.')
+                }
+              })
+            }
+          }, 500)
         }
         // Usuario no encontrado
         else if (msg.includes('user not found')) {
@@ -169,7 +186,7 @@ export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
       )}
       
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
           Email
         </label>
         <input
@@ -179,14 +196,14 @@ export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
           required
           value={formData.email}
           onChange={handleChange}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm"
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500"
           placeholder="tu@empresa.com"
         />
       </div>
 
       <div>
         <div className="flex items-center justify-between mb-2">
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
             Contraseña
           </label>
           <a href="/forgot-password" className="text-sm text-blue-600 hover:text-blue-500">
@@ -200,7 +217,7 @@ export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
           required
           value={formData.password}
           onChange={handleChange}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm"
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500"
           placeholder="••••••••"
         />
       </div>
@@ -216,14 +233,14 @@ export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
             onChange={(e) => setRememberMe(e.target.checked)}
             className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded cursor-pointer"
           />
-          <label htmlFor="remember-me" className="text-sm text-gray-700 cursor-pointer flex items-center gap-1">
+          <label htmlFor="remember-me" className="text-sm text-gray-700 dark:text-gray-300 cursor-pointer flex items-center gap-1">
             Recordarme
             <Tooltip content="Si activas esta opción, tu sesión permanecerá activa incluso después de cerrar el navegador. Desactívala en equipos compartidos.">
               <HelpIcon />
             </Tooltip>
           </label>
         </div>
-        <div className="text-xs text-gray-500">
+        <div className="text-xs text-gray-500 dark:text-gray-400">
           {rememberMe ? (
             <span className="flex items-center text-green-600">
               <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
@@ -250,7 +267,7 @@ export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
         {loading ? 'Iniciando sesión...' : isBlocked ? '🔒 Bloqueado' : 'Iniciar sesión'}
       </button>
 
-      <div className="text-center text-sm text-gray-600 pt-2 border-t border-gray-200 mt-4">
+      <div className="text-center text-sm text-gray-600 dark:text-gray-400 pt-2 border-t border-gray-200 dark:border-gray-700 mt-4">
         ¿No tienes cuenta?{' '}
         <button
           type="button"

@@ -11,6 +11,7 @@ export default function MyCVsPage() {
   const [user, setUser] = useState<any>(null)
   const [cvs, setCvs] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
+  const [mainCVId, setMainCVId] = useState<string | null>(null)
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -27,6 +28,20 @@ export default function MyCVsPage() {
 
     checkAuth()
   }, [router])
+
+  useEffect(() => {
+    // Obtener el CV principal del usuario
+    const fetchMainCV = async () => {
+      if (!user) return
+      const { data, error } = await supabase
+        .from('user_profiles')
+        .select('main_cv_id')
+        .eq('user_id', user.id)
+        .single()
+      if (data?.main_cv_id) setMainCVId(data.main_cv_id)
+    }
+    fetchMainCV()
+  }, [user])
 
   const fetchCVs = async (userId: string) => {
     try {
@@ -86,6 +101,19 @@ export default function MyCVsPage() {
       alert('Error inesperado al cargar los CVs. Por favor, recarga la página.')
     } finally {
       setLoading(false)
+    }
+  }
+
+  const setAsMainCV = async (cvId: string) => {
+    if (!user) return
+    try {
+      const { error } = await supabase
+        .from('user_profiles')
+        .update({ main_cv_id: cvId })
+        .eq('user_id', user.id)
+      if (!error) setMainCVId(cvId)
+    } catch (error) {
+      console.error('Error al cambiar el CV principal:', error)
     }
   }
 
@@ -170,7 +198,7 @@ export default function MyCVsPage() {
           {cvs.length > 0 ? (
             <div className="space-y-4">
               {cvs.map((cv) => (
-                <div key={cv.id} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                <div key={cv.id} className={`bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden ${mainCVId === cv.id ? 'ring-2 ring-blue-500' : ''}`}> 
                   <div className="p-6">
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
@@ -261,6 +289,13 @@ export default function MyCVsPage() {
                       </div>
 
                       <div className="flex flex-col space-y-2 ml-6">
+                                                <button
+                                                  onClick={() => setAsMainCV(cv.id)}
+                                                  className={`text-blue-600 hover:text-blue-800 text-sm font-medium ${mainCVId === cv.id ? 'font-bold underline' : ''}`}
+                                                  disabled={mainCVId === cv.id}
+                                                >
+                                                  {mainCVId === cv.id ? 'CV Principal' : 'Establecer como CV Principal'}
+                                                </button>
                         <button
                           onClick={() => router.push(`/dashboard/cv/${cv.id}`)}
                           className="text-blue-600 hover:text-blue-800 text-sm font-medium"

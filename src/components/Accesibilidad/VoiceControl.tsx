@@ -210,7 +210,7 @@ export default function VoiceControl() {
 
     recognition.onerror = (event: any) => {
       // Ignorar errores comunes que no son problemas reales
-      if (event.error === 'aborted' || event.error === 'no-speech') {
+      if (event.error === 'aborted' || event.error === 'no-speech' || event.error === 'network') {
         // No hacer nada, estos son normales
         return
       }
