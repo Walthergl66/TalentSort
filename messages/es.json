@@ -282,7 +282,8 @@
       "free": "Plan Gratuito",
       "pro": "Plan Pro",
       "enterprise": "Plan Enterprise",
-      "user": "Usuario",
+      "user": "Usuario/a",
+      "company": "Empresa",
       "uploadCv": "Subir CV"
     }
   },

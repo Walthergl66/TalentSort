@@ -63,15 +63,19 @@ export default function TopBar({ user, profile }: TopBarProps) {
               >
                 <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
                   <span className="text-sm font-medium text-white">
-                    {profile?.full_name?.charAt(0) || user?.email?.charAt(0) || 'U'}
+                    {profile?.role === 'company'
+                      ? (profile?.company_name?.charAt(0)?.toUpperCase() || 'E')
+                      : (profile?.full_name?.charAt(0)?.toUpperCase() || 'U')}
                   </span>
                 </div>
                 <div className="hidden md:block text-left">
                   <p className="text-sm font-medium text-gray-900">
-                    {profile?.full_name || t('user')}
+                    {profile?.role === 'company'
+                      ? (profile?.company_name || tpr('company'))
+                      : (profile?.full_name || tpr('user'))}
                   </p>
                   <p className="text-xs text-gray-500">
-                    {profile?.company_name || t('company')}
+                    {profile?.role === 'company' ? tpr('company') : tpr('user')}
                   </p>
                 </div>
                 <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

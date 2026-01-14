@@ -276,6 +276,7 @@
       "pro": "Pro Plan",
       "enterprise": "Enterprise Plan",
       "user": "User",
+      "company": "Company",
       "uploadCv": "Upload CV"
     }
   },

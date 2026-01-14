@@ -203,16 +203,19 @@ export default function NavigationMenu({ isOpen, onMouseEnter, onMouseLeave, pro
               <div className="flex items-center">
                 <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center flex-shrink-0 shadow-md">
                   <span className="text-sm font-medium text-white">
-                    {profile.full_name?.charAt(0) || 'U'}
+                    {profile.role === 'company' 
+                      ? (profile.company_name?.charAt(0)?.toUpperCase() || 'E')
+                      : (profile.full_name?.charAt(0)?.toUpperCase() || 'U')}
                   </span>
                 </div>
                 <div className="ml-3 min-w-0">
                   <p className="text-sm font-medium text-gray-900 truncate">
-                    {profile.full_name || tp('user')}
+                    {profile.role === 'company' 
+                      ? (profile.company_name || tp('company'))
+                      : (profile.full_name || tp('user'))}
                   </p>
                   <p className="text-xs text-gray-500 truncate">
-                    {profile.subscription_tier === 'free' ? tp('free') : 
-                     profile.subscription_tier === 'pro' ? tp('pro') : tp('enterprise')}
+                    {profile.role === 'company' ? tp('company') : tp('user')}
                   </p>
                 </div>
               </div>
