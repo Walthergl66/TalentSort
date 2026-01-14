@@ -34,6 +34,8 @@ export default function CVDetailsPage() {
 
   const fetchCVDetails = async (cvId: string, userId: string) => {
     try {
+      console.log('🔍 Fetching CV details:', { cvId, userId })
+      
       const { data, error } = await supabase
         .from('user_cvs')
         .select('*')
@@ -41,15 +43,32 @@ export default function CVDetailsPage() {
         .eq('user_id', userId)
         .single()
 
+      console.log('📦 CV details response:', { data, error })
+
       if (error) {
-        console.error('Error fetching CV details:', error)
+        console.error('❌ Error fetching CV details:', {
+          message: error.message,
+          details: error.details,
+          hint: error.hint,
+          code: error.code
+        })
+        alert(`Error al cargar el CV: ${error.message || 'No se pudo encontrar el CV'}`)
         router.push('/dashboard/cv')
         return
       }
 
+      if (!data) {
+        console.error('❌ No CV data returned')
+        alert('No se encontró el CV solicitado')
+        router.push('/dashboard/cv')
+        return
+      }
+
+      console.log('✅ CV loaded successfully:', data.file_name)
       setCv(data)
     } catch (error) {
-      console.error('Error:', error)
+      console.error('❌ Unexpected error:', error)
+      alert('Error inesperado al cargar el CV')
       router.push('/dashboard/cv')
     } finally {
       setLoading(false)

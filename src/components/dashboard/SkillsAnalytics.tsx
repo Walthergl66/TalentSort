@@ -56,7 +56,8 @@ export default function SkillsAnalytics() {
             name: skill.charAt(0).toUpperCase() + skill.slice(1),
             demand: stats.demand,
             percentage: Math.round((stats.demand / jobVacancies.length) * 100),
-            userHasSkill: userSkills.some(s => s.toLowerCase() === skill)
+            userHasSkill: userSkills.some(s => s.toLowerCase() === skill),
+            avgSalary: 45000 + (stats.demand * 2500) // Estimación basada en demanda
           }))
           .sort((a, b) => b.demand - a.demand)
 

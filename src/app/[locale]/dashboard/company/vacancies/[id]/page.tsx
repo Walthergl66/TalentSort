@@ -253,18 +253,31 @@ Nombre del archivo: ${cvData.file_name || 'No disponible'}
       console.log('📡 Respuesta de API:', {
         status: response.status,
         ok: response.ok,
-        statusText: response.statusText
+        statusText: response.statusText,
+        headers: Object.fromEntries(response.headers.entries())
       })
 
       if (!response.ok) {
-        let errorDetails;
+        let errorDetails: any = {};
+        const contentType = response.headers.get('content-type');
+        
         try {
-          errorDetails = await response.json()
-        } catch {
-          errorDetails = { error: await response.text() }
+          if (contentType?.includes('application/json')) {
+            errorDetails = await response.json();
+          } else {
+            const textError = await response.text();
+            errorDetails = { error: textError };
+          }
+        } catch (parseError) {
+          console.error('❌ Error al parsear respuesta de error:', parseError);
+          errorDetails = { error: 'No se pudo leer la respuesta del servidor' };
         }
-        console.error('❌ AI API error completo:', errorDetails)
-        throw new Error(errorDetails.detalles || errorDetails.error || 'El servicio de análisis no está disponible')
+        
+        console.error('❌ AI API error completo:', errorDetails);
+        console.error('❌ Error status:', response.status);
+        console.error('❌ Error statusText:', response.statusText);
+        
+        throw new Error(errorDetails.detalles || errorDetails.error || `Error ${response.status}: El servicio de análisis no está disponible`);
       }
 
       const aiResult = await response.json()
@@ -298,9 +311,15 @@ Nombre del archivo: ${cvData.file_name || 'No disponible'}
       }
 
       await fetchVacancyAndApplications()
+      
+      // Mostrar mensaje más detallado al usuario
+      const scoreText = aiResult.score ? `${aiResult.score}/10` : 'N/A';
+      const matchText = aiResult.match_percentage ? `${aiResult.match_percentage}%` : 'N/A';
+      
       alert('✅ Análisis completado exitosamente\n\n' +
-            `Puntuación: ${aiResult.score || 0}/100\n` +
-            `Match: ${aiResult.match_percentage || 0}%`)
+            `Puntuación: ${scoreText}\n` +
+            `Compatibilidad: ${matchText}\n\n` +
+            `El candidato ha sido actualizado en el ranking.`);
     } catch (error: any) {
       console.error('Error analyzing candidate:', error)
       

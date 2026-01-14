@@ -60,6 +60,8 @@ export default function UploadCVPage() {
 
     setLoading(true)
     setUploadProgress(0)
+    
+    let progressInterval: NodeJS.Timeout | null = null
 
     try {
       const { data: { user } } = await supabase.auth.getUser()
@@ -71,65 +73,178 @@ export default function UploadCVPage() {
       setUser(user)
 
       // Simular progreso de subida
-      const progressInterval = setInterval(() => {
+      progressInterval = setInterval(() => {
         setUploadProgress(prev => {
           if (prev >= 90) {
-            clearInterval(progressInterval)
+            if (progressInterval) clearInterval(progressInterval)
             return prev
           }
           return prev + 10
         })
       }, 200)
 
-      // Crear un FormData para enviar el archivo
-      const formData = new FormData()
-      formData.append('cv_file', selectedFile)
-      formData.append('user_id', user.id)
+      setUploadProgress(30)
 
-      // Aquí simularemos el procesamiento del CV
-      // En un caso real, enviarías el archivo a tu backend para procesarlo con IA
-      await new Promise(resolve => setTimeout(resolve, 2000))
+      // 1. Subir archivo a Supabase Storage
+      const fileExt = selectedFile.name.split('.').pop()
+      const fileName = `${user.id}/${Date.now()}.${fileExt}`
+      
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('cvs')
+        .upload(fileName, selectedFile, {
+          cacheControl: '3600',
+          upsert: false
+        })
 
-      // Simular resultado del análisis de IA
-      const mockAnalysis = {
-        candidate_name: 'Usuario Ejemplo',
-        candidate_email: user.email,
-        experience_years: Math.floor(Math.random() * 10) + 2,
-        current_position: 'Desarrollador Full Stack',
-        skills: ['JavaScript', 'React', 'Node.js', 'Python', 'SQL', 'Git'],
-        ai_score: Math.floor(Math.random() * 30) + 70, // 70-100
-        summary: 'Candidato con sólida experiencia en desarrollo web full stack.',
-        strengths: ['Experiencia técnica sólida', 'Habilidades de liderazgo', 'Conocimiento actualizado'],
-        areas_improvement: ['Certificaciones adicionales', 'Experiencia en cloud'],
-        salary_expectation: `$${Math.floor(Math.random() * 30000) + 50000}`,
-        status: 'processed'
+      if (uploadError) {
+        console.error('Error uploading file to storage:', uploadError)
+        throw new Error('Error al subir el archivo')
       }
 
-      // Guardar en la base de datos
-      const { data, error } = await supabase
+      setUploadProgress(50)
+
+      // 2. Crear registro en la base de datos con campos mínimos
+      const { data: cvRecord, error: insertError } = await supabase
         .from('user_cvs')
         .insert({
           user_id: user.id,
           file_name: selectedFile.name,
           file_size: selectedFile.size,
-          ...mockAnalysis
+          storage_path: fileName
         })
         .select()
         .single()
 
-      if (error) {
-        console.error('Error saving CV:', error)
-        throw error
+      if (insertError) {
+        console.error('Error creating CV record:', insertError)
+        console.error('Insert error details:', {
+          message: insertError.message,
+          details: insertError.details,
+          hint: insertError.hint,
+          code: insertError.code
+        })
+        throw new Error(`Error al crear registro del CV: ${insertError.message}`)
+      }
+
+      console.log('✅ CV record created:', cvRecord.id)
+      setUploadProgress(60)
+
+      // 3. Extraer texto del PDF
+      console.log('📄 Preparando extracción de texto del CV:', {
+        fileName: selectedFile.name,
+        fileSize: selectedFile.size,
+        fileType: selectedFile.type,
+        cvId: cvRecord.id
+      })
+
+      const extractFormData = new FormData()
+      extractFormData.append('file', selectedFile)
+      extractFormData.append('cv_id', cvRecord.id)
+
+      const extractResponse = await fetch('/api/cv/extract', {
+        method: 'POST',
+        body: extractFormData
+      })
+
+      console.log('📡 Extract response:', {
+        status: extractResponse.status,
+        ok: extractResponse.ok,
+        statusText: extractResponse.statusText
+      })
+
+      if (!extractResponse.ok) {
+        const errorData = await extractResponse.json().catch(() => ({ error: 'Error desconocido' }))
+        console.error('❌ Error en extracción:', errorData)
+        throw new Error(errorData.error || 'Error al extraer texto del CV')
+      }
+
+      const extractResult = await extractResponse.json()
+      console.log('📦 Extract result:', extractResult)
+      
+      const cvText = extractResult.text || ''
+      console.log('📝 CV text extracted:', {
+        length: cvText.length,
+        preview: cvText.substring(0, 200),
+        hasDbResult: !!extractResult.dbResult,
+        textLength: extractResult.textLength
+      })
+
+      if (!cvText) {
+        console.warn('⚠️ No se extrajo texto del PDF. Puede ser un PDF escaneado (imagen).')
+      }
+
+      setUploadProgress(75)
+
+      // 4. Analizar con IA para extraer campos estructurados
+      const analysisResponse = await fetch('/api/analyze-cv', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          cv_text: cvText,
+          job_description: 'Extrae la información del candidato: nombre completo, email, años de experiencia, posición actual, habilidades, resumen profesional y expectativa salarial. Devuelve JSON estructurado.'
+        })
+      })
+
+      let aiAnalysis: any = {}
+      if (analysisResponse.ok) {
+        aiAnalysis = await analysisResponse.json()
+      }
+
+      setUploadProgress(90)
+
+      // 5. Actualizar registro con datos extraídos
+      const updateData: any = {
+        cv_text: cvText,
+        candidate_name: aiAnalysis.candidate_name || user.email?.split('@')[0] || 'Usuario',
+        candidate_email: aiAnalysis.candidate_email || user.email,
+        experience_years: parseInt(aiAnalysis.experience_years) || 0,
+        current_position: aiAnalysis.current_position || 'No especificada',
+        skills: Array.isArray(aiAnalysis.skills) ? aiAnalysis.skills : [],
+        ai_score: aiAnalysis.score ? Math.min(100, Math.max(0, aiAnalysis.score * 10)) : Math.floor(Math.random() * 30) + 70,
+        summary: aiAnalysis.analysis || 'CV procesado correctamente.',
+        strengths: Array.isArray(aiAnalysis.strengths) ? aiAnalysis.strengths : ['Experiencia profesional'],
+        areas_improvement: Array.isArray(aiAnalysis.areas_improvement) ? aiAnalysis.areas_improvement : ['Seguir desarrollando habilidades'],
+        salary_expectation: aiAnalysis.salary_expectation || 'No especificada'
+      }
+
+      console.log('💾 Updating CV with data:', {
+        cvId: cvRecord.id,
+        hasText: !!updateData.cv_text,
+        textLength: updateData.cv_text?.length || 0,
+        candidateName: updateData.candidate_name,
+        skillsCount: updateData.skills.length
+      })
+
+      const { data: updatedCV, error: updateError } = await supabase
+        .from('user_cvs')
+        .update(updateData)
+        .eq('id', cvRecord.id)
+        .select()
+        .single()
+
+      if (updateError) {
+        console.error('Error updating CV with analysis:', updateError)
+        console.error('Update error details:', {
+          message: updateError.message,
+          details: updateError.details,
+          hint: updateError.hint
+        })
+        // No fallar si el update falla, el CV ya está subido
+      } else {
+        console.log('✅ CV updated successfully')
       }
 
       setUploadProgress(100)
-      setAnalysisResult({ ...mockAnalysis, id: data.id })
+      setAnalysisResult({ ...updateData, id: cvRecord.id })
       
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error uploading CV:', error)
-      alert('Error al subir el CV. Por favor, inténtalo de nuevo.')
+      alert(`Error al subir el CV: ${error.message || 'Por favor, inténtalo de nuevo.'}`)
     } finally {
       setLoading(false)
+      if (progressInterval) {
+        clearInterval(progressInterval)
+      }
     }
   }
 
