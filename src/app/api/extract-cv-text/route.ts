@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
   try {
     const { cvId } = await request.json()
 
-    console.log('📥 Extract CV text request:', { cvId })
+    console.log('[extract-cv-text] Request:', { cvId })
 
     if (!cvId) {
       return NextResponse.json(
@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
       .eq('id', cvId)
       .maybeSingle()
 
-    console.log('📄 CV data fetched:', { found: !!cvData, error: cvError })
+    console.log('[extract-cv-text] CV data fetched:', { found: !!cvData, error: cvError })
 
     if (cvError || !cvData) {
       console.error('Error fetching CV:', cvError)
@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
     // Si tiene storage_path, intentar descargar y extraer PDF
     if (cvData.storage_path) {
       try {
-        console.log('📦 Descargando PDF desde storage:', cvData.storage_path)
+        console.log('[extract-cv-text] Descargando PDF desde storage:', cvData.storage_path)
         
         const { data: fileData, error: downloadError } = await supabase.storage
           .from('cvs')
@@ -62,11 +62,11 @@ export async function POST(request: NextRequest) {
           const parser = new PDFParse({ buffer });
           const pdfData = await parser.getText();
           extractedText = pdfData.text;
-          console.log('✅ Texto extraído del PDF:', {
+          console.log('[extract-cv-text] Texto extraído del PDF:', {
             length: extractedText.length
           });
         } else {
-          console.warn('⚠️ No se pudo descargar el PDF:', downloadError)
+          console.warn('[extract-cv-text] No se pudo descargar el PDF:', downloadError)
         }
       } catch (error) {
         console.error('Error extrayendo PDF:', error)

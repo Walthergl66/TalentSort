@@ -42,8 +42,8 @@ ${jobDescription}`;
 
   prompt += '\n\nResponde ÚNICAMENTE con el JSON, sin markdown, sin explicaciones adicionales.';
 
-  console.log('🚀 Enviando solicitud a IA:', AI_API_URL);
-  console.log('📝 Tamaño del prompt:', prompt.length, 'caracteres');
+  console.log('[AI] Enviando solicitud a:', AI_API_URL);
+  console.log('[AI] Tamaño del prompt:', prompt.length, 'caracteres');
 
   try {
     const response = await fetch(AI_API_URL, {
@@ -54,21 +54,21 @@ ${jobDescription}`;
       body: JSON.stringify({ message: prompt }),
     });
 
-    console.log('📡 Respuesta HTTP status:', response.status, response.statusText);
+    console.log('[AI] Respuesta HTTP status:', response.status, response.statusText);
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('❌ Error response body:', errorText);
+      console.error('[AI] Error response body:', errorText);
       throw new Error(`Error en el servicio de chat: ${response.status} ${response.statusText}`);
     }
 
     const data = await response.json();
-    console.log('✅ Respuesta completa de IA:', JSON.stringify(data).substring(0, 200) + '...');
+    console.log('[AI] Respuesta recibida:', JSON.stringify(data).substring(0, 200) + '...');
 
     // Intentar extraer el texto de la respuesta
     // La API puede devolver { reply: "..." } o { response: "..." } o directamente el texto
     let text = data.reply || data.response || data.message || data.text || JSON.stringify(data);
-    console.log('📄 Texto extraído:', text.substring(0, 200) + '...');
+    console.log('[AI] Texto extraído:', text.substring(0, 200) + '...');
 
     // Intentar parsear el JSON
     try {
@@ -81,18 +81,18 @@ ${jobDescription}`;
       }
       
       const parsed = JSON.parse(cleanText);
-      console.log('✨ JSON parseado exitosamente:', parsed);
+      console.log('[AI] JSON parseado exitosamente:', parsed);
       return parsed;
     } catch (parseError) {
-      console.error('❌ Error al parsear JSON:', parseError);
-      console.error('📄 Texto que falló:', text);
+      console.error('[AI] Error al parsear JSON:', parseError);
+      console.error('[AI] Texto que falló:', text);
       
       // Intentar extraer JSON del texto si está mezclado con otra cosa
       const jsonMatch = text.match(/\{[\s\S]*\}/);
       if (jsonMatch) {
         try {
           const parsed = JSON.parse(jsonMatch[0]);
-          console.log('✨ JSON extraído y parseado exitosamente');
+          console.log('[AI] JSON extraído y parseado exitosamente');
           return parsed;
         } catch {
           // Si aún así falla, devolver error
@@ -110,8 +110,8 @@ ${jobDescription}`;
       };
     }
   } catch (error: any) {
-    console.error('💥 Error en sendMessageToChatAgent:', error);
-    console.error('💥 Stack:', error.stack);
+    console.error('[AI] Error en sendMessageToChatAgent:', error);
+    console.error('[AI] Stack:', error.stack);
     throw new Error(`No se pudo obtener respuesta del chat IA: ${error.message}`);
   }
 }

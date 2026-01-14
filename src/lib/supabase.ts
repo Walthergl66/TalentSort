@@ -5,9 +5,9 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
 if (!supabaseUrl || !supabaseAnonKey) {
-  console.error('❌ Missing Supabase environment variables')
-  console.error('NEXT_PUBLIC_SUPABASE_URL:', supabaseUrl ? '✅ Set' : '❌ Missing')
-  console.error('NEXT_PUBLIC_SUPABASE_ANON_KEY:', supabaseAnonKey ? '✅ Set' : '❌ Missing')
+  console.error('[Supabase] Error: Missing environment variables')
+  console.error('NEXT_PUBLIC_SUPABASE_URL:', supabaseUrl ? 'Set' : 'Missing')
+  console.error('NEXT_PUBLIC_SUPABASE_ANON_KEY:', supabaseAnonKey ? 'Set' : 'Missing')
 }
 
 export const supabase = createClient(
@@ -25,7 +25,7 @@ export const supabase = createClient(
 
 // Debug helper
 if (typeof window !== 'undefined') {
-  console.log('🔧 Supabase Client Config:', {
+  console.log('[Supabase] Client Config:', {
     url: supabaseUrl,
     hasAnonKey: !!supabaseAnonKey,
     anonKeyLength: supabaseAnonKey?.length,

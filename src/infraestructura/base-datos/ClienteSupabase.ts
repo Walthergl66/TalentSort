@@ -52,9 +52,9 @@ export class ClienteSupabase {
   private validarConfiguracion(): void {
     if (!CONFIG_SUPABASE.URL || !CONFIG_SUPABASE.ANON_KEY) {
       const mensajeError = [
-        '❌ Faltan variables de entorno de Supabase',
-        `NEXT_PUBLIC_SUPABASE_URL: ${CONFIG_SUPABASE.URL ? '✅ Configurada' : '❌ Faltante'}`,
-        `NEXT_PUBLIC_SUPABASE_ANON_KEY: ${CONFIG_SUPABASE.ANON_KEY ? '✅ Configurada' : '❌ Faltante'}`,
+        '[Supabase] Error: Faltan variables de entorno',
+        `NEXT_PUBLIC_SUPABASE_URL: ${CONFIG_SUPABASE.URL ? 'OK' : 'FALTANTE'}`,
+        `NEXT_PUBLIC_SUPABASE_ANON_KEY: ${CONFIG_SUPABASE.ANON_KEY ? 'OK' : 'FALTANTE'}`,
       ].join('\n');
 
       console.error(mensajeError);
@@ -93,7 +93,7 @@ export class ClienteSupabase {
    */
   private inicializarLogging(): void {
     if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
-      console.log('🔧 Cliente Supabase inicializado:', {
+      console.log('[Supabase] Cliente inicializado:', {
         url: CONFIG_SUPABASE.URL,
         tieneKey: !!CONFIG_SUPABASE.ANON_KEY,
         longitudKey: CONFIG_SUPABASE.ANON_KEY?.length,

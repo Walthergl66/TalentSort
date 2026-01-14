@@ -126,11 +126,11 @@ export default function UploadCVPage() {
         throw new Error(`Error al crear registro del CV: ${insertError.message}`)
       }
 
-      console.log('✅ CV record created:', cvRecord.id)
+      console.log('[cv/upload] CV record created:', cvRecord.id)
       setUploadProgress(60)
 
       // 3. Extraer texto del PDF
-      console.log('📄 Preparando extracción de texto del CV:', {
+      console.log('[cv/upload] Preparando extracción de texto del CV:', {
         fileName: selectedFile.name,
         fileSize: selectedFile.size,
         fileType: selectedFile.type,
@@ -146,7 +146,7 @@ export default function UploadCVPage() {
         body: extractFormData
       })
 
-      console.log('📡 Extract response:', {
+      console.log('[cv/upload] Extract response:', {
         status: extractResponse.status,
         ok: extractResponse.ok,
         statusText: extractResponse.statusText
@@ -154,15 +154,15 @@ export default function UploadCVPage() {
 
       if (!extractResponse.ok) {
         const errorData = await extractResponse.json().catch(() => ({ error: 'Error desconocido' }))
-        console.error('❌ Error en extracción:', errorData)
+        console.error('[cv/upload] Error en extracción:', errorData)
         throw new Error(errorData.error || 'Error al extraer texto del CV')
       }
 
       const extractResult = await extractResponse.json()
-      console.log('📦 Extract result:', extractResult)
+      console.log('[cv/upload] Extract result:', extractResult)
       
       const cvText = extractResult.text || ''
-      console.log('📝 CV text extracted:', {
+      console.log('[cv/upload] CV text extracted:', {
         length: cvText.length,
         preview: cvText.substring(0, 200),
         hasDbResult: !!extractResult.dbResult,
@@ -170,7 +170,7 @@ export default function UploadCVPage() {
       })
 
       if (!cvText) {
-        console.warn('⚠️ No se extrajo texto del PDF. Puede ser un PDF escaneado (imagen).')
+        console.warn('[cv/upload] No se extrajo texto del PDF. Puede ser un PDF escaneado (imagen).')
       }
 
       setUploadProgress(75)
@@ -207,7 +207,7 @@ export default function UploadCVPage() {
         salary_expectation: aiAnalysis.salary_expectation || 'No especificada'
       }
 
-      console.log('💾 Updating CV with data:', {
+      console.log('[cv/upload] Updating CV with data:', {
         cvId: cvRecord.id,
         hasText: !!updateData.cv_text,
         textLength: updateData.cv_text?.length || 0,
@@ -231,7 +231,7 @@ export default function UploadCVPage() {
         })
         // No fallar si el update falla, el CV ya está subido
       } else {
-        console.log('✅ CV updated successfully')
+        console.log('[cv/upload] CV updated successfully')
       }
 
       setUploadProgress(100)
@@ -479,7 +479,7 @@ export default function UploadCVPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                   <h4 className="text-lg font-medium text-green-900 mb-4">
-                    🎯 Fortalezas
+                    Fortalezas
                   </h4>
                   <ul className="space-y-2">
                     {analysisResult.strengths.map((strength: string, index: number) => (
@@ -495,7 +495,7 @@ export default function UploadCVPage() {
 
                 <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                   <h4 className="text-lg font-medium text-orange-900 mb-4">
-                    📈 Áreas de Mejora
+                    Áreas de Mejora
                   </h4>
                   <ul className="space-y-2">
                     {analysisResult.areas_improvement.map((area: string, index: number) => (

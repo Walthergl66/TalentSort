@@ -151,11 +151,11 @@ export default function CandidateApplicationsPage() {
   };
 
   const statusIcons: Record<string, string> = {
-    pending: '⏳',
-    reviewed: '👀',
-    shortlisted: '⭐',
-    rejected: '❌',
-    accepted: '✅'
+    pending: '',
+    reviewed: '',
+    shortlisted: '',
+    rejected: '',
+    accepted: ''
   };
 
   const analizarPostulacion = async (applicationId: string, cvId: string, jobId: string) => {
@@ -189,7 +189,7 @@ export default function CandidateApplicationsPage() {
         return;
       }
 
-      console.log('📄 CV obtenido:', {
+      console.log('[applications] CV obtenido:', {
         id: cvData.id,
         file_name: cvData.file_name,
         has_cv_text: !!cvData.cv_text,
@@ -199,7 +199,7 @@ export default function CandidateApplicationsPage() {
       // Si el CV no tiene texto extraído, ofrecer re-procesarlo
       if (!cvData.cv_text) {
         const shouldReprocess = confirm(
-          '⚠️ Este CV no ha sido procesado para extraer su contenido.\n\n' +
+          'Este CV no ha sido procesado para extraer su contenido.\n\n' +
           '¿Deseas procesarlo ahora para poder analizarlo con IA?'
         );
 
@@ -209,7 +209,7 @@ export default function CandidateApplicationsPage() {
 
         // Llamar a la API de extracción de texto
         try {
-          console.log('🔄 Reprocesando CV...');
+          console.log('[applications] Reprocesando CV...');
           const extractResponse = await fetch('/api/extract-cv-text', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -221,7 +221,7 @@ export default function CandidateApplicationsPage() {
           }
 
           const extractResult = await extractResponse.json();
-          console.log('✅ CV reprocesado:', extractResult);
+          console.log('[applications] CV reprocesado:', extractResult);
 
           if (!extractResult.text) {
             alert('No se pudo extraer texto del CV. El archivo podría estar dañado o en un formato no compatible.');
@@ -246,7 +246,7 @@ export default function CandidateApplicationsPage() {
         required_experience: currentApp.required_experience || 0
       };
 
-      console.log('📄 Datos del trabajo obtenidos:', {
+      console.log('[applications] Datos del trabajo obtenidos:', {
         title: jobData.title,
         hasDescription: !!jobData.description,
         skillsCount: jobData.required_skills.length,
@@ -271,7 +271,7 @@ export default function CandidateApplicationsPage() {
         
         // Detectar error de cuota excedida
         if (response.status === 500 && errorData.error?.includes('RESOURCE_EXHAUSTED')) {
-          alert('⚠️ La cuota diaria de análisis de IA se ha agotado.\n\nPor favor, intenta de nuevo mañana o contacta al administrador para aumentar el límite.');
+          alert('La cuota diaria de análisis de IA se ha agotado.\n\nPor favor, intenta de nuevo mañana o contacta al administrador para aumentar el límite.');
         } else {
           alert(`Error al analizar el CV: ${errorData.error || 'Error desconocido'}`);
         }
@@ -312,12 +312,12 @@ export default function CandidateApplicationsPage() {
       const califica = score >= 7 || matchPercentage >= 70;
 
       alert(
-        `📊 Análisis completado:\n\n` +
+        `Análisis completado:\n\n` +
         `Puntaje: ${score}/10\n` +
         `Compatibilidad: ${matchPercentage}%\n\n` +
         (califica 
-          ? '✅ ¡Calificas para este puesto! Tu perfil es compatible con los requisitos.'
-          : '⚠️ Tu perfil no cumple completamente con los requisitos. Considera mejorar tu CV o postularte a otras posiciones más afines.')
+          ? 'Calificas para este puesto. Tu perfil es compatible con los requisitos.'
+          : 'Tu perfil no cumple completamente con los requisitos. Considera mejorar tu CV o postularte a otras posiciones más afines.')
       );
 
     } catch (error) {
@@ -573,7 +573,7 @@ export default function CandidateApplicationsPage() {
                               // Re-sincronizar por si hay otros cambios
                               await fetchApplications(user.id)
                               
-                              alert('✅ CV actualizado exitosamente');
+                              alert('CV actualizado exitosamente');
                             } catch (err) {
                               console.error('Exception updating application CV:', err)
                               alert('Error al actualizar el CV de la postulación');
@@ -647,7 +647,7 @@ export default function CandidateApplicationsPage() {
                   {app.status === 'accepted' && (
                     <div className="mt-4 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
                       <p className="text-green-800 dark:text-green-300 font-semibold">
-                        🎉 ¡Felicidades! Has sido aceptado para esta posición. La empresa se pondrá en contacto contigo pronto.
+                        Felicidades, has sido aceptado para esta posición. La empresa se pondrá en contacto contigo pronto.
                       </p>
                     </div>
                   )}
@@ -655,7 +655,7 @@ export default function CandidateApplicationsPage() {
                   {app.status === 'shortlisted' && (
                     <div className="mt-4 p-4 bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg">
                       <p className="text-purple-800 dark:text-purple-300 font-semibold">
-                        ⭐ Has sido preseleccionado. Mantente atento a futuras comunicaciones.
+                        Has sido preseleccionado. Mantente atento a futuras comunicaciones.
                       </p>
                     </div>
                   )}

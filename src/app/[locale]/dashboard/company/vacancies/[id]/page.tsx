@@ -85,7 +85,7 @@ export default function VacancyApplicationsPage() {
         .eq('job_id', vacancyId)
         .order('created_at', { ascending: false })
 
-      console.log('📋 Applications fetched:', {
+      console.log('[vacancies/id] Applications fetched:', {
         count: applicationsData?.length || 0,
         data: applicationsData
       })
@@ -96,7 +96,7 @@ export default function VacancyApplicationsPage() {
       }
 
       if (!applicationsData || applicationsData.length === 0) {
-        console.log('⚠️ No applications found for vacancy:', vacancyId)
+        console.log('[vacancies/id] No applications found for vacancy:', vacancyId)
         setApplications([])
         return
       }
@@ -105,7 +105,7 @@ export default function VacancyApplicationsPage() {
       const candidateIds = [...new Set(applicationsData.map(app => app.candidate_id))]
       const cvIds = [...new Set(applicationsData.map(app => app.cv_id).filter(Boolean))]
 
-      console.log('🔍 Fetching profiles for candidate IDs:', candidateIds)
+      console.log('[vacancies/id] Fetching profiles for candidate IDs:', candidateIds)
 
       // Obtener información de candidatos
       let profilesData: Array<{
@@ -130,7 +130,7 @@ export default function VacancyApplicationsPage() {
         }
       }
 
-      console.log('👥 Profiles fetched:', {
+      console.log('[vacancies/id] Profiles fetched:', {
         count: profilesData?.length || 0,
         profiles: profilesData
       })
@@ -172,7 +172,7 @@ export default function VacancyApplicationsPage() {
         }
       })
 
-      console.log('✅ Formatted applications:', formattedApplications)
+      console.log('[vacancies/id] Formatted applications:', formattedApplications)
       setApplications(formattedApplications)
     } catch (error) {
       console.error('Error fetching data:', error)
@@ -190,7 +190,7 @@ export default function VacancyApplicationsPage() {
         throw new Error('Este candidato no ha subido un CV')
       }
 
-      console.log('📄 Paso 1: Obteniendo datos del CV con ID:', cvId)
+      console.log('[vacancies/id] Paso 1: Obteniendo datos del CV con ID:', cvId)
 
       // Obtener datos del CV directamente
       const { data: cvData, error: cvError } = await supabase
@@ -226,14 +226,14 @@ ARCHIVO CV
 Nombre del archivo: ${cvData.file_name || 'No disponible'}
       `.trim()
 
-      console.log('✅ Texto extraído:', {
+      console.log('[vacancies/id] Texto extraído:', {
         length: cvText.length,
         preview: cvText.substring(0, 150) + '...',
         hasSkills: !!(cvData.skills && cvData.skills.length > 0),
         hasSummary: !!cvData.summary
       })
 
-      console.log('🤖 Paso 2: Enviando a análisis IA')
+      console.log('[vacancies/id] Paso 2: Enviando a análisis IA')
 
       // Paso 2: Analizar con IA
       const response = await fetch('/api/analyze-cv', {
@@ -250,7 +250,7 @@ Nombre del archivo: ${cvData.file_name || 'No disponible'}
         })
       })
 
-      console.log('📡 Respuesta de API:', {
+      console.log('[vacancies/id] Respuesta de API:', {
         status: response.status,
         ok: response.ok,
         statusText: response.statusText,
@@ -269,30 +269,30 @@ Nombre del archivo: ${cvData.file_name || 'No disponible'}
             errorDetails = { error: textError };
           }
         } catch (parseError) {
-          console.error('❌ Error al parsear respuesta de error:', parseError);
+          console.error('[vacancies/id] Error al parsear respuesta de error:', parseError);
           errorDetails = { error: 'No se pudo leer la respuesta del servidor' };
         }
         
-        console.error('❌ AI API error completo:', errorDetails);
-        console.error('❌ Error status:', response.status);
-        console.error('❌ Error statusText:', response.statusText);
+        console.error('[vacancies/id] AI API error completo:', errorDetails);
+        console.error('[vacancies/id] Error status:', response.status);
+        console.error('[vacancies/id] Error statusText:', response.statusText);
         
         throw new Error(errorDetails.detalles || errorDetails.error || `Error ${response.status}: El servicio de análisis no está disponible`);
       }
 
       const aiResult = await response.json()
-      console.log('✅ Resultado recibido:', {
+      console.log('[vacancies/id] Resultado recibido:', {
         hasScore: !!aiResult.score,
         hasMatchPercentage: !!aiResult.match_percentage,
         hasAnalysis: !!aiResult.analysis
       })
 
-      console.log('📊 Resultados del análisis:', {
+      console.log('[vacancies/id] Resultados del análisis:', {
         score: aiResult.score,
         match_percentage: aiResult.match_percentage
       })
 
-      console.log('💾 Paso 3: Guardando resultados en el ranking')
+      console.log('[vacancies/id] Paso 3: Guardando resultados en el ranking')
 
       // Paso 3: Actualizar aplicación con resultados y crear ranking
       const { error: updateError } = await supabase
@@ -316,7 +316,7 @@ Nombre del archivo: ${cvData.file_name || 'No disponible'}
       const scoreText = aiResult.score ? `${aiResult.score}/10` : 'N/A';
       const matchText = aiResult.match_percentage ? `${aiResult.match_percentage}%` : 'N/A';
       
-      alert('✅ Análisis completado exitosamente\n\n' +
+      alert('Análisis completado exitosamente\n\n' +
             `Puntuación: ${scoreText}\n` +
             `Compatibilidad: ${matchText}\n\n` +
             `El candidato ha sido actualizado en el ranking.`);
@@ -331,7 +331,7 @@ Nombre del archivo: ${cvData.file_name || 'No disponible'}
       
       // Si el servicio de IA no está disponible, permitir marcar como "en revisión" manualmente
       const shouldContinue = confirm(
-        `⚠️ ${errorMessage}\n\n` +
+        `${errorMessage}\n\n` +
         '¿Deseas marcar esta aplicación como "En revisión" para revisarla manualmente?'
       )
       
@@ -348,14 +348,14 @@ Nombre del archivo: ${cvData.file_name || 'No disponible'}
 
           if (updateError) {
             console.error('Error updating application:', updateError)
-            alert('❌ No se pudo actualizar la aplicación')
+            alert('No se pudo actualizar la aplicación')
           } else {
             await fetchVacancyAndApplications()
-            alert('✅ Aplicación marcada para revisión manual')
+            alert('Aplicación marcada para revisión manual')
           }
         } catch (updateErr) {
           console.error('Update error:', updateErr)
-          alert('❌ Error al actualizar la aplicación')
+          alert('Error al actualizar la aplicación')
         }
       }
     } finally {
@@ -455,7 +455,7 @@ Nombre del archivo: ${cvData.file_name || 'No disponible'}
                 </p>
                 {applications.some(app => app.ai_score !== null) && (
                   <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 rounded-full text-sm font-medium">
-                    🏆 Ranking habilitado
+                    Ranking habilitado
                   </span>
                 )}
               </div>
@@ -497,21 +497,21 @@ Nombre del archivo: ${cvData.file_name || 'No disponible'}
                         </span>
                       </div>
                       <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                        📧 {application.candidate_email}
+                        {application.candidate_email}
                       </p>
                       {application.candidate_phone && (
                         <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                          📞 {application.candidate_phone}
+                          {application.candidate_phone}
                         </p>
                       )}
                       {application.candidate_location && (
                         <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                          📍 {application.candidate_location}
+                          {application.candidate_location}
                         </p>
                       )}
                       {application.candidate_position && (
                         <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                          💼 {application.candidate_position}
+                          {application.candidate_position}
                         </p>
                       )}
                       <p className="text-xs text-gray-500 dark:text-gray-500">
@@ -527,13 +527,13 @@ Nombre del archivo: ${cvData.file_name || 'No disponible'}
                       <div className="text-right">
                         <div className="flex items-center gap-2 justify-end mb-1">
                           {index === 0 && (
-                            <span className="text-2xl">🥇</span>
+                            <span className="text-lg font-bold text-yellow-500">1º</span>
                           )}
                           {index === 1 && (
-                            <span className="text-2xl">🥈</span>
+                            <span className="text-lg font-bold text-gray-400">2º</span>
                           )}
                           {index === 2 && (
-                            <span className="text-2xl">🥉</span>
+                            <span className="text-lg font-bold text-amber-600">3º</span>
                           )}
                           <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">
                             {application.ai_score}/100
@@ -559,7 +559,9 @@ Nombre del archivo: ${cvData.file_name || 'No disponible'}
                       {/* Header del análisis */}
                       <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
                         <div className="flex items-center gap-2 mb-2">
-                          <span className="text-2xl">🤖</span>
+                          <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                          </svg>
                           <h4 className="text-lg font-bold text-gray-900 dark:text-white">
                             Análisis Detallado de IA
                           </h4>
@@ -573,7 +575,9 @@ Nombre del archivo: ${cvData.file_name || 'No disponible'}
                       {application.ai_analysis.evaluation && (
                         <div className="bg-white dark:bg-gray-800 p-5 rounded-lg border-2 border-blue-300 dark:border-blue-700 shadow-sm">
                           <div className="flex items-center gap-2 mb-3">
-                            <span className="text-2xl">📊</span>
+                            <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                            </svg>
                             <strong className="text-blue-900 dark:text-blue-300 font-bold text-lg">
                               Evaluación Profesional
                             </strong>
@@ -588,7 +592,9 @@ Nombre del archivo: ${cvData.file_name || 'No disponible'}
                       {application.ai_analysis.recommendation && (
                         <div className="bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-900/30 dark:to-blue-900/30 p-5 rounded-lg border-2 border-indigo-300 dark:border-indigo-700">
                           <div className="flex items-center gap-2 mb-3">
-                            <span className="text-2xl">🎯</span>
+                            <svg className="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
                             <strong className="text-indigo-900 dark:text-indigo-300 font-bold text-lg">
                               Recomendación Final
                             </strong>
@@ -625,7 +631,9 @@ Nombre del archivo: ${cvData.file_name || 'No disponible'}
                       {application.ai_analysis.strengths && application.ai_analysis.strengths.length > 0 && (
                         <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg border border-green-200 dark:border-green-800">
                           <div className="flex items-center gap-2 mb-3">
-                            <span className="text-xl">✅</span>
+                            <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                            </svg>
                             <strong className="text-green-900 dark:text-green-300 font-semibold">
                               Fortalezas Identificadas
                             </strong>
@@ -645,7 +653,9 @@ Nombre del archivo: ${cvData.file_name || 'No disponible'}
                       {application.ai_analysis.weaknesses && application.ai_analysis.weaknesses.length > 0 && (
                         <div className="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-lg border border-yellow-200 dark:border-yellow-800">
                           <div className="flex items-center gap-2 mb-3">
-                            <span className="text-xl">⚠️</span>
+                            <svg className="w-5 h-5 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                            </svg>
                             <strong className="text-yellow-900 dark:text-yellow-300 font-semibold">
                               Áreas de Mejora Detectadas
                             </strong>
@@ -665,7 +675,9 @@ Nombre del archivo: ${cvData.file_name || 'No disponible'}
                       {application.ai_analysis.recommendations && application.ai_analysis.recommendations.length > 0 && (
                         <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg border border-purple-200 dark:border-purple-800">
                           <div className="flex items-center gap-2 mb-3">
-                            <span className="text-xl">💡</span>
+                            <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                            </svg>
                             <strong className="text-purple-900 dark:text-purple-300 font-semibold">
                               Recomendaciones de Acción
                             </strong>
@@ -686,7 +698,7 @@ Nombre del archivo: ${cvData.file_name || 'No disponible'}
                   <div className="flex flex-wrap gap-2">
                     {application.cv_file_name && (
                       <span className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg">
-                        📄 {application.cv_file_name}
+                        {application.cv_file_name}
                       </span>
                     )}
 
@@ -696,13 +708,13 @@ Nombre del archivo: ${cvData.file_name || 'No disponible'}
                         disabled={analyzing === application.id}
                         className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 rounded-lg transition-colors"
                       >
-                        {analyzing === application.id ? '⏳ Analizando...' : '🤖 Analizar con IA'}
+                        {analyzing === application.id ? 'Analizando...' : 'Analizar con IA'}
                       </button>
                     )}
                     
                     {!application.cv_id && (
                       <span className="px-4 py-2 text-sm text-gray-500 dark:text-gray-400 italic">
-                        ⚠️ Postulación sin CV adjunto
+                        Postulación sin CV adjunto
                       </span>
                     )}
 
@@ -711,7 +723,7 @@ Nombre del archivo: ${cvData.file_name || 'No disponible'}
                         onClick={() => handleStatusChange(application.id, 'shortlisted')}
                         className="px-4 py-2 text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-lg transition-colors"
                       >
-                        ⭐ Preseleccionar
+                        Preseleccionar
                       </button>
                     )}
 
@@ -720,7 +732,7 @@ Nombre del archivo: ${cvData.file_name || 'No disponible'}
                         onClick={() => handleStatusChange(application.id, 'accepted')}
                         className="px-4 py-2 text-sm font-medium text-white bg-green-600 hover:bg-green-700 rounded-lg transition-colors"
                       >
-                        ✅ Aceptar
+                        Aceptar
                       </button>
                     )}
 
@@ -730,7 +742,7 @@ Nombre del archivo: ${cvData.file_name || 'No disponible'}
                         disabled={analyzing === application.id}
                         className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 rounded-lg transition-colors"
                       >
-                        {analyzing === application.id ? '⏳ Volver a analizar...' : '🔄 Volver a analizar'}
+                        {analyzing === application.id ? 'Volver a analizar...' : 'Volver a analizar'}
                       </button>
                     )}
 
@@ -739,7 +751,7 @@ Nombre del archivo: ${cvData.file_name || 'No disponible'}
                         onClick={() => handleStatusChange(application.id, 'rejected')}
                         className="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-lg transition-colors"
                       >
-                        ❌ Rechazar
+                        Rechazar
                       </button>
                     )}
                   </div>

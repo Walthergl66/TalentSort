@@ -87,7 +87,7 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
               <p>Utilizamos su información personal para:</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div className="border border-gray-200 rounded-lg p-3">
-                  <div className="font-semibold text-gray-700 mb-1">✅ Servicios principales</div>
+                  <div className="font-semibold text-gray-700 mb-1">Servicios principales</div>
                   <ul className="text-sm space-y-1">
                     <li>• Crear y gestionar su cuenta</li>
                     <li>• Procesar CVs con IA</li>
@@ -96,7 +96,7 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
                   </ul>
                 </div>
                 <div className="border border-gray-200 rounded-lg p-3">
-                  <div className="font-semibold text-gray-700 mb-1">📊 Mejora del servicio</div>
+                  <div className="font-semibold text-gray-700 mb-1">Mejora del servicio</div>
                   <ul className="text-sm space-y-1">
                     <li>• Analizar patrones de uso</li>
                     <li>• Mejorar algoritmos de IA</li>
@@ -105,7 +105,7 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
                   </ul>
                 </div>
                 <div className="border border-gray-200 rounded-lg p-3">
-                  <div className="font-semibold text-gray-700 mb-1">📧 Comunicaciones</div>
+                  <div className="font-semibold text-gray-700 mb-1">Comunicaciones</div>
                   <ul className="text-sm space-y-1">
                     <li>• Confirmaciones de registro</li>
                     <li>• Recuperación de contraseña</li>
@@ -114,7 +114,7 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
                   </ul>
                 </div>
                 <div className="border border-gray-200 rounded-lg p-3">
-                  <div className="font-semibold text-gray-700 mb-1">⚖️ Cumplimiento legal</div>
+                  <div className="font-semibold text-gray-700 mb-1">Cumplimiento legal</div>
                   <ul className="text-sm space-y-1">
                     <li>• Cumplir con leyes aplicables</li>
                     <li>• Responder a solicitudes legales</li>
@@ -136,7 +136,7 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
             <div className="space-y-3">
               <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                 <p className="font-semibold text-green-800 mb-2">
-                  ✅ NO vendemos su información personal a terceros
+                  NO vendemos su información personal a terceros
                 </p>
                 <p className="text-sm text-green-700">
                   Su información solo se comparte en las siguientes circunstancias:
@@ -177,7 +177,7 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
               <p className="font-semibold">Implementamos medidas de seguridad robustas:</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
                 <div>
-                  <div className="font-semibold text-indigo-700 mb-1">🔐 Encriptación</div>
+                  <div className="font-semibold text-indigo-700 mb-1">Encriptación</div>
                   <ul className="list-disc list-inside ml-2">
                     <li>HTTPS/TLS en todas las comunicaciones</li>
                     <li>Contraseñas hasheadas con bcrypt</li>
@@ -185,7 +185,7 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
                   </ul>
                 </div>
                 <div>
-                  <div className="font-semibold text-indigo-700 mb-1">🛡️ Acceso controlado</div>
+                  <div className="font-semibold text-indigo-700 mb-1">Acceso controlado</div>
                   <ul className="list-disc list-inside ml-2">
                     <li>Autenticación de dos factores (2FA)</li>
                     <li>Row Level Security (RLS)</li>
@@ -193,7 +193,7 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
                   </ul>
                 </div>
                 <div>
-                  <div className="font-semibold text-indigo-700 mb-1">💾 Backups</div>
+                  <div className="font-semibold text-indigo-700 mb-1">Backups</div>
                   <ul className="list-disc list-inside ml-2">
                     <li>Respaldos automáticos diarios</li>
                     <li>Almacenamiento redundante</li>
@@ -201,7 +201,7 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
                   </ul>
                 </div>
                 <div>
-                  <div className="font-semibold text-indigo-700 mb-1">👁️ Monitoreo</div>
+                  <div className="font-semibold text-indigo-700 mb-1">Monitoreo</div>
                   <ul className="list-disc list-inside ml-2">
                     <li>Detección de intrusiones</li>
                     <li>Alertas de seguridad</li>
@@ -227,34 +227,34 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
               <p className="font-semibold">Usted tiene derecho a:</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div className="bg-white border-2 border-indigo-200 rounded-lg p-3">
-                  <div className="font-semibold text-indigo-700 mb-1">📋 Acceso</div>
+                  <div className="font-semibold text-indigo-700 mb-1">Acceso</div>
                   <p className="text-sm">Solicitar una copia de todos sus datos personales</p>
                 </div>
                 <div className="bg-white border-2 border-purple-200 rounded-lg p-3">
-                  <div className="font-semibold text-purple-700 mb-1">✏️ Rectificación</div>
+                  <div className="font-semibold text-purple-700 mb-1">Rectificación</div>
                   <p className="text-sm">Corregir información inexacta o incompleta</p>
                 </div>
                 <div className="bg-white border-2 border-red-200 rounded-lg p-3">
-                  <div className="font-semibold text-red-700 mb-1">🗑️ Eliminación</div>
+                  <div className="font-semibold text-red-700 mb-1">Eliminación</div>
                   <p className="text-sm">Solicitar la eliminación de sus datos ("derecho al olvido")</p>
                 </div>
                 <div className="bg-white border-2 border-orange-200 rounded-lg p-3">
-                  <div className="font-semibold text-orange-700 mb-1">🚫 Oposición</div>
+                  <div className="font-semibold text-orange-700 mb-1">Oposición</div>
                   <p className="text-sm">Oponerse al procesamiento de sus datos</p>
                 </div>
                 <div className="bg-white border-2 border-green-200 rounded-lg p-3">
-                  <div className="font-semibold text-green-700 mb-1">📦 Portabilidad</div>
+                  <div className="font-semibold text-green-700 mb-1">Portabilidad</div>
                   <p className="text-sm">Recibir sus datos en formato estructurado (JSON/CSV)</p>
                 </div>
                 <div className="bg-white border-2 border-blue-200 rounded-lg p-3">
-                  <div className="font-semibold text-blue-700 mb-1">⏸️ Restricción</div>
+                  <div className="font-semibold text-blue-700 mb-1">Restricción</div>
                   <p className="text-sm">Limitar el procesamiento de sus datos</p>
                 </div>
               </div>
               
               <div className="bg-yellow-50 border border-yellow-300 rounded-lg p-4 mt-4">
                 <p className="font-semibold text-yellow-800 mb-2">
-                  📧 Para ejercer sus derechos:
+                  Para ejercer sus derechos:
                 </p>
                 <p className="text-sm text-yellow-700">
                   Envíe un email a <strong>privacy@reclutamiento-ia.com</strong> con el asunto 
@@ -347,7 +347,7 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
             </h3>
             <div className="bg-red-50 border border-red-300 rounded-lg p-4">
               <p className="font-semibold text-red-800 mb-2">
-                ⚠️ La plataforma NO está dirigida a menores de 18 años
+                Importante: La plataforma NO está dirigida a menores de 18 años
               </p>
               <p className="text-sm text-red-700">
                 No recopilamos intencionalmente información de menores. Si descubrimos que 
@@ -391,18 +391,18 @@ export default function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
           {/* Resumen ejecutivo */}
           <section className="border-t-2 border-gray-200 pt-6">
             <h3 className="text-xl font-semibold text-gray-800 mb-3">
-              📋 Resumen Ejecutivo
+              Resumen Ejecutivo
             </h3>
             <div className="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg p-4">
               <p className="font-semibold mb-2">Sus datos, sus derechos:</p>
               <ul className="list-disc list-inside space-y-1 text-sm">
-                <li>✅ Recopilamos solo lo necesario para el servicio</li>
-                <li>🔒 Protegemos sus datos con encriptación y seguridad avanzada</li>
-                <li>🚫 NO vendemos su información a terceros</li>
-                <li>👁️ Usted controla qué reclutadores ven su perfil</li>
-                <li>📧 Puede solicitar, modificar o eliminar sus datos en cualquier momento</li>
-                <li>🌍 Cumplimos con GDPR, CCPA y regulaciones internacionales</li>
-                <li>📞 Estamos disponibles para resolver sus dudas de privacidad</li>
+                <li>Recopilamos solo lo necesario para el servicio</li>
+                <li>Protegemos sus datos con encriptación y seguridad avanzada</li>
+                <li>NO vendemos su información a terceros</li>
+                <li>Usted controla qué reclutadores ven su perfil</li>
+                <li>Puede solicitar, modificar o eliminar sus datos en cualquier momento</li>
+                <li>Cumplimos con GDPR, CCPA y regulaciones internacionales</li>
+                <li>Estamos disponibles para resolver sus dudas de privacidad</li>
               </ul>
             </div>
           </section>

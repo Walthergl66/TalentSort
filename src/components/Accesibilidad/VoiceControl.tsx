@@ -298,7 +298,7 @@ export default function VoiceControl() {
 
       {isListening && (
         <div className="voice-commands-hint">
-          <p>🎤 Escuchando... Di comandos como:</p>
+          <p>Escuchando... Di comandos como:</p>
           <ul>
             <li>"Activar alto contraste"</li>
             <li>"Aumentar texto"</li>

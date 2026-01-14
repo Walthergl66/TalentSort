@@ -55,8 +55,8 @@ export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
       
       // Redirigir al dashboard después del login exitoso
       if (data.session) {
-        console.log('✅ Login successful, redirecting...')
-        console.log('👤 User data:', data.session.user)
+        console.log('[Login] Exitoso, redirigiendo...')
+        console.log('[Login] Usuario:', data.session.user)
         router.push('/dashboard')
       }
       
@@ -73,7 +73,7 @@ export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
         if (msg.includes('rate limit') || msg.includes('too many') || msg.includes('temporarily')) {
           setIsBlocked(true)
           setRemainingTime(300) // 5 minutos por defecto
-          errorMessage = '🔒 Cuenta bloqueada temporalmente por seguridad. Por favor, espera 5 minutos antes de intentar nuevamente.'
+          errorMessage = 'Cuenta bloqueada temporalmente por seguridad. Por favor, espera 5 minutos antes de intentar nuevamente.'
           
           // Countdown timer
           const timer = setInterval(() => {
@@ -89,11 +89,11 @@ export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
         } 
         // Credenciales inválidas
         else if (msg.includes('invalid') || msg.includes('incorrect')) {
-          errorMessage = '❌ Credenciales incorrectas. Verifica tu email y contraseña.'
+          errorMessage = 'Credenciales incorrectas. Verifica tu email y contraseña.'
         }
         // Email no confirmado
         else if (msg.includes('email not confirmed') || msg.includes('confirm')) {
-          errorMessage = '📧 Email no confirmado. Por favor verifica tu correo electrónico.'
+          errorMessage = 'Email no confirmado. Por favor verifica tu correo electrónico.'
           
           // Ofrecer reenviar email de confirmación
           setTimeout(() => {
@@ -106,7 +106,7 @@ export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
                 if (error) {
                   alert('Error al reenviar: ' + error.message)
                 } else {
-                  alert('✅ Email de confirmación reenviado. Revisa tu bandeja de entrada y spam.')
+                  alert('Email de confirmación reenviado. Revisa tu bandeja de entrada y spam.')
                 }
               })
             }
@@ -114,7 +114,7 @@ export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
         }
         // Usuario no encontrado
         else if (msg.includes('user not found')) {
-          errorMessage = '👤 No existe una cuenta con este email. ¿Quieres registrarte?'
+          errorMessage = 'No existe una cuenta con este email. ¿Quieres registrarte?'
         }
         // Otro error
         else {
@@ -176,7 +176,7 @@ export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
                     />
                   </div>
                   <p className="text-xs text-orange-600 mt-2">
-                    💡 Tip: Después de 3 intentos fallidos, bloqueamos temporalmente el acceso por seguridad.
+                    Nota: Después de 3 intentos fallidos, bloqueamos temporalmente el acceso por seguridad.
                   </p>
                 </div>
               )}
@@ -264,7 +264,7 @@ export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
         disabled={loading || isBlocked}
         className="w-full bg-blue-600 text-white py-2.5 px-4 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm font-medium"
       >
-        {loading ? 'Iniciando sesión...' : isBlocked ? '🔒 Bloqueado' : 'Iniciar sesión'}
+        {loading ? 'Iniciando sesión...' : isBlocked ? 'Bloqueado' : 'Iniciar sesión'}
       </button>
 
       <div className="text-center text-sm text-gray-600 dark:text-gray-400 pt-2 border-t border-gray-200 dark:border-gray-700 mt-4">

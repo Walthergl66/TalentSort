@@ -45,11 +45,11 @@ export default function MyCVsPage() {
 
   const fetchCVs = async (userId: string) => {
     try {
-      console.log('🔍 Fetching CVs for user:', userId)
+      console.log('[cv] Fetching CVs for user:', userId)
       
       // Verificar configuración de Supabase
       const { data: { session } } = await supabase.auth.getSession()
-      console.log('🔐 Session status:', {
+      console.log('[cv] Session status:', {
         hasSession: !!session,
         userId: session?.user?.id,
         email: session?.user?.email
@@ -61,7 +61,7 @@ export default function MyCVsPage() {
         .eq('user_id', userId)
         .order('created_at', { ascending: false })
 
-      console.log('📦 Raw response:', { 
+      console.log('[cv] Raw response:', { 
         data, 
         error,
         errorType: error ? typeof error : 'no error',
@@ -77,7 +77,7 @@ export default function MyCVsPage() {
           full: JSON.stringify(error, null, 2)
         }
         
-        console.error('❌ Error fetching CVs:', errorInfo)
+        console.error('[cv] Error fetching CVs:', errorInfo)
         
         // Mensajes de error específicos
         let userMessage = 'Error al cargar los CVs: '
@@ -94,10 +94,10 @@ export default function MyCVsPage() {
         return
       }
 
-      console.log('✅ CVs fetched successfully:', data?.length || 0, 'CVs')
+      console.log('[cv] CVs fetched successfully:', data?.length || 0, 'CVs')
       setCvs(data || [])
     } catch (error) {
-      console.error('❌ Unexpected error:', error)
+      console.error('[cv] Unexpected error:', error)
       alert('Error inesperado al cargar los CVs. Por favor, recarga la página.')
     } finally {
       setLoading(false)
@@ -360,7 +360,7 @@ export default function MyCVsPage() {
                 </svg>
                 <div>
                   <h4 className="text-lg font-medium text-blue-900 mb-2">
-                    💡 Consejos para mejorar tu CV
+                    Consejos para mejorar tu CV
                   </h4>
                   <ul className="text-sm text-blue-800 space-y-1">
                     <li>• Mantén tu CV actualizado con tu experiencia más reciente</li>

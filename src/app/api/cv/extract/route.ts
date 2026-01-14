@@ -17,13 +17,13 @@ const supabase = createClient(
 
 export async function POST(request: NextRequest) {
   try {
-    console.log('🔔 /api/cv/extract - Nueva solicitud')
+    console.log('[cv/extract] Nueva solicitud')
     
     const formData = await request.formData()
     const file = formData.get('file') as File
     const cvId = formData.get('cv_id') as string
 
-    console.log('📦 FormData recibido:', {
+    console.log('[cv/extract] FormData recibido:', {
       hasFile: !!file,
       fileName: file?.name,
       fileSize: file?.size,
@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
     })
 
     if (!file) {
-      console.error('❌ No se proporcionó archivo')
+      console.error('[cv/extract] No se proporcionó archivo')
       return NextResponse.json(
         { error: 'No se proporcionó ningún archivo' },
         { status: 400 }
@@ -41,10 +41,10 @@ export async function POST(request: NextRequest) {
 
     // Validar archivo
     const validation = validateCVFile(file)
-    console.log('🔍 Validación de archivo:', validation)
+    console.log('[cv/extract] Validación de archivo:', validation)
     
     if (!validation.valid) {
-      console.error('❌ Validación fallida:', validation.error)
+      console.error('[cv/extract] Validación fallida:', validation.error)
       return NextResponse.json(
         { error: validation.error },
         { status: 400 }
@@ -54,13 +54,13 @@ export async function POST(request: NextRequest) {
     // Extraer texto del CV usando pdf2json (específico para Node.js)
     let text = ''
     try {
-      console.log('📖 Iniciando extracción de texto del PDF con pdf2json...')
+      console.log('[cv/extract] Iniciando extracción de texto del PDF...')
       const arrayBuffer = await file.arrayBuffer()
-      console.log('✅ ArrayBuffer obtenido, tamaño:', arrayBuffer.byteLength)
+      console.log('[cv/extract] ArrayBuffer obtenido, tamaño:', arrayBuffer.byteLength)
       
       // Importar pdf2json dinámicamente
       const PDFParser = (await import('pdf2json')).default
-      console.log('✅ pdf2json importado correctamente')
+      console.log('[cv/extract] pdf2json importado correctamente')
       
       // Crear instancia del parser
       const pdfParser = new PDFParser()
@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
         
         pdfParser.on('pdfParser_dataReady', (pdfData: any) => {
           try {
-            console.log('✅ PDF parseado:', {
+            console.log('[cv/extract] PDF parseado:', {
               numPages: pdfData.Pages?.length || 0
             })
             
@@ -94,7 +94,7 @@ export async function POST(request: NextRequest) {
               }
             }
             
-            console.log('✅ Texto extraído:', {
+            console.log('[cv/extract] Texto extraído:', {
               hasText: !!extractedText,
               textLength: extractedText.length,
               numPages: pdfData.Pages?.length || 0,
@@ -103,13 +103,13 @@ export async function POST(request: NextRequest) {
             
             resolve(extractedText.trim())
           } catch (parseErr: any) {
-            console.error('❌ Error procesando datos del PDF:', parseErr)
+            console.error('[cv/extract] Error procesando datos del PDF:', parseErr)
             reject(parseErr)
           }
         })
         
         pdfParser.on('pdfParser_dataError', (errData: any) => {
-          console.error('❌ Error en pdf2json:', errData.parserError)
+          console.error('[cv/extract] Error en pdf2json:', errData.parserError)
           reject(new Error(errData.parserError || 'Error desconocido al parsear PDF'))
         })
         
@@ -119,16 +119,16 @@ export async function POST(request: NextRequest) {
       })
       
       if (!text) {
-        console.warn('⚠️ El PDF no contiene texto extraíble')
+        console.warn('[cv/extract] El PDF no contiene texto extraíble')
       }
     } catch (err: any) {
-      console.error('❌ Error extrayendo texto del CV:', err)
-      console.error('❌ Stack:', err.stack)
-      console.error('❌ Message:', err.message)
+      console.error('[cv/extract] Error extrayendo texto del CV:', err)
+      console.error('[cv/extract] Stack:', err.stack)
+      console.error('[cv/extract] Message:', err.message)
       text = ''
     }
 
-    console.log('📊 Resultado de extracción:', {
+    console.log('[cv/extract] Resultado de extracción:', {
       hasText: !!text,
       textLength: text.length,
       preview: text.substring(0, 100)
@@ -137,7 +137,7 @@ export async function POST(request: NextRequest) {
     // Guardar el texto extraído en la base de datos (user_cvs.cv_text)
     let dbResult = null;
     if (cvId) {
-      console.log('💾 Guardando texto en BD para CV:', cvId)
+      console.log('[cv/extract] Guardando texto en BD para CV:', cvId)
       const { data, error } = await supabase
         .from('user_cvs')
         .update({ cv_text: text })
@@ -145,9 +145,9 @@ export async function POST(request: NextRequest) {
         .select();
       
       if (error) {
-        console.error('❌ Error guardando en BD:', error)
+        console.error('[cv/extract] Error guardando en BD:', error)
       } else {
-        console.log('✅ Texto guardado en BD exitosamente')
+        console.log('[cv/extract] Texto guardado en BD exitosamente')
       }
       
       dbResult = { data, error };

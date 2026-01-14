@@ -249,13 +249,13 @@ function VacancyCard({ vacancy, onEdit, onDelete, onChangeStatus }: VacancyCardP
           </div>
           <div className="flex flex-wrap gap-2 mb-3">
             <span className="text-sm text-gray-600 dark:text-gray-400">
-              📍 {vacancy.location}
+              {vacancy.location}
             </span>
             <span className="text-sm text-gray-600 dark:text-gray-400">
-              💼 {employmentTypeLabels[vacancy.employment_type]}
+              {employmentTypeLabels[vacancy.employment_type]}
             </span>
             <span className="text-sm text-gray-600 dark:text-gray-400">
-              📝 {vacancy.applications_count} postulaciones
+              {vacancy.applications_count} postulaciones
             </span>
           </div>
         </div>
@@ -283,7 +283,7 @@ function VacancyCard({ vacancy, onEdit, onDelete, onChangeStatus }: VacancyCardP
           onClick={() => onEdit(vacancy)}
           className="px-4 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
         >
-          ✏️ Editar
+          Editar
         </button>
         
         {vacancy.status === 'draft' && (
@@ -291,7 +291,7 @@ function VacancyCard({ vacancy, onEdit, onDelete, onChangeStatus }: VacancyCardP
             onClick={() => onChangeStatus(vacancy.id, 'open')}
             className="px-4 py-2 text-sm font-medium text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg transition-colors"
           >
-            ✅ Publicar
+            Publicar
           </button>
         )}
         
@@ -300,7 +300,7 @@ function VacancyCard({ vacancy, onEdit, onDelete, onChangeStatus }: VacancyCardP
             onClick={() => onChangeStatus(vacancy.id, 'closed')}
             className="px-4 py-2 text-sm font-medium text-yellow-600 dark:text-yellow-400 hover:bg-yellow-50 dark:hover:bg-yellow-900/20 rounded-lg transition-colors"
           >
-            🔒 Cerrar
+            Cerrar
           </button>
         )}
         
@@ -309,7 +309,7 @@ function VacancyCard({ vacancy, onEdit, onDelete, onChangeStatus }: VacancyCardP
             onClick={() => onChangeStatus(vacancy.id, 'open')}
             className="px-4 py-2 text-sm font-medium text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg transition-colors"
           >
-            🔓 Reabrir
+            Reabrir
           </button>
         )}
         
@@ -317,7 +317,7 @@ function VacancyCard({ vacancy, onEdit, onDelete, onChangeStatus }: VacancyCardP
           onClick={() => onDelete(vacancy.id)}
           className="px-4 py-2 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors ml-auto"
         >
-          🗑️ Eliminar
+          Eliminar
         </button>
       </div>
     </div>

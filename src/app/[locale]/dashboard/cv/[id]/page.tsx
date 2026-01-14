@@ -34,7 +34,7 @@ export default function CVDetailsPage() {
 
   const fetchCVDetails = async (cvId: string, userId: string) => {
     try {
-      console.log('🔍 Fetching CV details:', { cvId, userId })
+      console.log('[cv/id] Fetching CV details:', { cvId, userId })
       
       const { data, error } = await supabase
         .from('user_cvs')
@@ -43,10 +43,10 @@ export default function CVDetailsPage() {
         .eq('user_id', userId)
         .single()
 
-      console.log('📦 CV details response:', { data, error })
+      console.log('[cv/id] CV details response:', { data, error })
 
       if (error) {
-        console.error('❌ Error fetching CV details:', {
+        console.error('[cv/id] Error fetching CV details:', {
           message: error.message,
           details: error.details,
           hint: error.hint,
@@ -58,16 +58,16 @@ export default function CVDetailsPage() {
       }
 
       if (!data) {
-        console.error('❌ No CV data returned')
+        console.error('[cv/id] No CV data returned')
         alert('No se encontró el CV solicitado')
         router.push('/dashboard/cv')
         return
       }
 
-      console.log('✅ CV loaded successfully:', data.file_name)
+      console.log('[cv/id] CV loaded successfully:', data.file_name)
       setCv(data)
     } catch (error) {
-      console.error('❌ Unexpected error:', error)
+      console.error('[cv/id] Unexpected error:', error)
       alert('Error inesperado al cargar el CV')
       router.push('/dashboard/cv')
     } finally {
@@ -103,7 +103,7 @@ export default function CVDetailsPage() {
 
     setReanalyzing(true)
     try {
-      console.log('🔄 Reanalizando CV...')
+      console.log('[cv/id] Reanalizando CV...')
 
       // Construir texto del CV a partir de los datos disponibles
       const cvText = cv.cv_text || `
@@ -130,7 +130,7 @@ ${cv.areas_improvement && cv.areas_improvement.length > 0 ? cv.areas_improvement
         throw new Error('No hay suficiente información en el CV para analizar')
       }
 
-      console.log('📄 Texto del CV generado:', {
+      console.log('[cv/id] Texto del CV generado:', {
         length: cvText.length,
         preview: cvText.substring(0, 200)
       })
@@ -157,7 +157,7 @@ ${cv.areas_improvement && cv.areas_improvement.length > 0 ? cv.areas_improvement
 
       const analysis = await response.json()
 
-      console.log('✅ Análisis recibido:', analysis)
+      console.log('[cv/id] Análisis recibido:', analysis)
 
       // Actualizar CV en base de datos
       const { error: updateError } = await supabase
@@ -180,17 +180,17 @@ ${cv.areas_improvement && cv.areas_improvement.length > 0 ? cv.areas_improvement
       await fetchCVDetails(cv.id, user.id)
 
       alert(
-        '✅ CV reanalisado exitosamente\n\n' +
+        'CV reanalisado exitosamente\n\n' +
         `Nuevo puntaje: ${analysis.score}/100\n` +
         `Coincidencia: ${analysis.match_percentage}%`
       )
 
-      console.log('✅ Reanálisis completado')
+      console.log('[cv/id] Reanálisis completado')
 
     } catch (error: any) {
-      console.error('❌ Error al reanalizar:', error)
+      console.error('[cv/id] Error al reanalizar:', error)
       alert(
-        '❌ Error al reanalizar el CV\n\n' +
+        'Error al reanalizar el CV\n\n' +
         (error.message || 'Por favor, intenta nuevamente.')
       )
     } finally {
@@ -284,10 +284,10 @@ ${cv.areas_improvement && cv.areas_improvement.length > 0 ? cv.areas_improvement
             </h2>
             <p className="text-gray-600 mb-6">
               {cv.ai_score >= 80 
-                ? '🎉 ¡Excelente! Tu CV es muy competitivo en el mercado actual'
+                ? 'Excelente. Tu CV es muy competitivo en el mercado actual'
                 : cv.ai_score >= 60
-                ? '👍 Buen CV con algunas oportunidades de mejora'
-                : '📈 Tu CV necesita mejoras para destacar entre los candidatos'
+                ? 'Buen CV con algunas oportunidades de mejora'
+                : 'Tu CV necesita mejoras para destacar entre los candidatos'
               }
             </p>
             
@@ -315,7 +315,7 @@ ${cv.areas_improvement && cv.areas_improvement.length > 0 ? cv.areas_improvement
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                📋 Información Profesional
+                Información Profesional
               </h3>
               <dl className="space-y-4">
                 <div>
@@ -343,7 +343,7 @@ ${cv.areas_improvement && cv.areas_improvement.length > 0 ? cv.areas_improvement
 
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                📊 Información del Archivo
+                Información del Archivo
               </h3>
               <dl className="space-y-4">
                 <div>
@@ -374,7 +374,7 @@ ${cv.areas_improvement && cv.areas_improvement.length > 0 ? cv.areas_improvement
           {cv.skills && cv.skills.length > 0 && (
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                🎯 Habilidades Detectadas
+                Habilidades Detectadas
               </h3>
               <div className="flex flex-wrap gap-3">
                 {cv.skills.map((skill: string, index: number) => (
@@ -393,7 +393,7 @@ ${cv.areas_improvement && cv.areas_improvement.length > 0 ? cv.areas_improvement
           {cv.summary && (
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                🤖 Resumen Generado por IA
+                Resumen Generado por IA
               </h3>
               <p className="text-gray-700 leading-relaxed">
                 {cv.summary}
@@ -406,7 +406,7 @@ ${cv.areas_improvement && cv.areas_improvement.length > 0 ? cv.areas_improvement
             {cv.strengths && cv.strengths.length > 0 && (
               <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                 <h3 className="text-lg font-semibold text-green-900 mb-4">
-                  ✅ Fortalezas Identificadas
+                  Fortalezas Identificadas
                 </h3>
                 <ul className="space-y-3">
                   {cv.strengths.map((strength: string, index: number) => (
@@ -424,7 +424,7 @@ ${cv.areas_improvement && cv.areas_improvement.length > 0 ? cv.areas_improvement
             {cv.areas_improvement && cv.areas_improvement.length > 0 && (
               <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                 <h3 className="text-lg font-semibold text-orange-900 mb-4">
-                  📈 Áreas de Mejora
+                  Áreas de Mejora
                 </h3>
                 <ul className="space-y-3">
                   {cv.areas_improvement.map((area: string, index: number) => (
@@ -448,7 +448,7 @@ ${cv.areas_improvement && cv.areas_improvement.length > 0 ? cv.areas_improvement
               </svg>
               <div>
                 <h4 className="text-lg font-semibold text-blue-900 mb-3">
-                  💡 Recomendaciones Personalizadas
+                  Recomendaciones Personalizadas
                 </h4>
                 <div className="space-y-2 text-sm text-blue-800">
                   {cv.ai_score < 60 && (
@@ -488,7 +488,7 @@ ${cv.areas_improvement && cv.areas_improvement.length > 0 ? cv.areas_improvement
                 </>
               ) : (
                 <>
-                  🔄 Volver a Analizar con IA
+                  Volver a Analizar con IA
                 </>
               )}
             </button>

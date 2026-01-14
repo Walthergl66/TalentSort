@@ -153,9 +153,9 @@ export default function RankingPage() {
   }
 
   const getRankBadge = (index: number) => {
-    if (index === 0) return '🥇'
-    if (index === 1) return '🥈'
-    if (index === 2) return '🥉'
+    if (index === 0) return '1º'
+    if (index === 1) return '2º'
+    if (index === 2) return '3º'
     return `#${index + 1}`
   }
 
@@ -171,7 +171,7 @@ export default function RankingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-              🏆 Ranking de Postulantes IA - {userName}
+              Ranking de Postulantes IA - {userName}
             </h1>
             <p className="text-gray-600 dark:text-gray-400">
               Los mejores postulantes ordenados por análisis de inteligencia artificial
@@ -257,7 +257,7 @@ export default function RankingPage() {
                         {candidate.candidate_email}
                       </p>
                       <p className="text-sm text-blue-600 dark:text-blue-400 font-medium mb-3">
-                        💼 {candidate.job_title}
+                        {candidate.job_title}
                       </p>
 
                       {/* Análisis IA */}
@@ -265,7 +265,7 @@ export default function RankingPage() {
                         <div className="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
                           {candidate.ai_analysis.recommendation && (
                             <p className="text-sm text-gray-700 dark:text-gray-300">
-                              <strong>💡 Recomendación:</strong> {candidate.ai_analysis.recommendation}
+                              <strong>Recomendación:</strong> {candidate.ai_analysis.recommendation}
                             </p>
                           )}
                         </div>

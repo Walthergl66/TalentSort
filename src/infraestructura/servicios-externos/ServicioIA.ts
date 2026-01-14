@@ -75,7 +75,7 @@ export class ServicioIA {
     this.timeout = CONFIG_IA.TIMEOUT;
     this.reintentos = CONFIG_IA.REINTENTOS;
 
-    console.log('🔧 ServicioIA inicializado con:', {
+    console.log('[ServicioIA] Inicializado con:', {
       urlBase: this.urlBase,
       timeout: this.timeout,
       reintentos: this.reintentos,
@@ -234,7 +234,7 @@ export class ServicioIA {
       }
     };
 
-    console.log('📤 Enviando solicitud a ATS:', {
+    console.log('[ServicioIA] Enviando solicitud a ATS:', {
       url: `${this.urlBase}/api/v1/ats/match`,
       vacante: {
         title: body.vacante.job_title,
@@ -248,7 +248,7 @@ export class ServicioIA {
       }
     });
 
-    console.log('📦 Body completo que se enviará:', JSON.stringify(body, null, 2));
+    console.log('[ServicioIA] Body de solicitud:', JSON.stringify(body, null, 2));
 
     const respuesta = await fetch(`${this.urlBase}/api/v1/ats/match`, {
       method: 'POST',
@@ -263,19 +263,19 @@ export class ServicioIA {
       try {
         const jsonError = await respuesta.json();
         textoError = JSON.stringify(jsonError, null, 2);
-        console.error('❌ Error JSON de API ATS:', jsonError);
+        console.error('[ServicioIA] Error JSON de API ATS:', jsonError);
         
         // Si el error es por falta de GROQ_API_KEY, usar análisis mock
         if (textoError.includes('GROQ_API_KEY') || textoError.includes('no está configurada')) {
-          console.warn('⚠️  Servicio de IA no configurado, usando análisis simulado');
+          console.warn('[ServicioIA] Servicio de IA no configurado, usando análisis simulado');
           return this.generarAnalisisMock(solicitud);
         }
       } catch {
         textoError = await respuesta.text();
-        console.error('❌ Error de texto de API ATS:', textoError);
+        console.error('[ServicioIA] Error de texto de API ATS:', textoError);
       }
       
-      console.error('❌ Detalles completos del error:', {
+      console.error('[ServicioIA] Detalles del error:', {
         status: respuesta.status,
         statusText: respuesta.statusText,
         error: textoError,
@@ -290,7 +290,7 @@ export class ServicioIA {
     }
 
     const data = await respuesta.json();
-    console.log('✅ Respuesta ATS recibida:', {
+    console.log('[ServicioIA] Respuesta ATS recibida:', {
       match_score: data.match_score,
       status: data.status
     });

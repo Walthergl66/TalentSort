@@ -327,12 +327,12 @@ export default function ProfilePage() {
   }
 
   const candidateTabs = [
-    { id: 'overview', name: 'Resumen', icon: '📊' },
-    { id: 'personal', name: 'Información Personal', icon: '👤' },
-    { id: 'professional', name: 'Experiencia', icon: '💼' },
-    { id: 'education', name: 'Educación', icon: '🎓' },
-    { id: 'skills', name: 'Habilidades', icon: '🎯' },
-    { id: 'preferences', name: 'Preferencias', icon: '⚙️' }
+    { id: 'overview', name: 'Resumen', icon: '' },
+    { id: 'personal', name: 'Información Personal', icon: '' },
+    { id: 'professional', name: 'Experiencia', icon: '' },
+    { id: 'education', name: 'Educación', icon: '' },
+    { id: 'skills', name: 'Habilidades', icon: '' },
+    { id: 'preferences', name: 'Preferencias', icon: '' }
   ]
 
   if (loading) {

@@ -251,10 +251,10 @@ export default function AllApplicationsPage() {
                         </span>
                       </div>
                       <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
-                        📧 {application.candidate_email}
+                        {application.candidate_email}
                       </p>
                       <p className="text-sm text-blue-600 dark:text-blue-400 font-medium mb-2">
-                        💼 {application.job_title}
+                        {application.job_title}
                       </p>
                       <p className="text-xs text-gray-500 dark:text-gray-500">
                         Aplicó el {new Date(application.created_at).toLocaleDateString('es-ES', {

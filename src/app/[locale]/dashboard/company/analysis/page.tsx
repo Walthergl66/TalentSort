@@ -156,7 +156,7 @@ export default function CompanyAnalysisPage() {
 
     setReanalyzing(applicationId)
     try {
-      console.log('🔄 Reanalizando aplicación...')
+      console.log('[analysis] Reanalizando aplicación...')
 
       // Obtener datos de la aplicación
       const { data: appData, error: appError } = await supabase
@@ -207,7 +207,7 @@ ${cvData.areas_improvement && cvData.areas_improvement.length > 0 ? '- ' + cvDat
         throw new Error('No hay suficiente información en el CV para analizar')
       }
 
-      console.log('📄 Texto del CV generado:', {
+      console.log('[analysis] Texto del CV generado:', {
         length: cvText.length,
         candidato: cvData.candidate_name
       })
@@ -254,17 +254,17 @@ ${cvData.areas_improvement && cvData.areas_improvement.length > 0 ? '- ' + cvDat
       await fetchApplications(user.id)
 
       alert(
-        '✅ Aplicación reanalisada exitosamente\n\n' +
+        'Aplicación reanalisada exitosamente\n\n' +
         `Nuevo puntaje: ${analysis.score}/100\n` +
         `Coincidencia: ${analysis.match_percentage}%`
       )
 
-      console.log('✅ Reanálisis completado')
+      console.log('[analysis] Reanálisis completado')
 
     } catch (error: any) {
-      console.error('❌ Error al reanalizar:', error)
+      console.error('[analysis] Error al reanalizar:', error)
       alert(
-        '❌ Error al reanalizar la aplicación\n\n' +
+        'Error al reanalizar la aplicación\n\n' +
         (error.message || 'Por favor, intenta nuevamente.')
       )
     } finally {
@@ -472,7 +472,7 @@ ${cvData.areas_improvement && cvData.areas_improvement.length > 0 ? '- ' + cvDat
                         </>
                       ) : (
                         <>
-                          🔄 Volver a Analizar
+                          Volver a Analizar
                         </>
                       )}
                     </button>

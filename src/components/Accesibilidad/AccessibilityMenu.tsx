@@ -101,7 +101,11 @@ export const AccessibilityMenu: React.FC = () => {
         >
           <header className="a11y-menu-header">
             <h3>Accesibilidad</h3>
-            <button onClick={() => setOpen(false)} aria-label="Cerrar menú (ESC)">✕</button>
+            <button onClick={() => setOpen(false)} aria-label="Cerrar menú (ESC)">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
           </header>
 
           {/* Información de atajos */}
@@ -273,11 +277,20 @@ export const AccessibilityMenu: React.FC = () => {
                 <div className="a11y-tts-controls">
                   <button onClick={() => { setState({ ttsEnabled: true }); speakPage() }}>
                     <span className="flex items-center gap-2">
-                      🔊 Leer página <kbd className="a11y-kbd">Alt+5</kbd>
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1V10a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                      </svg>
+                      Leer página <kbd className="a11y-kbd">Alt+5</kbd>
                     </span>
                   </button>
                   <button onClick={() => { if ('speechSynthesis' in window) window.speechSynthesis.cancel(); setState({ ttsEnabled: false }) }}>
-                    🔇 Detener lectura
+                    <span className="flex items-center gap-2">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.586 15H4a1 1 0 01-1-1V10a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+                      </svg>
+                      Detener lectura
+                    </span>
                   </button>
                 </div>
               </div>

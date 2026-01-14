@@ -35,7 +35,7 @@ export default function AnalyticsPage() {
       <div className="max-w-6xl mx-auto px-6 py-8">
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
           <h3 className="font-semibold text-blue-900 mb-2">
-            ℹ️ Sobre estas métricas
+            Sobre estas métricas
           </h3>
           <ul className="text-sm text-blue-800 space-y-1">
             <li>• <strong>Objetivo de rúbrica:</strong> Claridad ≥ 4.0/5.0</li>

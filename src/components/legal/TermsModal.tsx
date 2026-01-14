@@ -264,7 +264,7 @@ export default function TermsModal({ isOpen, onClose }: TermsModalProps) {
           {/* Resumen ejecutivo */}
           <section className="border-t-2 border-gray-200 pt-6">
             <h3 className="text-xl font-semibold text-gray-800 mb-3">
-              📋 Resumen Ejecutivo
+              Resumen Ejecutivo
             </h3>
             <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-4">
               <p className="font-semibold mb-2">En resumen:</p>

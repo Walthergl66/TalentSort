@@ -153,10 +153,10 @@ export default function SettingsPage() {
   }
 
   const sections = [
-    { id: 'personal', name: 'Información Personal', icon: '👤' },
-    { id: 'security', name: 'Seguridad', icon: '🔒' },
-    { id: 'notifications', name: 'Notificaciones', icon: '🔔' },
-    { id: 'preferences', name: 'Preferencias', icon: '⚙️' }
+    { id: 'personal', name: 'Información Personal', icon: '' },
+    { id: 'security', name: 'Seguridad', icon: '' },
+    { id: 'notifications', name: 'Notificaciones', icon: '' },
+    { id: 'preferences', name: 'Preferencias', icon: '' }
   ]
 
   if (loading) {

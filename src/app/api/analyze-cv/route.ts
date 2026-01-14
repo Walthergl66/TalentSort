@@ -12,11 +12,11 @@ import { sendMessageToChatAgent } from '@/lib/aiService';
  * Analiza un CV comparándolo con los requisitos de una vacante
  */
 export async function POST(request: NextRequest) {
-  console.log('🔔 /api/analyze-cv - Nueva solicitud recibida');
+  console.log('[analyze-cv] Nueva solicitud recibida');
   
   try {
     const body = await request.json();
-    console.log('📦 Body recibido:', {
+    console.log('[analyze-cv] Body recibido:', {
       hasCvText: !!body.cv_text,
       cvTextLength: body.cv_text?.length || 0,
       hasJobDescription: !!body.job_description,
@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
     
     // Validar campos requeridos mínimos
     if (!body.cv_text || !body.job_description) {
-      console.error('❌ Validación fallida: Campos faltantes');
+      console.error('[analyze-cv] Validación fallida: Campos faltantes');
       return NextResponse.json(
         { 
           error: 'Campos requeridos faltantes',
@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.log('✅ Validación pasada, llamando a sendMessageToChatAgent...');
+    console.log('[analyze-cv] Validación OK, llamando a sendMessageToChatAgent...');
     
     // Llamar a sendMessageToChatAgent con el objeto esperado
     const respuesta = await sendMessageToChatAgent({
@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
       requiredExperience: body.required_experience
     });
     
-    console.log('✅ Respuesta de IA recibida:', {
+    console.log('[analyze-cv] Respuesta de IA recibida:', {
       hasScore: !!respuesta.score,
       score: respuesta.score,
       hasMatchPercentage: !!respuesta.match_percentage,
@@ -58,9 +58,9 @@ export async function POST(request: NextRequest) {
     // La respuesta ya es un objeto JSON
     return NextResponse.json(respuesta);
   } catch (error: any) {
-    console.error('💥 Error en /api/analyze-cv:', error);
-    console.error('💥 Error message:', error.message);
-    console.error('💥 Error stack:', error.stack);
+    console.error('[analyze-cv] Error:', error);
+    console.error('[analyze-cv] Message:', error.message);
+    console.error('[analyze-cv] Stack:', error.stack);
     
     return NextResponse.json(
       {

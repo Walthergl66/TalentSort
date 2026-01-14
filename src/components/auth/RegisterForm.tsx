@@ -121,14 +121,14 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
         // Verificar que tenemos sesión activa
         const { data: { session } } = await supabase.auth.getSession()
         
-        console.log('🔍 Sesión actual:', {
+        console.log('[Register] Sesión actual:', {
           hasSession: !!session,
           userId: session?.user?.id,
           registeredUserId: data.user.id
         })
 
         // Crear perfil de usuario en user_profiles
-        console.log('🔍 Intentando crear perfil con datos:', {
+        console.log('[Register] Intentando crear perfil con datos:', {
           user_id: data.user.id,
           email: formData.email,
           full_name: formData.full_name,
@@ -148,7 +148,7 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
           .select()
 
         if (profileError) {
-          console.error('❌ Error creando perfil:', {
+          console.error('[Register] Error creando perfil:', {
             message: profileError.message,
             details: profileError.details,
             hint: profileError.hint,
@@ -157,7 +157,7 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
           
           // Si el error es de RLS, dar instrucciones específicas
           if (profileError.message?.includes('row-level security')) {
-            alert(`⚠️ ERROR DE CONFIGURACIÓN DE BASE DE DATOS\n\n` +
+            alert(`ERROR DE CONFIGURACIÓN DE BASE DE DATOS\n\n` +
               `Las políticas RLS necesitan ser reconfiguradas.\n\n` +
               `SOLUCIÓN RÁPIDA:\n` +
               `1. Ve a Supabase Dashboard > SQL Editor\n` +
@@ -170,10 +170,10 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
               `  FOR INSERT WITH CHECK (true);\n\n` +
               `3. Intenta registrarte nuevamente`)
           } else {
-            alert(`⚠️ IMPORTANTE: El usuario se creó pero el perfil falló.\n\nError: ${profileError.message}\n\nPor favor ejecuta el script SQL de inicialización en Supabase Dashboard > SQL Editor.\n\nRuta del script: sql/init_database.sql`)
+            alert(`IMPORTANTE: El usuario se creó pero el perfil falló.\n\nError: ${profileError.message}\n\nPor favor ejecuta el script SQL de inicialización en Supabase Dashboard > SQL Editor.\n\nRuta del script: sql/init_database.sql`)
           }
         } else {
-          console.log('✅ Perfil creado exitosamente:', profileData)
+          console.log('[Register] Perfil creado exitosamente:', profileData)
         }
         
         // Verificar si el email está confirmado automáticamente
@@ -184,7 +184,7 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
           if (formData.role === 'company') {
             setMessage({ 
               type: 'success', 
-              text: '¡Registro exitoso! 🎉 Bienvenido. Ahora puedes publicar tus ofertas de empleo.' 
+              text: '¡Registro exitoso! Bienvenido. Ahora puedes publicar tus ofertas de empleo.' 
             })
             
             // Redirigir a empresas directamente a crear vacantes después de 2 segundos
@@ -216,7 +216,7 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
           }
         }
         
-        console.log('📧 Usuario registrado:', {
+        console.log('[Register] Usuario registrado:', {
           email: data.user.email,
           confirmed: isConfirmed,
           userId: data.user.id,
@@ -272,7 +272,7 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
       existingSurveys.push(surveyData)
       localStorage.setItem('registration_surveys', JSON.stringify(existingSurveys))
 
-      console.log('📊 Encuesta post-registro guardada:', surveyData)
+      console.log('[Register] Encuesta post-registro guardada:', surveyData)
       
       // En producción, aquí se enviaría a una API:
       // await fetch('/api/surveys/registration', {
@@ -340,8 +340,8 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
             onChange={(e) => setFormData({...formData, role: e.target.value as 'candidate' | 'company'})}
             className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
           >
-            <option value="candidate">🔍 Busco Empleo (Candidato)</option>
-            <option value="company">🏢 Ofrezco Empleo (Empresa)</option>
+            <option value="candidate">Busco Empleo (Candidato)</option>
+            <option value="company">Ofrezco Empleo (Empresa)</option>
           </select>
         </div>
 
@@ -586,7 +586,7 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
 
             {/* Título */}
             <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3">
-              ¡Gracias por registrarte! 🎉
+              ¡Gracias por registrarte!
             </h3>
 
             {/* Mensaje */}
