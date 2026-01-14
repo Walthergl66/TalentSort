@@ -35,10 +35,15 @@ export default function TopBar({ user, profile }: TopBarProps) {
     <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-30">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Lado izquierdo - Título */}
-          <div className="flex items-center">
-            <h1 className="text-lg font-semibold text-gray-900">
-              {getPageTitle()}
+          {/* Lado izquierdo - Logo y nombre del proyecto */}
+          <div className="flex items-center space-x-3">
+            <img 
+              src="/TALENTAI.png" 
+              alt="TalentSort Logo" 
+              className="h-8 w-8 object-contain"
+            />
+            <h1 className="text-xl font-bold text-gray-900">
+              TalentSort
             </h1>
           </div>
 
