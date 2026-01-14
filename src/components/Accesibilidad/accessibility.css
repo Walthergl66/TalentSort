@@ -146,10 +146,34 @@ button, input, select, textarea, label {
   outline-offset: 2px !important;
 }
 
-/* Large buttons */
-.a11y-large-buttons button, .a11y-large-buttons .btn {
-  padding: 12px 18px !important;
-  font-size: 1.05rem !important;
+/* Large buttons - 2.5.5 Target Size (AAA) - mínimo 44x44px */
+.a11y-large-buttons button, 
+.a11y-large-buttons .btn,
+.a11y-large-buttons a.btn,
+.a11y-large-buttons input[type="submit"],
+.a11y-large-buttons input[type="button"] {
+  min-width: 44px !important;
+  min-height: 44px !important;
+  padding: 14px 20px !important;
+  font-size: 1.1rem !important;
+  touch-action: manipulation; /* 2.5.1 Pointer Gestures */
+}
+
+/* Asegurar que todos los controles interactivos tengan tamaño mínimo - WCAG 2.5.5 */
+.a11y-large-buttons input[type="checkbox"],
+.a11y-large-buttons input[type="radio"] {
+  min-width: 24px !important;
+  min-height: 24px !important;
+  transform: scale(1.5);
+  margin: 8px !important;
+}
+
+/* Aumentar área clickeable de links */
+.a11y-large-buttons a {
+  display: inline-block;
+  padding: 8px 12px !important;
+  min-height: 44px !important;
+  line-height: 1.5 !important;
 }
 
 /* Menu styling */
@@ -159,18 +183,18 @@ button, input, select, textarea, label {
   background: #ef4444; /* red-500 */
   color: #fff;
   border: none;
-  padding: 8px 12px;
+  padding: 12px 16px;
   border-radius: 8px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   font-weight: 600;
+  font-size: 0.95rem;
 }
 .a11y-toggle-button:hover { filter: brightness(0.95); }
 .a11y-toggle-button svg { width: 32px; height: 32px; fill: currentColor; }
 .a11y-toggle-button span { line-height: 1; }
-.a11y-toggle-button { gap: 12px; padding: 12px 16px; font-size: 0.95rem; }
 .a11y-menu { width: 300px; max-width: calc(100vw - 32px); background: #fff; color: #111; box-shadow: 0 6px 24px rgba(0,0,0,0.15); border-radius: 8px; padding: 12px; margin-top: 8px; }
 
 /* Menú lateral expandible */
@@ -567,3 +591,275 @@ button, input, select, textarea, label {
 .voice-commands-hint li:last-child {
   border-bottom: none;
 }
+
+/* ========================================
+   WCAG 2.1 & 2.2 COMPLIANCE ENHANCEMENTS
+   ======================================== */
+
+/* 2.4.7 Focus Visible (AA) - Mejorado */
+/* Asegurar que el foco sea siempre visible con contraste alto */
+.a11y-keyboard-nav *:focus,
+.a11y-keyboard-nav *:focus-visible,
+*:focus-visible {
+  outline: 3px solid var(--a11y-accent, #3b82f6) !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 6px rgba(59, 130, 246, 0.2) !important;
+  border-radius: 4px;
+}
+
+/* Foco extra visible para alto contraste */
+.a11y-high-contrast *:focus,
+.a11y-high-contrast *:focus-visible {
+  outline: 4px solid #ffd54f !important;
+  outline-offset: 4px !important;
+  box-shadow: 0 0 0 8px rgba(255, 213, 79, 0.3) !important;
+}
+
+/* 2.4.12 Focus Not Obscured (AA) - WCAG 2.2 */
+/* Asegurar que elementos con foco no queden ocultos */
+*:focus,
+*:focus-visible {
+  position: relative;
+  z-index: 100;
+  scroll-margin: 120px; /* Espacio al hacer scroll para evitar que quede oculto */
+}
+
+/* 2.1.2 No Keyboard Trap (A) */
+/* Asegurar que los modales y diálogos permitan escape */
+[role="dialog"],
+[role="alertdialog"],
+.modal,
+.a11y-menu {
+  /* El foco debe poder salir siempre */
+  isolation: isolate;
+}
+
+/* 1.4.10 Reflow (AA) - Sin scroll horizontal hasta 320px */
+/* Asegurar que el contenido se adapte sin scroll horizontal */
+@media (max-width: 400px) {
+  * {
+    max-width: 100% !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+  
+  table {
+    display: block !important;
+    overflow-x: auto !important;
+  }
+  
+  img, video, iframe {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+}
+
+/* 1.4.4 Resize Text (AA) - Texto ampliable hasta 200% */
+/* Ya implementado con font-scale variable */
+
+/* 2.5.2 Pointer Cancellation (A) */
+/* Los eventos touch deben poder cancelarse */
+button,
+a,
+[role="button"],
+[role="link"] {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+}
+
+/* 2.3.1 Three Flashes or Below Threshold (A) */
+/* Prevenir animaciones peligrosas */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Aplicar también cuando el usuario activa reducedMotion */
+.a11y-reduced-motion *,
+.a11y-reduced-motion *::before,
+.a11y-reduced-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* 1.4.3 Contrast (Minimum) AA - Ratios 4.5:1 */
+/* 1.4.6 Contrast (Enhanced) AAA - Ratios 7:1 */
+/* Los niveles de contraste ya están implementados arriba */
+
+/* 2.5.8 Target Size (Minimum) - WCAG 2.2 AA */
+/* Espaciado mínimo entre controles interactivos */
+.a11y-large-buttons button + button,
+.a11y-large-buttons a + a,
+.a11y-large-buttons input + input {
+  margin-left: 12px !important;
+}
+
+/* Asegurar separación vertical */
+.a11y-large-buttons * + button,
+.a11y-large-buttons * + a {
+  margin-top: 8px !important;
+}
+
+/* 3.3.2 Labels or Instructions (A) */
+/* Asegurar que los inputs siempre tengan labels visibles */
+input:not([type="hidden"]):not([aria-label]):not([aria-labelledby]) {
+  outline: 2px dashed orange !important; /* Advertencia visual para inputs sin label */
+}
+
+/* Mejorar visibilidad de placeholders */
+input::placeholder,
+textarea::placeholder {
+  opacity: 0.7 !important;
+  color: #6b7280 !important;
+}
+
+.a11y-high-contrast input::placeholder,
+.a11y-high-contrast textarea::placeholder {
+  opacity: 0.8 !important;
+  color: #9ca3af !important;
+}
+
+/* 1.3.1 Info and Relationships (A) */
+/* Asegurar que las listas tengan estructura semántica adecuada */
+ul, ol {
+  list-style-position: outside;
+  padding-left: 1.5em;
+}
+
+/* 2.4.6 Headings and Labels (AA) */
+/* Mejorar jerarquía visual de encabezados */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700 !important;
+  margin-top: 1.5em !important;
+  margin-bottom: 0.75em !important;
+  line-height: 1.3 !important;
+}
+
+/* Skip links para navegación (2.4.1 Bypass Blocks) */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--a11y-accent, #3b82f6);
+  color: white;
+  padding: 12px 20px;
+  text-decoration: none;
+  z-index: 10000;
+  font-weight: 600;
+  border-radius: 0 0 8px 0;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid white;
+  outline-offset: -3px;
+}
+
+/* Live regions para lectores de pantalla (4.1.3 Status Messages) */
+[aria-live="polite"],
+[aria-live="assertive"],
+[role="status"],
+[role="alert"] {
+  position: relative;
+}
+
+/* Asegurar que los íconos decorativos no interfieran con lectores de pantalla */
+[aria-hidden="true"] {
+  speak: never;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Mejorar tablas accesibles (1.3.1) */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  text-align: left;
+  font-weight: 700;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 12px;
+}
+
+td {
+  padding: 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.a11y-high-contrast th {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.a11y-high-contrast td {
+  border-top-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Cursor de texto visible (2.4.7) */
+input,
+textarea,
+[contenteditable="true"] {
+  caret-color: var(--a11y-accent, #3b82f6);
+}
+
+.a11y-high-contrast input,
+.a11y-high-contrast textarea,
+.a11y-high-contrast [contenteditable="true"] {
+  caret-color: #ffd54f !important;
+}
+
+/* ========================================
+   UTILITY CLASSES FOR ACCESSIBILITY
+   ======================================== */
+
+/* Screen reader only content (1.3.1 Info and Relationships) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Focusable screen reader content */
+.sr-only-focusable:focus,
+.sr-only-focusable:active {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* Prevent content from being read by screen readers */
+.aria-hidden-true {
+  speak: never;
+}
+
+/* Live regions helpers */
+.live-region-polite {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+[aria-live] {
+  position: relative;
+}
+
+

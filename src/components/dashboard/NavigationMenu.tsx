@@ -168,9 +168,10 @@ export default function NavigationMenu({ isOpen, onMouseEnter, onMouseLeave, pro
     <>
       {/* Sidebar */}
       <nav
+        id="navigation"
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
-        className={`fixed top-16 left-0 z-20 h-full bg-white border-r border-gray-200 transition-all duration-300 ease-in-out overflow-hidden ${
+        className={`fixed top-16 left-0 z-20 h-full bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 transition-all duration-300 ease-in-out overflow-hidden ${
           isOpen ? 'w-64 shadow-lg' : 'w-16'
         }`}
         role="navigation"
