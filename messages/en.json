@@ -385,5 +385,57 @@
     "submit": "Submit",
     "confirm": "Confirm",
     "search": "Search"
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Manage your account and preferences",
+    "sections": {
+      "personal": "Personal Information",
+      "security": "Security",
+      "notifications": "Notifications",
+      "preferences": "Preferences"
+    },
+    "personal": {
+      "title": "Personal Information",
+      "subtitle": "Update your contact information and personal data",
+      "fullName": "Full name",
+      "email": "Email address",
+      "emailNote": "Email cannot be changed from here",
+      "phone": "Phone",
+      "location": "Location",
+      "bio": "Description / Bio"
+    },
+    "security": {
+      "title": "Security",
+      "subtitle": "Manage your account security",
+      "changePassword": "Change password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm new password",
+      "updatePassword": "Update password",
+      "currentSession": "Current session",
+      "active": "Active",
+      "passwordError": "Passwords do not match",
+      "passwordMinLength": "Password must be at least 6 characters",
+      "passwordSuccess": "Password updated successfully"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "subtitle": "Configure how you want to receive notifications",
+      "emailNotifications": "Email notifications",
+      "emailNotificationsDesc": "Receive updates about your applications",
+      "newOpportunities": "New opportunities",
+      "newOpportunitiesDesc": "Alert when there are jobs that match your profile",
+      "reminders": "Reminders",
+      "remindersDesc": "Receive reminders to complete your profile"
+    },
+    "preferences": {
+      "title": "Preferences",
+      "subtitle": "Customize your experience on the platform",
+      "language": "Language",
+      "timezone": "Timezone",
+      "dangerZone": "Danger zone",
+      "dangerZoneDesc": "Deleting your account will permanently remove all your data",
+      "deleteAccount": "Delete account"
+    }
   }
 }

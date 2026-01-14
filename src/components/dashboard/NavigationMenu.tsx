@@ -53,16 +53,7 @@ const getNavigationItems = (t: any, td: any, userRole: string) => {
       ),
       description: 'Estado de aplicaciones'
     },
-    {
-      name: 'Mi Perfil',
-      href: '/dashboard/profile',
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-        </svg>
-      ),
-      description: 'Información personal'
-    }
+    
   ]
 
   // Items para empresas
@@ -146,6 +137,17 @@ const getNavigationItems = (t: any, td: any, userRole: string) => {
         </svg>
       ),
       description: 'Perfil de la empresa'
+    },
+    {
+      name: 'Configuración',
+      href: '/dashboard/settings',
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+      ),
+      description: 'Ajustes de cuenta'
     }
   ]
 
@@ -193,34 +195,7 @@ export default function NavigationMenu({ isOpen, onMouseEnter, onMouseLeave, pro
             </div>
           </div>
 
-          {/* Información del usuario */}
-          <div 
-            className={`border-b border-gray-200 bg-gradient-to-r from-gray-50 to-gray-100 transition-all duration-300 overflow-hidden ${
-              isOpen ? 'px-4 py-4 opacity-100' : 'h-0 py-0 opacity-0'
-            }`}
-          >
-            {profile && (
-              <div className="flex items-center">
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center flex-shrink-0 shadow-md">
-                  <span className="text-sm font-medium text-white">
-                    {profile.role === 'company' 
-                      ? (profile.company_name?.charAt(0)?.toUpperCase() || 'E')
-                      : (profile.full_name?.charAt(0)?.toUpperCase() || 'U')}
-                  </span>
-                </div>
-                <div className="ml-3 min-w-0">
-                  <p className="text-sm font-medium text-gray-900 truncate">
-                    {profile.role === 'company' 
-                      ? (profile.company_name || tp('company'))
-                      : (profile.full_name || tp('user'))}
-                  </p>
-                  <p className="text-xs text-gray-500 truncate">
-                    {profile.role === 'company' ? tp('company') : tp('user')}
-                  </p>
-                </div>
-              </div>
-            )}
-          </div>
+         
 
           {/* Items de navegación */}
           <div className="flex-1 px-2 py-4 space-y-1 overflow-y-auto">

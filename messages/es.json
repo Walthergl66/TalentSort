@@ -392,5 +392,57 @@
     "submit": "Enviar",
     "confirm": "Confirmar",
     "search": "Buscar"
+  },
+  "settings": {
+    "title": "Configuración",
+    "subtitle": "Administra tu cuenta y preferencias",
+    "sections": {
+      "personal": "Información Personal",
+      "security": "Seguridad",
+      "notifications": "Notificaciones",
+      "preferences": "Preferencias"
+    },
+    "personal": {
+      "title": "Información Personal",
+      "subtitle": "Actualiza tu información de contacto y datos personales",
+      "fullName": "Nombre completo",
+      "email": "Correo electrónico",
+      "emailNote": "El correo no se puede cambiar desde aquí",
+      "phone": "Teléfono",
+      "location": "Ubicación",
+      "bio": "Descripción / Bio"
+    },
+    "security": {
+      "title": "Seguridad",
+      "subtitle": "Gestiona la seguridad de tu cuenta",
+      "changePassword": "Cambiar contraseña",
+      "newPassword": "Nueva contraseña",
+      "confirmPassword": "Confirmar nueva contraseña",
+      "updatePassword": "Actualizar contraseña",
+      "currentSession": "Sesión actual",
+      "active": "Activa",
+      "passwordError": "Las contraseñas no coinciden",
+      "passwordMinLength": "La contraseña debe tener al menos 6 caracteres",
+      "passwordSuccess": "Contraseña actualizada correctamente"
+    },
+    "notifications": {
+      "title": "Notificaciones",
+      "subtitle": "Configura cómo quieres recibir notificaciones",
+      "emailNotifications": "Notificaciones por correo",
+      "emailNotificationsDesc": "Recibe actualizaciones sobre tus postulaciones",
+      "newOpportunities": "Nuevas oportunidades",
+      "newOpportunitiesDesc": "Alerta cuando haya trabajos que coincidan con tu perfil",
+      "reminders": "Recordatorios",
+      "remindersDesc": "Recibe recordatorios para completar tu perfil"
+    },
+    "preferences": {
+      "title": "Preferencias",
+      "subtitle": "Personaliza tu experiencia en la plataforma",
+      "language": "Idioma",
+      "timezone": "Zona horaria",
+      "dangerZone": "Zona de peligro",
+      "dangerZoneDesc": "Eliminar tu cuenta borrará permanentemente todos tus datos",
+      "deleteAccount": "Eliminar cuenta"
+    }
   }
 }
